@@ -256,7 +256,7 @@ const Sidebar = () => {
                                 </li>
 
                                 <li className="sub-menu">
-                                    <a >
+                                    <a href="javascript:;">
                                         <i className="fa fa-book"></i>
                                         <span>UI Elements</span>
                                     </a>
