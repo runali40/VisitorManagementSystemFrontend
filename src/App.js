@@ -1,25 +1,33 @@
-import logo from './logo.svg';
-import './App.css';
 
-function App() {
+import "./App.css";
+import React from "react";
+import { Routes, Route, BrowserRouter as Router } from "react-router-dom";
+
+// import "../node_modules/bootstrap/dist/css/bootstrap.min.css";
+// import "../node_modules/bootstrap/dist/js/bootstrap.min.js";
+
+// import "datatables.net-dt/css/jquery.dataTables.min.css";
+// import "datatables.net";
+// import "datatables.net-responsive-dt/css/responsive.dataTables.min.css";
+// import "datatables.net-responsive";
+
+import Login from './Components/Pages/Login';
+import Registration from './Components/Pages/Registration';
+import Sidebar from './Components/Pages/Sidebar';
+
+
+const App = (props) => {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <>
+      <Router>
+        <Routes>
+          <Route path="/" element={<Login/>}/>
+           <Route path="/registration" element={<Registration/>}/>
+          <Route exact path="/*" element={<Sidebar />} />
+        </Routes>
+      </Router>
+    </>
   );
-}
+};
 
 export default App;
