@@ -1,6 +1,6 @@
-import React, {useState} from 'react'
+import React, { useState } from 'react'
 import { NavLink } from 'react-router-dom'
-import TheContent from '../Layouts/Content.js'
+import TheContent from './Content.js'
 // import 'bootstrap/dist/css/bootstrap.min.css';
 // import 'bootstrap/dist/js/bootstrap.bundle.min.js'
 // import "../../assets/css/bootstrap.min.css"
@@ -39,6 +39,7 @@ import "../../assets/js/jquery.slimscroll.js"
 import "../../assets/js/jquery.nicescroll.js"
 import "../../assets/js/jquery.scrollTo.js"
 import "../../assets/js/scripts.js"
+import { Nav } from 'react-bootstrap'
 
 const Sidebar = () => {
     const [isOpen, setIsOpen] = useState(false);
@@ -53,9 +54,9 @@ const Sidebar = () => {
                 <header className="header fixed-top clearfix">
                     {/* <!--logo start--> */}
                     <div className="brand">
-                        <a href="index.html" className="logo">
+                        <NavLink to="/" className="logo">
                             VISITORS
-                        </a>
+                        </NavLink>
                         <div className="sidebar-toggle-box">
                             <div className="fa fa-bars"></div>
                         </div>
@@ -66,7 +67,7 @@ const Sidebar = () => {
                         <ul className="nav top-menu">
                             {/* <!-- settings start --> */}
                             <li className="dropdown">
-                                <a data-toggle="dropdown" className="dropdown-toggle" href="#">
+                                <a data-toggle="dropdown" className="dropdown-toggle" >
                                     <i className="fa fa-tasks"></i>
                                     <span className="badge bg-success">8</span>
                                 </a>
@@ -75,7 +76,7 @@ const Sidebar = () => {
                                         <p className="">You have 8 pending tasks</p>
                                     </li>
                                     <li>
-                                        <a href="#">
+                                        <NavLink to="">
                                             <div className="task-info clearfix">
                                                 <div className="desc pull-left">
                                                     <h5>Target Sell</h5>
@@ -85,10 +86,10 @@ const Sidebar = () => {
                                                     <span className="percent"></span>
                                                 </span>
                                             </div>
-                                        </a>
+                                        </NavLink>
                                     </li>
                                     <li>
-                                        <a href="#">
+                                        <NavLink to="">
                                             <div className="task-info clearfix">
                                                 <div className="desc pull-left">
                                                     <h5>Product Delivery</h5>
@@ -98,10 +99,10 @@ const Sidebar = () => {
                                                     <span className="percent"></span>
                                                 </span>
                                             </div>
-                                        </a>
+                                        </NavLink>
                                     </li>
                                     <li>
-                                        <a href="#">
+                                        <NavLink to="/">
                                             <div className="task-info clearfix">
                                                 <div className="desc pull-left">
                                                     <h5>Payment collection</h5>
@@ -111,10 +112,10 @@ const Sidebar = () => {
                                                     <span className="percent"></span>
                                                 </span>
                                             </div>
-                                        </a>
+                                        </NavLink>
                                     </li>
                                     <li>
-                                        <a href="#">
+                                        <NavLink to="">
                                             <div className="task-info clearfix">
                                                 <div className="desc pull-left">
                                                     <h5>Target Sell</h5>
@@ -124,7 +125,7 @@ const Sidebar = () => {
                                                     <span className="percent"></span>
                                                 </span>
                                             </div>
-                                        </a>
+                                        </NavLink>
                                     </li>
 
                                     <li className="external">
@@ -144,7 +145,7 @@ const Sidebar = () => {
                                         <p className="red">You have 4 Mails</p>
                                     </li>
                                     <li>
-                                        <a href="#">
+                                        <NavLink to="">
                                             <span className="photo"><img alt="avatar" src="images/3.png" /></span>
                                             <span className="subject">
                                                 <span className="from">Jonathan Smith</span>
@@ -153,10 +154,10 @@ const Sidebar = () => {
                                             <span className="message">
                                                 Hello, this is an example msg.
                                             </span>
-                                        </a>
+                                        </NavLink>
                                     </li>
                                     <li>
-                                        <a href="#">
+                                        <NavLink to="">
                                             <span className="photo"><img alt="avatar" src="images/1.png" /></span>
                                             <span className="subject">
                                                 <span className="from">Jane Doe</span>
@@ -165,10 +166,10 @@ const Sidebar = () => {
                                             <span className="message">
                                                 Nice admin template
                                             </span>
-                                        </a>
+                                        </NavLink>
                                     </li>
                                     <li>
-                                        <a href="#">
+                                        <NavLink to="">
                                             <span className="photo"><img alt="avatar" src="images/3.png" /></span>
                                             <span className="subject">
                                                 <span className="from">Tasi sam</span>
@@ -177,10 +178,10 @@ const Sidebar = () => {
                                             <span className="message">
                                                 This is an example msg.
                                             </span>
-                                        </a>
+                                        </NavLink>
                                     </li>
                                     <li>
-                                        <a href="#">
+                                        <NavLink to="">
                                             <span className="photo"><img alt="avatar" src="images/2.png" /></span>
                                             <span className="subject">
                                                 <span className="from">Mr. Perfect</span>
@@ -189,10 +190,10 @@ const Sidebar = () => {
                                             <span className="message">
                                                 Hi there, its a test
                                             </span>
-                                        </a>
+                                        </NavLink>
                                     </li>
                                     <li>
-                                        <a href="#">See all messages</a>
+                                        <NavLink to="">See all messages</NavLink>
                                     </li>
                                 </ul>
                             </li>
@@ -253,9 +254,9 @@ const Sidebar = () => {
                                     <b className="caret"></b>
                                 </a>
                                 <ul className="dropdown-menu extended logout">
-                                    <li><a href="#"><i className=" fa fa-suitcase"></i>Profile</a></li>
-                                    <li><a href="#"><i className="fa fa-cog"></i> Settings</a></li>
-                                    <li><a href="login.html"><i className="fa fa-key"></i> Log Out</a></li>
+                                    <li><NavLink><i className=" fa fa-suitcase"></i>Profile</NavLink></li>
+                                    <li><NavLink><i className="fa fa-cog"></i> Settings</NavLink></li>
+                                    <li><NavLink to="/"><i className="fa fa-key"></i> Log Out</NavLink></li>
                                 </ul>
                             </li>
                             {/* <!-- user login dropdown end --> */}
@@ -271,12 +272,12 @@ const Sidebar = () => {
                         {/* <!-- sidebar menu start--> */}
                         <div className="leftside-navigation">
                             <ul className="sidebar-menu" id="nav-accordion">
-                                <li>
-                                    <div className="active">
-                                        <i className="fa fa-dashboard"></i>
-                                        <span>Dashboard</span>
-                                    </div>
-                                </li>
+                                <li><NavLink to="/dashboard">
+                                    {/* <div className="active"> */}<i className="fa fa-dashboard"></i>
+                                    <span>Dashboard</span>
+
+                                    {/* </div> */}
+                                </NavLink></li>
                                 <li className={`sub-menu ${isOpen ? 'active' : ''}`}>
                                     <div onClick={toggleSubmenu} style={{ cursor: 'pointer' }}>
                                         <i className="fa fa-book"></i>
@@ -286,9 +287,10 @@ const Sidebar = () => {
                                     {isOpen && (
                                         <ul className="sub">
                                             <li><NavLink to="/VisitorType">Visitor Type Master</NavLink></li>
-                                            <li><NavLink to="/typography">Typography</NavLink></li>
-                                            
-                                            <li><NavLink to="/grids">Grids</NavLink></li>
+                                            <li><NavLink to="/departmentMaster">Department Master</NavLink></li>
+                                            <li><NavLink to="/employeeMaster">Employee Master</NavLink></li>
+                                            <li><NavLink to="/userMaster">User Master</NavLink></li>
+                                            <li><NavLink to="/roleMaster">Role Master</NavLink></li>
                                         </ul>
                                     )}
                                 </li>

@@ -4,20 +4,31 @@
 import { lazy } from 'react';
 
 
-const Registration = lazy(() => import('./Components/Pages/Registration'));
-const Grids = lazy(() => import('./Components/Pages/Grids'));
-const Typography = lazy(() => import('./Components/Pages/Typography'));
+const Registration = lazy(() => import('./Components/Pages/Login/Registration'));
 const VisitorType = lazy(() => import('./Components/Pages/Masters/VisitorTypeMaster/VisitorType'));
 const AddVisitorType = lazy(() => import('./Components/Pages/Masters/VisitorTypeMaster/AddVisitorType'));
+const AddDepartmentMaster = lazy(() => import('./Components/Pages/Masters/DepartmentMaster/AddDepartmentMaster'));
+const DepartmentMaster = lazy(() => import('./Components/Pages/Masters/DepartmentMaster/DepartmentMaster'));
+const EmployeeMaster = lazy(() => import('./Components/Pages/Masters/EmployeeMaster/EmployeeMaster'));
+const AddEmployeeMaster = lazy(() => import('./Components/Pages/Masters/EmployeeMaster/AddEmployeeMaster'));
+const Dashboard = lazy(() => import('./Components/Dashboard/Dashboard'));
+const UserMaster = lazy(() => import('./Components/Pages/Masters/UserMaster/UserMaster'));
+const AddUserMaster = lazy(() => import('./Components/Pages/Masters/UserMaster/AddUserMaster'));
+
 const routes = [
   // { path: '/', exact: true, name: 'Login', element: Login },
   // { path: '/resgistration', exact: true, name: 'Registration', element: Registration },
   { path: '/registration', exact: true, name: 'Dashboard', element: Registration },
   // { path: '/sidebar', exact: true, name: 'sidebar', element: Sidebar },
-  { path: '/typography', exact: true, name: 'Dashboard', element: Typography },
-  { path: '/grids', exact: true, name: 'Dashboard', element: Grids },
+  { path: '/dashboard', exact: true, name: 'Dashboard', element: Dashboard },
   { path: '/visitorType', exact: true, name: 'VisitorType', element: VisitorType },
   { path: '/addVisitorType', exact: true, name: 'AddVisitorType', element: AddVisitorType },
+  { path: '/departmentMaster', exact: true, name: 'DepartmentMaster', element: DepartmentMaster },
+  { path: '/addDepartmentMaster', exact: true, name: 'AddVisitorType', element: AddDepartmentMaster },
+  { path: '/employeeMaster', exact: true, name: 'EmployeeMaster', element: EmployeeMaster },
+  { path: '/addEmployeeMaster', exact: true, name: 'AddEmployeeMaster', element: AddEmployeeMaster },
+  { path: '/userMaster', exact: true, name: 'UserMaster', element: UserMaster },
+  { path: '/addUserMaster', exact: true, name: 'AddUserMaster', element: AddUserMaster },
 
 ]
 export default routes

@@ -1,13 +1,11 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { Table, Modal, Button, Form, Row, Col } from "react-bootstrap";
 import { Pagination } from "../../../Utils/Pagination";
 import "bootstrap/dist/css/bootstrap.min.css"; // Make sure this is loaded once globally
 import 'bootstrap/dist/js/bootstrap.bundle.min.js';
 import { useNavigate } from "react-router-dom";
-import { getAllVisitorTypeApi, getVisitorTypeApi, deleteVisitorTypeApi } from "../../../Api/VisitorTypeMasterApi";
-import { Edit, Delete } from "@material-ui/icons";
 
-const VisitorType = () => {
+const UserMaster = () => {
     const headerCellStyle = {
         backgroundColor: "#8b5c7e",
         color: "#fff",
@@ -15,54 +13,12 @@ const VisitorType = () => {
     const navigate = useNavigate();
     const [currentPage, setCurrentPage] = useState(1);
     const [itemsPerPage] = useState(10);
-    const [allVisitors, setAllVisitors] = useState([]); // Dummy empty state
-    const [searchData, setSearchData] = useState("");
+    const [allVisitors] = useState([]); // Dummy empty state
+    const [showModal, setShowModal] = useState(false);
 
     const handleNavigate = () => {
-        navigate("/addVisitorType");
+        navigate("/addUserMaster");
     };
-
-    useEffect(() => {
-        getAllVisitorsType();
-    }, [currentPage, itemsPerPage]);
-
-    const getAllVisitorsType = async () => {
-        const data = await getAllVisitorTypeApi(navigate);
-        console.log(data)
-        setAllVisitors(data)
-    }
-
-    const getVisitorsTypeData = (visitorId) => {
-        navigate('/addVisitorType', { state: { visitorId } });
-    };
-
-    const DeleteVisitiorTypeData = async (visitorId) => {
-        const data = await deleteVisitorTypeApi(visitorId, navigate);
-        console.log(data)
-        getAllVisitorsType()
-    }
-
-    const handleSearch = (e) => {
-        const searchDataValue = e.target.value.toLowerCase();
-        setSearchData(searchDataValue);
-
-        if (searchDataValue.trim() === "") {
-            getAllVisitorsType();
-        } else {
-            const filteredData = allVisitors.filter(
-                (visitors) =>
-                    visitors.VisitorCode.toLowerCase().includes(searchDataValue) ||
-                    visitors.VisitorTypeName.toLowerCase().includes(searchDataValue)
-
-            );
-            setAllVisitors(filteredData);
-            setCurrentPage(1);
-        }
-    };
-
-    const indexOfLastItem = currentPage * itemsPerPage;
-    const indexOfFirstItem = indexOfLastItem - itemsPerPage;
-    const currentItems = allVisitors.slice(indexOfFirstItem, indexOfLastItem);
 
     return (
         <>
@@ -75,7 +31,7 @@ const VisitorType = () => {
                                     <div className="card-header m-3">
                                         <div className="row">
                                             <div className="col-lg-10">
-                                                <h3>Visitor Type Master</h3>
+                                                <h3>User Master</h3>
                                             </div>
                                             <div className="col-lg-2 d-flex justify-content-end">
                                                 {/* <Button onClick={handleNavigate}  style={headerCellStyle}>
@@ -97,7 +53,7 @@ const VisitorType = () => {
                                         <div className="row">
                                             <div className="col-lg-3 col-md-3 d-flex justify-content-center justify-content-lg-start">
                                                 <h6 className="mt-2">Show</h6>&nbsp;&nbsp;
-                                                <select className="form-select w-auto" style={{ height: "33px" }}>
+                                                <select className="form-select w-auto" style={{ height: "35px" }}>
                                                     <option value="10">10</option>
                                                     <option value="50">50</option>
                                                     <option value="100">100</option>
@@ -109,55 +65,38 @@ const VisitorType = () => {
                                             <div className="col-lg-6 col-md-6"></div>
 
                                             <div className="col-lg-3 col-md-3 d-flex justify-content-lg-end mt-lg-0 mt-md-0 mt-3">
-                                                <input className="form-control" placeholder="Search here" value={searchData}
-                                                    onChange={handleSearch} />
+                                                <input className="form-control" placeholder="Search here" />
                                             </div>
                                         </div>
+
                                         <br />
+
                                         <Table striped hover responsive className="border text-left">
                                             <thead>
                                                 <tr>
                                                     <th style={headerCellStyle}>Sr.No</th>
-                                                    <th style={headerCellStyle}>Visitor Type Code</th>
-                                                    <th style={headerCellStyle}>Visitor Type Name</th>
+                                                    <th style={headerCellStyle}>Username</th>
+                                                    <th style={headerCellStyle}>Employee</th>
+                                                    <th style={headerCellStyle}>Role</th>
                                                     <th style={headerCellStyle}>Status</th>
                                                     <th style={{ ...headerCellStyle, textAlign: "center" }}>Action</th>
                                                 </tr>
                                             </thead>
                                             <tbody>
-                                                {currentItems.map((data, index) => (
-                                                    <tr key={data.Id}>
-                                                        <td>
-                                                            {(currentPage - 1) * itemsPerPage + index + 1}
-                                                        </td>
-                                                        <td>{data.VisitorCode}</td>
-                                                        <td>{data.VisitorTypeName}</td>
-                                                        <td>{data.IsActive === true ? "Active" : "Inactive"}</td>
-                                                        <td>
-                                                            <div className="d-flex ">
-                                                                <Edit
-                                                                    className="text-success mr-2"
-                                                                    type="button"
-                                                                    onClick={() => getVisitorsTypeData(data.Id)}
-
-                                                                />
-                                                                <Delete
-                                                                    className="text-danger"
-                                                                    type="button"
-                                                                    onClick={() => DeleteVisitiorTypeData(data.Id)}
-
-                                                                /> </div>
-                                                        </td>
-                                                    </tr>
-                                                ))}
+                                                <tr>
+                                                    <td>1</td>
+                                                    <td>abc</td>
+                                                    <td>abcdfsd</td>
+                                                    <td>admin</td>
+                                                    <td>Active</td>
+                                                    <td className="text-center">Edit</td>
+                                                </tr>
                                             </tbody>
                                         </Table>
 
                                         <div className="row mt-4 mt-xl-3">
                                             <div className="col-lg-4 col-md-4 col-12">
-                                                <h6 className="text-lg-start text-center"> Showing {indexOfFirstItem + 1} to{" "}
-                                                    {Math.min(indexOfLastItem, allVisitors.length)} of{" "}
-                                                    {allVisitors.length} entries</h6>
+                                                <h6 className="text-lg-start text-center">entries</h6>
                                             </div>
                                             <div className="col-lg-4 col-md-4 col-12"></div>
                                             <div className="col-lg-4 col-md-4 col-12 mt-3 mt-lg-0 mt-md-0">
@@ -180,4 +119,4 @@ const VisitorType = () => {
     );
 };
 
-export default VisitorType;
+export default UserMaster;

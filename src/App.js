@@ -11,9 +11,9 @@ import "../node_modules/bootstrap/dist/js/bootstrap.min.js";
 // import "datatables.net-responsive-dt/css/responsive.dataTables.min.css";
 // import "datatables.net-responsive";
 
-import Login from './Components/Pages/Login';
-import Registration from './Components/Pages/Registration';
-import Sidebar from './Components/Pages/Sidebar';
+import Login from './Components/Pages/Login/Login.js';
+import Registration from './Components/Pages/Login/Registration.js';
+import Sidebar from './Components/Layouts/Sidebar.js';
 
 
 const App = (props) => {
