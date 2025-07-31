@@ -43,10 +43,15 @@ import { Nav } from 'react-bootstrap'
 
 const Sidebar = () => {
     const [isOpen, setIsOpen] = useState(false);
+    const [isVisitor, setIsVisitor] = useState(false);
 
     const toggleSubmenu = () => {
         setIsOpen(!isOpen);
     };
+    const toggleVisitor = () => {
+        setIsVisitor(!isVisitor);
+    };
+
     return (
         <>
             <section id="container">
@@ -291,6 +296,19 @@ const Sidebar = () => {
                                             <li><NavLink to="/employeeMaster">Employee Master</NavLink></li>
                                             <li><NavLink to="/userMaster">User Master</NavLink></li>
                                             <li><NavLink to="/roleMaster">Role Master</NavLink></li>
+                                        </ul>
+                                    )}
+                                </li>
+                                <li className={`sub-menu ${isVisitor ? 'active' : ''}`}>
+                                    <div onClick={toggleVisitor} style={{ cursor: 'pointer' }}>
+                                        <i className="fa fa-book"></i>
+                                        <span className="ms-2">Visitors</span>
+                                    </div>
+
+                                    {isVisitor && (
+                                        <ul className="sub">
+                                            <li><NavLink to="/VisitorType">Visitor Form</NavLink></li>
+
                                         </ul>
                                     )}
                                 </li>

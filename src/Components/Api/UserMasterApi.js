@@ -6,17 +6,19 @@ import 'react-toastify/dist/ReactToastify.css';
 import ErrorHandler from "../ErrorHandler/ErrorHandler";
 
 
-export const AddDepartmentApi = (departmentCode, departmentName, departmentId, navigate) => {
+export const AddUserApi = (username, employeeName, role, uId, navigate) => {
     const userId = localStorage.getItem('userId');
     const data = {
         userId: userId,
-        departmentCode: departmentCode,
-        departmentName: departmentName,
+        um_user_name: username,
+        um_roleid: role.value,
+        employeeName: employeeName.value,
+        um_isactive: "1"
     };
-    if (departmentId !== null && departmentId !== "") {
-        data.id = departmentId;
+    if (uId !== null && uId !== "") {
+        data.um_id = uId;
     }
-    const url = 'DepartmentMaster/Insert';
+    const url = 'UserMaster/Insert';
     return apiClient({
         method: 'post',
         url: UrlData + url,
@@ -25,10 +27,10 @@ export const AddDepartmentApi = (departmentCode, departmentName, departmentId, n
         .then((response) => {
             console.log('API response:', response);
             // toast.success("Visitor Type added successfully!");
-            if (data.id) {
-                toast.success("Department updated successfully!");
+            if (data.um_id) {
+                toast.success("User updated successfully!");
             } else {
-                toast.success("Department added successfully!");
+                toast.success("User added successfully!");
             }
             const token1 = response.data.outcome.tokens;
             Cookies.set("UserCredential", token1, { expires: 7 });
@@ -51,12 +53,12 @@ export const AddDepartmentApi = (departmentCode, departmentName, departmentId, n
         });
 };
 
-export const getAllDepartmentApi = (navigate) => {
+export const getAllUserApi = (navigate) => {
     const userId = localStorage.getItem('userId');
     const params = {
-        userId: userId,
+        UserId: userId,
     };
-    const url = 'DepartmentMaster/GetAll';
+    const url = 'UserMaster/GetAll';
     return apiClient({
         method: 'get',
         url: UrlData + url,
@@ -86,14 +88,14 @@ export const getAllDepartmentApi = (navigate) => {
         });
 };
 
-export const getDepartmentApi = (departmentId, navigate) => {
+export const getUserApi = (uId, navigate) => {
     const userId = localStorage.getItem('userId');
-    console.log(departmentId)
+    console.log(uId)
     const params = {
         userId: userId,
-        Id: departmentId,
+        um_id: uId,
     };
-    const url = 'DepartmentMaster/Get';
+    const url = 'UserMaster/Get';
     return apiClient({
         method: 'get',
         url: UrlData + url,
@@ -123,13 +125,13 @@ export const getDepartmentApi = (departmentId, navigate) => {
         });
 };
 
-export const deleteDepartmentApi = (departmentId, navigate) => {
+export const deleteUserApi = (uId, navigate) => {
     const userId = localStorage.getItem('userId');
     const data = {
         userId: userId,
-        id: departmentId,
+        um_id: uId,
     };
-    const url = 'DepartmentMaster/Delete';
+    const url = 'UserMaster/Delete';
     return apiClient({
         method: 'post',
         url: UrlData + url,
@@ -137,7 +139,7 @@ export const deleteDepartmentApi = (departmentId, navigate) => {
     })
         .then((response) => {
             console.log('delete API response:', response.data);
-            toast.success("Department Deleted Successfully!")
+            toast.success("User Deleted Successfully!")
             const token1 = response.data.outcome.tokens;
             Cookies.set("UserCredential", token1, { expires: 7 });
             return response.data.data;

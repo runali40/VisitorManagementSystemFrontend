@@ -1,9 +1,11 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Table, Modal, Button, Form, Row, Col } from "react-bootstrap";
 import { Pagination } from "../../../Utils/Pagination";
 import "bootstrap/dist/css/bootstrap.min.css"; // Make sure this is loaded once globally
 import 'bootstrap/dist/js/bootstrap.bundle.min.js';
 import { useNavigate } from "react-router-dom";
+import { deleteEmployeeApi, getAllEmployeeApi } from "../../../Api/EmployeeMasterApi";
+import { Delete, Edit } from "@material-ui/icons";
 
 const EmployeeMaster = () => {
     const headerCellStyle = {
@@ -13,19 +15,50 @@ const EmployeeMaster = () => {
     const navigate = useNavigate();
     const [currentPage, setCurrentPage] = useState(1);
     const [itemsPerPage] = useState(10);
-    const [allVisitors] = useState([]); // Dummy empty state
-    const [showModal, setShowModal] = useState(false);
+    const [allEmployee, setAllEmployee] = useState([]); // Dummy empty state
+    const [searchData, setSearchData] = useState("")
 
-    const handleShow = () => {
-        setShowModal(true);
+    useEffect(() => {
+        getAllEmployee();
+    }, [currentPage, itemsPerPage]);
+
+    const getAllEmployee = async () => {
+        const data = await getAllEmployeeApi(navigate);
+        console.log(data)
+        setAllEmployee(data)
+    }
+
+    const getEmployeeData = (employeeId) => {
+        navigate('/addEmployeeMaster', { state: { employeeId } });
     };
 
-    const handleClose = () => {
-        setShowModal(false);
+    const DeleteEmployeeData = async (employeeId) => {
+        const data = await deleteEmployeeApi(employeeId, navigate);
+        console.log(data)
+        getAllEmployee()
+    }
+
+    const handleSearch = (e) => {
+        const searchDataValue = e.target.value.toLowerCase();
+        setSearchData(searchDataValue);
+
+        if (searchDataValue.trim() === "") {
+            getAllEmployee();
+        } else {
+            const filteredData = allEmployee.filter(
+                (employee) =>
+                    employee.EmployeeCode.toLowerCase().includes(searchDataValue) ||
+                    employee.EmployeeName.toLowerCase().includes(searchDataValue)
+
+            );
+            setAllEmployee(filteredData);
+            setCurrentPage(1);
+        }
     };
-      const handleNavigate = () => {
-    navigate("/addEmployeeMaster");
-  };
+
+    const indexOfLastItem = currentPage * itemsPerPage;
+    const indexOfFirstItem = indexOfLastItem - itemsPerPage;
+    const currentItems = allEmployee.slice(indexOfFirstItem, indexOfLastItem);
 
     return (
         <>
@@ -48,7 +81,7 @@ const EmployeeMaster = () => {
                                                     className="btn btn-md text-light"
                                                     type="button"
                                                     style={{ backgroundColor: "#8b5c7e" }}
-                                                    onClick={handleNavigate}
+                                                    onClick={() => navigate("/addEmployeeMaster")}
                                                 >
                                                     Add
                                                 </button>
@@ -72,7 +105,8 @@ const EmployeeMaster = () => {
                                             <div className="col-lg-6 col-md-6"></div>
 
                                             <div className="col-lg-3 col-md-3 d-flex justify-content-lg-end mt-lg-0 mt-md-0 mt-3">
-                                                <input className="form-control" placeholder="Search here" />
+                                                <input className="form-control" placeholder="Search here" value={searchData}
+                                                    onChange={handleSearch} />
                                             </div>
                                         </div>
 
@@ -92,29 +126,49 @@ const EmployeeMaster = () => {
                                                 </tr>
                                             </thead>
                                             <tbody>
-                                                <tr>
-                                                    <td>1</td>
-                                                    <td>453</td>
-                                                    <td>abc</td>
-                                                    <td>abc@gmail.com</td>
-                                                    <td>94534</td>
-                                                    <td>IT</td>
-                                                    <td>Active</td>
-                                                    <td className="text-center">Edit</td>
-                                                </tr>
+                                                {currentItems.map((data, index) => (
+                                                    <tr key={data.Id}>
+                                                        <td>
+                                                            {(currentPage - 1) * itemsPerPage + index + 1}
+                                                        </td>
+                                                        <td>{data.EmployeeCode}</td>
+                                                        <td>{data.EmployeeName}</td>
+                                                        <td>{data.Email}</td>
+                                                        <td>{data.MobileNo}</td>
+                                                        <td>{data.DepartmentName}</td>
+                                                        <td>{data.IsActive === true ? "Active" : "Inactive"}</td>
+                                                        <td>
+                                                            <div className="d-flex ">
+                                                                <Edit
+                                                                    className="text-success mr-2"
+                                                                    type="button"
+                                                                    onClick={() => getEmployeeData(data.Id)}
+
+                                                                />
+                                                                <Delete
+                                                                    className="text-danger"
+                                                                    type="button"
+                                                                    onClick={() => DeleteEmployeeData(data.Id)}
+
+                                                                /> </div>
+                                                        </td>
+                                                    </tr>
+                                                ))}
                                             </tbody>
                                         </Table>
 
                                         <div className="row mt-4 mt-xl-3">
                                             <div className="col-lg-4 col-md-4 col-12">
-                                                <h6 className="text-lg-start text-center">entries</h6>
+                                                <h6 className="text-lg-start text-center"> Showing {indexOfFirstItem + 1} to{" "}
+                                                    {Math.min(indexOfLastItem, allEmployee.length)} of{" "}
+                                                    {allEmployee.length} entries</h6>
                                             </div>
                                             <div className="col-lg-4 col-md-4 col-12"></div>
                                             <div className="col-lg-4 col-md-4 col-12 mt-3 mt-lg-0 mt-md-0">
                                                 <Pagination
                                                     currentPage={currentPage}
                                                     setCurrentPage={setCurrentPage}
-                                                    allData={allVisitors}
+                                                    allData={allEmployee}
                                                     itemsPerPage={itemsPerPage}
                                                 />
                                             </div>

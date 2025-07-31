@@ -1,9 +1,11 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Table, Modal, Button, Form, Row, Col } from "react-bootstrap";
 import { Pagination } from "../../../Utils/Pagination";
 import "bootstrap/dist/css/bootstrap.min.css"; // Make sure this is loaded once globally
 import 'bootstrap/dist/js/bootstrap.bundle.min.js';
 import { useNavigate } from "react-router-dom";
+import { deleteUserApi, getAllUserApi } from "../../../Api/UserMasterApi";
+import { Delete, Edit } from "@material-ui/icons";
 
 const UserMaster = () => {
     const headerCellStyle = {
@@ -13,13 +15,50 @@ const UserMaster = () => {
     const navigate = useNavigate();
     const [currentPage, setCurrentPage] = useState(1);
     const [itemsPerPage] = useState(10);
-    const [allVisitors] = useState([]); // Dummy empty state
-    const [showModal, setShowModal] = useState(false);
+    const [searchData, setSearchData] = useState("")
+    const [allUsers, setAllUsers] = useState([]); // Dummy empty state
 
-    const handleNavigate = () => {
-        navigate("/addUserMaster");
+    useEffect(() => {
+        getAllUsers();
+    }, [currentPage, itemsPerPage]);
+
+    const getAllUsers = async () => {
+        const data = await getAllUserApi(navigate);
+        console.log(data)
+        setAllUsers(data)
+    }
+
+    const getUserData = (uId) => {
+        navigate('/addUserMaster', { state: { uId } });
     };
 
+    const DeleteUserData = async (employeeId) => {
+        const data = await deleteUserApi(employeeId, navigate);
+        console.log(data)
+        getAllUsers()
+    }
+
+    const handleSearch = (e) => {
+        const searchDataValue = e.target.value.toLowerCase();
+        setSearchData(searchDataValue);
+
+        if (searchDataValue.trim() === "") {
+            getAllUsers();
+        } else {
+            // const filteredData = allUsers.filter(
+            //     (user) =>
+            //         user.userCode.toLowerCase().includes(searchDataValue) ||
+            //         user.EmployeeName.toLowerCase().includes(searchDataValue)
+
+            // );
+            // setAllUsers(filteredData);
+            setCurrentPage(1);
+        }
+    };
+
+    const indexOfLastItem = currentPage * itemsPerPage;
+    const indexOfFirstItem = indexOfLastItem - itemsPerPage;
+    const currentItems = allUsers.slice(indexOfFirstItem, indexOfLastItem);
     return (
         <>
             <section id="main-content">
@@ -41,7 +80,7 @@ const UserMaster = () => {
                                                     className="btn btn-md text-light"
                                                     type="button"
                                                     style={{ backgroundColor: "#8b5c7e" }}
-                                                    onClick={handleNavigate}
+                                                    onClick={() => navigate("/addUserMaster")}
                                                 >
                                                     Add
                                                 </button>
@@ -65,7 +104,8 @@ const UserMaster = () => {
                                             <div className="col-lg-6 col-md-6"></div>
 
                                             <div className="col-lg-3 col-md-3 d-flex justify-content-lg-end mt-lg-0 mt-md-0 mt-3">
-                                                <input className="form-control" placeholder="Search here" />
+                                                <input className="form-control" placeholder="Search here" value={searchData}
+                                                    onChange={handleSearch} />
                                             </div>
                                         </div>
 
@@ -83,27 +123,47 @@ const UserMaster = () => {
                                                 </tr>
                                             </thead>
                                             <tbody>
-                                                <tr>
-                                                    <td>1</td>
-                                                    <td>abc</td>
-                                                    <td>abcdfsd</td>
-                                                    <td>admin</td>
-                                                    <td>Active</td>
-                                                    <td className="text-center">Edit</td>
-                                                </tr>
+                                                {currentItems.map((data, index) => (
+                                                    <tr key={data.Id}>
+                                                        <td>
+                                                            {(currentPage - 1) * itemsPerPage + index + 1}
+                                                        </td>
+                                                        <td>{data.um_user_name}</td>
+                                                        <td>{data.EmployeeName}</td>
+                                                        <td>{data.r_rolename}</td>
+                                                        <td>{data.um_isactive === "1" ? "Active" : "Inactive"}</td>
+                                                        <td>
+                                                            <div className="d-flex ">
+                                                                <Edit
+                                                                    className="text-success mr-2"
+                                                                    type="button"
+                                                                    onClick={() => getUserData(data.um_id)}
+
+                                                                />
+                                                                <Delete
+                                                                    className="text-danger"
+                                                                    type="button"
+                                                                    onClick={() => DeleteUserData(data.um_id)}
+
+                                                                /> </div>
+                                                        </td>
+                                                    </tr>
+                                                ))}
                                             </tbody>
                                         </Table>
 
                                         <div className="row mt-4 mt-xl-3">
                                             <div className="col-lg-4 col-md-4 col-12">
-                                                <h6 className="text-lg-start text-center">entries</h6>
+                                                <h6 className="text-lg-start text-center"> Showing {indexOfFirstItem + 1} to{" "}
+                                                    {Math.min(indexOfLastItem, allUsers.length)} of{" "}
+                                                    {allUsers.length} entries</h6>
                                             </div>
                                             <div className="col-lg-4 col-md-4 col-12"></div>
                                             <div className="col-lg-4 col-md-4 col-12 mt-3 mt-lg-0 mt-md-0">
                                                 <Pagination
                                                     currentPage={currentPage}
                                                     setCurrentPage={setCurrentPage}
-                                                    allData={allVisitors}
+                                                    allData={allUsers}
                                                     itemsPerPage={itemsPerPage}
                                                 />
                                             </div>

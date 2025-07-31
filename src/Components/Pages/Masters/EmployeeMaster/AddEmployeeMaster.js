@@ -1,33 +1,71 @@
-import React, { useState } from "react";
-import { Table, Modal, Button, Form, Row, Col } from "react-bootstrap";
-import { Pagination } from "../../../Utils/Pagination";
-import { useNavigate } from "react-router-dom";
+import React, { useState, useEffect } from "react";
+import { useNavigate, useLocation } from "react-router-dom";
 import Select from "react-select";
+import { AddEmployeeApi, getEmployeeApi } from "../../../Api/EmployeeMasterApi";
+import { getAllDepartmentApi } from "../../../Api/DepartmentMasterApi";
 
 const AddEmployeeMaster = () => {
     const navigate = useNavigate();
-    const headerCellStyle = {
-        backgroundColor: "#8b5c7e",
-        color: "#fff",
-    };
+    const location = useLocation();
+    const { employeeId } = location.state || {};
+    console.log(employeeId, "employeeId")
 
-    const [currentPage, setCurrentPage] = useState(1);
-    const [itemsPerPage] = useState(10);
-    const [allVisitors] = useState([]); // Dummy empty state
-    const [showModal, setShowModal] = useState(false);
     const [employeeCode, setEmployeeCode] = useState("")
     const [employeeName, setEmployeeName] = useState("")
     const [email, setEmail] = useState("")
     const [mobileNo, setMobileNo] = useState("")
     const [department, setDepartment] = useState("")
+    const [allDepartment, setAllDepartment] = useState([])
 
-    const handleShow = () => {
-        setShowModal(true);
-    };
+    useEffect(() => {
+        if (employeeId != null) { // covers both null and undefined
+            getEmployeeData();
+        }
+    }, [employeeId]);
 
-    const handleClose = () => {
-        setShowModal(false);
-    };
+    useEffect(() => {
+        const fetchData = async () => {
+
+            await getAllDepartment();
+        };
+        fetchData();
+    }, []);
+
+    const getAllDepartment = async () => {
+        const data = await getAllDepartmentApi(navigate);
+        console.log(data)
+        const options = data.map((data) => ({
+            value: data.Id,
+            label: `${data.DepartmentName}`,
+        }));
+        setAllDepartment(options);
+    }
+
+    const handleDepartment = (selected) => {
+        const selectedValue = selected;
+        setDepartment(selectedValue);
+        console.log(selectedValue, "selected value");
+    }
+
+    const AddEmployee = async () => {
+        const data = await AddEmployeeApi(employeeCode, employeeName, email, mobileNo, department, employeeId, navigate);
+        console.log(data)
+        navigate("/employeeMaster")
+    }
+
+    const getEmployeeData = async () => {
+
+        const data = await getEmployeeApi(employeeId, navigate);
+        console.log(data)
+        setEmployeeCode(data.EmployeeCode)
+        setEmployeeName(data.EmployeeName)
+        setEmail(data.Email)
+        setMobileNo(data.MobileNo)
+        setDepartment({
+            value: data.DepartmentId,
+            label: `${data.DepartmentName}`,
+        })
+    }
 
     return (
         <>
@@ -43,7 +81,7 @@ const AddEmployeeMaster = () => {
                                                 <h3>Add Employee</h3>
                                             </div>
                                             <div className="col-lg-2 d-flex justify-content-end">
-                                               
+
                                                 <button
                                                     className="btn btn-md text-light"
                                                     type="button"
@@ -97,7 +135,7 @@ const AddEmployeeMaster = () => {
                                                 </div>
                                             </div>
                                         </div>
-                                          <div className="row mt-lg-1">
+                                        <div className="row mt-lg-1">
                                             <div className="col-xs-12 col-sm-12 col-md-6 col-lg-6 mt-2 mt-lg-0">
                                                 <div className="form-group form-group-sm">
                                                     <label className="control-label fw-bold">
@@ -130,7 +168,7 @@ const AddEmployeeMaster = () => {
                                                 </div>
                                             </div>
                                         </div>
-                                          <div className="row mt-lg-1">
+                                        <div className="row mt-lg-1">
                                             <div className="col-xs-12 col-sm-12 col-md-6 col-lg-6 mt-2 mt-lg-0">
                                                 <div className="form-group form-group-sm">
                                                     <label className="control-label fw-bold">
@@ -140,8 +178,8 @@ const AddEmployeeMaster = () => {
                                                     <Select
                                                         className="mt-3"
                                                         value={department}
-                                                        // onChange={handleDutyName}
-                                                        // options={allDutyName}
+                                                        onChange={handleDepartment}
+                                                        options={allDepartment}
                                                         placeholder="Select Department"
 
                                                     />
@@ -157,8 +195,7 @@ const AddEmployeeMaster = () => {
                                                     type="button"
                                                     style={{ backgroundColor: "#8b5c7e" }}
                                                     onClick={() => {
-                                                        // addRoleMaster();
-                                                        // editDesignation();
+                                                        AddEmployee();
                                                     }}
                                                 >
                                                     Save

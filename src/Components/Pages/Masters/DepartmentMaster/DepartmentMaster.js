@@ -18,10 +18,6 @@ const DepartmentMaster = () => {
     const [allDeparment, setAllDepartment] = useState([]); // Dummy empty state
     const [searchData, setSearchData] = useState("");
 
-    const handleNavigate = () => {
-        navigate("/addDepartmentMaster");
-    };
-
     useEffect(() => {
         getAllDepartment();
     }, [currentPage, itemsPerPage]);
@@ -49,13 +45,13 @@ const DepartmentMaster = () => {
         if (searchDataValue.trim() === "") {
             getAllDepartment();
         } else {
-            //   const filteredData = allVisitors.filter(
-            //       (department) =>
-            //           department.VisitorCode.toLowerCase().includes(searchDataValue) ||
-            //           department.VisitorTypeName.toLowerCase().includes(searchDataValue)
+            const filteredData = allDeparment.filter(
+                (department) =>
+                    department.DepartmentCode.toLowerCase().includes(searchDataValue) ||
+                    department.DepartmentName.toLowerCase().includes(searchDataValue)
 
-            //   );
-            //   setAllDepartment(filteredData);
+            );
+            setAllDepartment(filteredData);
             setCurrentPage(1);
         }
     };
@@ -85,7 +81,7 @@ const DepartmentMaster = () => {
                                                     className="btn btn-md text-light"
                                                     type="button"
                                                     style={{ backgroundColor: "#8b5c7e" }}
-                                                    onClick={handleNavigate}
+                                                    onClick={()=>navigate("/addDepartmentMaster")}
                                                 >
                                                     Add
                                                 </button>
@@ -109,7 +105,8 @@ const DepartmentMaster = () => {
                                             <div className="col-lg-6 col-md-6"></div>
 
                                             <div className="col-lg-3 col-md-3 d-flex justify-content-lg-end mt-lg-0 mt-md-0 mt-3">
-                                                <input className="form-control" placeholder="Search here" />
+                                                <input className="form-control" placeholder="Search here" value={searchData}
+                                                    onChange={handleSearch} />
                                             </div>
                                         </div>
 
@@ -139,13 +136,13 @@ const DepartmentMaster = () => {
                                                                 <Edit
                                                                     className="text-success mr-2"
                                                                     type="button"
-                                                                   onClick={() => getDepartmentData(data.Id)}
+                                                                    onClick={() => getDepartmentData(data.Id)}
 
                                                                 />
                                                                 <Delete
                                                                     className="text-danger"
                                                                     type="button"
-                                                                   onClick={() => DeleteDepartmentData(data.Id)}
+                                                                    onClick={() => DeleteDepartmentData(data.Id)}
 
                                                                 /> </div>
                                                         </td>
@@ -156,7 +153,9 @@ const DepartmentMaster = () => {
 
                                         <div className="row mt-4 mt-xl-3">
                                             <div className="col-lg-4 col-md-4 col-12">
-                                                <h6 className="text-lg-start text-center">entries</h6>
+                                                <h6 className="text-lg-start text-center"> Showing {indexOfFirstItem + 1} to{" "}
+                                                    {Math.min(indexOfLastItem, allDeparment.length)} of{" "}
+                                                    {allDeparment.length} entries</h6>
                                             </div>
                                             <div className="col-lg-4 col-md-4 col-12"></div>
                                             <div className="col-lg-4 col-md-4 col-12 mt-3 mt-lg-0 mt-md-0">

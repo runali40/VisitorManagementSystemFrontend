@@ -1,31 +1,69 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Table, Modal, Button, Form, Row, Col } from "react-bootstrap";
 import { Pagination } from "../../../Utils/Pagination";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 import Select from "react-select";
+import { AddUserApi, getUserApi } from "../../../Api/UserMasterApi";
+import { getAllEmployeeApi } from "../../../Api/EmployeeMasterApi";
 
 const AddUserMaster = () => {
     const navigate = useNavigate();
-    const headerCellStyle = {
-        backgroundColor: "#8b5c7e",
-        color: "#fff",
-    };
+    const location = useLocation();
+    const { uId } = location.state || {};
+    console.log(uId, "uId")
 
-    const [currentPage, setCurrentPage] = useState(1);
-    const [itemsPerPage] = useState(10);
-    const [allVisitors] = useState([]); // Dummy empty state
-    const [showModal, setShowModal] = useState(false);
     const [username, setUsername] = useState("")
     const [employeeName, setEmployeeName] = useState("")
+    const [allEmployee, setAllEmployee] = useState([])
     const [role, setRole] = useState("")
 
-    const handleShow = () => {
-        setShowModal(true);
-    };
+    useEffect(() => {
+        if (uId != null) { // covers both null and undefined
+            getUserData();
+        }
+    }, [uId]);
 
-    const handleClose = () => {
-        setShowModal(false);
-    };
+    useEffect(() => {
+        const fetchData = async () => {
+
+            await getAllEmployee();
+        };
+        fetchData();
+    }, []);
+
+    const getAllEmployee = async () => {
+        const data = await getAllEmployeeApi(navigate);
+        console.log(data)
+        const options = data.map((data) => ({
+            value: data.Id,
+            label: `${data.EmployeeName}`,
+        }));
+        setAllEmployee(options);
+    }
+
+    const handleEmployee = (selected) => {
+        const selectedValue = selected;
+        setEmployeeName(selectedValue);
+        console.log(selectedValue, "selected value");
+    }
+
+    const AddUser = async () => {
+        const data = await AddUserApi(username, employeeName, role, uId, navigate);
+        console.log(data)
+        navigate("/userMaster")
+    }
+
+    const getUserData = async () => {
+        const data = await getUserApi(uId, navigate);
+        console.log(data)
+        setUsername(data.um_user_name)
+        // setEmail(data.Email)
+        // setMobileNo(data.MobileNo)
+        setEmployeeName({
+            value: data.EmployeeId,
+            label: `${data.EmployeeName}`,
+        })
+    }
 
     return (
         <>
@@ -79,8 +117,8 @@ const AddUserMaster = () => {
                                                     <Select
                                                         className="mt-3"
                                                         value={employeeName}
-                                                        // onChange={handleDutyName}
-                                                        // options={allDutyName}
+                                                        onChange={handleEmployee}
+                                                        options={allEmployee}
                                                         placeholder="Select Employee"
 
                                                     />
@@ -114,8 +152,8 @@ const AddUserMaster = () => {
                                                     type="button"
                                                     style={{ backgroundColor: "#8b5c7e" }}
                                                     onClick={() => {
-                                                        // addRoleMaster();
-                                                        // editDesignation();
+                                                        AddUser();
+
                                                     }}
                                                 >
                                                     Save

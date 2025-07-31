@@ -1,6 +1,4 @@
 import React, { useState, useEffect } from "react";
-import { Table, Modal, Button, Form, Row, Col } from "react-bootstrap";
-import { Pagination } from "../../../Utils/Pagination";
 import { useNavigate, useLocation } from "react-router-dom";
 import { AddDepartmentApi, getDepartmentApi } from "../../../Api/DepartmentMasterApi";
 
@@ -26,6 +24,7 @@ const AddDepartmentMaster = () => {
             getDepartmentData();
         }
     }, [departmentId]);
+
     const AddDepartment = async () => {
         const data = await AddDepartmentApi(departmentCode, departmentName, departmentId, navigate);
         console.log(data)
