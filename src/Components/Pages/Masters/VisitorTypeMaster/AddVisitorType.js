@@ -68,7 +68,7 @@ const AddVisitorType = () => {
                                                     <span className="text-danger fw-bold">*</span>
                                                     <input
                                                         type="text"
-                                                        id="dutyName"
+                                                        id="visitorTypeCode"
                                                         className="form-control mt-3"
                                                         placeholder="Enter Visitor Type Code"
                                                         value={visitorTypeCode}
@@ -83,9 +83,9 @@ const AddVisitorType = () => {
                                                     </label>{" "}
                                                     <input
                                                         type="text"
-                                                        id="dutyName"
+                                                        id="visitorTypeName"
                                                         className="form-control mt-3"
-                                                        placeholder="Enter Visitor Type Code"
+                                                        placeholder="Enter Visitor Type Name"
                                                         value={visitorTypeName}
                                                         onChange={(e) => setVisitorTypeName(e.target.value)}
                                                     />

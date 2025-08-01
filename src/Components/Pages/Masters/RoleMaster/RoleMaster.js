@@ -1,14 +1,13 @@
 import React, { useState, useEffect } from "react";
-import { Table, Modal, Button, Form, Row, Col } from "react-bootstrap";
-import { Pagination } from "../../Utils/Pagination";
+import { Table } from "react-bootstrap";
+import { Pagination } from "../../../Utils/Pagination";
 import "bootstrap/dist/css/bootstrap.min.css"; // Make sure this is loaded once globally
 import 'bootstrap/dist/js/bootstrap.bundle.min.js';
 import { useNavigate } from "react-router-dom";
+import { deleteRoleApi, getAllRoleApi } from "../../../Api/RoleMasterApi";
 import { Delete, Edit } from "@material-ui/icons";
-import { deleteEmployeeApi, getAllEmployeeApi } from "../../Api/EmployeeMasterApi";
-import { deleteVisitorApi, getAllVisitorApi } from "../../Api/VisitorFormApi";
 
-const Visitor = () => {
+const RoleMaster = () => {
     const headerCellStyle = {
         backgroundColor: "#8b5c7e",
         color: "#fff",
@@ -16,27 +15,27 @@ const Visitor = () => {
     const navigate = useNavigate();
     const [currentPage, setCurrentPage] = useState(1);
     const [itemsPerPage] = useState(10);
-    const [allVisitors, setAllVisitors] = useState([]); // Dummy empty state
     const [searchData, setSearchData] = useState("")
+    const [allRole, setAllRole] = useState([]); // Dummy empty state
 
     useEffect(() => {
-        getAllVisitor();
+        getAllRole();
     }, [currentPage, itemsPerPage]);
 
-    const getAllVisitor = async () => {
-        const data = await getAllVisitorApi(navigate);
+    const getAllRole = async () => {
+        const data = await getAllRoleApi(navigate);
         console.log(data)
-        setAllVisitors(data)
+        setAllRole(data)
     }
 
-    const getVisitorData = (vId) => {
-        navigate('/visitorForm', { state: { vId } });
+    const GetRoleMaster = (roleId) => {
+        navigate('/addRoleMaster', { state: { roleId } });
     };
 
-    const DeleteVisitorData = async (vId) => {
-        const data = await deleteVisitorApi(vId, navigate);
+    const DeleteRoleData = async (roleId) => {
+        const data = await deleteRoleApi(roleId, navigate);
         console.log(data)
-        getAllVisitor()
+        getAllRole()
     }
 
     const handleSearch = (e) => {
@@ -44,23 +43,21 @@ const Visitor = () => {
         setSearchData(searchDataValue);
 
         if (searchDataValue.trim() === "") {
-            getAllVisitor();
+            getAllRole();
         } else {
-            const filteredData = allVisitors.filter(
-                (employee) =>
-                    employee.EmployeeCode.toLowerCase().includes(searchDataValue) ||
-                    employee.EmployeeName.toLowerCase().includes(searchDataValue)
-
-            );
-            setAllVisitors(filteredData);
+            const filteredData = allRole.filter((user) => {
+                const roleName = user.r_rolename ? user.r_rolename.toLowerCase() : '';
+                const description = user.r_description ? user.r_description.toLowerCase() : '';
+                return roleName.includes(searchDataValue) || description.includes(searchDataValue);
+            });
+            setAllRole(filteredData);
             setCurrentPage(1);
         }
     };
 
     const indexOfLastItem = currentPage * itemsPerPage;
     const indexOfFirstItem = indexOfLastItem - itemsPerPage;
-    const currentItems = allVisitors.slice(indexOfFirstItem, indexOfLastItem);
-
+    const currentItems = allRole.slice(indexOfFirstItem, indexOfLastItem);
     return (
         <>
             <section id="main-content">
@@ -72,14 +69,17 @@ const Visitor = () => {
                                     <div className="card-header m-3">
                                         <div className="row">
                                             <div className="col-lg-10">
-                                                <h3>Visitor Form</h3>
+                                                <h3>Role Master</h3>
                                             </div>
                                             <div className="col-lg-2 d-flex justify-content-end">
+                                                {/* <Button onClick={handleNavigate}  style={headerCellStyle}>
+                                                    Add
+                                                </Button> */}
                                                 <button
                                                     className="btn btn-md text-light"
                                                     type="button"
                                                     style={{ backgroundColor: "#8b5c7e" }}
-                                                    onClick={() => navigate("/visitorForm")}
+                                                    onClick={() => navigate("/addRoleMaster")}
                                                 >
                                                     Add
                                                 </button>
@@ -113,45 +113,66 @@ const Visitor = () => {
                                         <Table striped hover responsive className="border text-left">
                                             <thead>
                                                 <tr>
-                                                    <th style={headerCellStyle}>Sr.No</th>
-                                                    <th style={headerCellStyle}>Full Name</th>
-                                                    <th style={headerCellStyle}>Company Name</th>
-                                                    <th style={headerCellStyle}>Email</th>
-                                                    <th style={headerCellStyle}>Mobile No</th>
-                                                    <th style={headerCellStyle}>Gov Id</th>
-                                                    <th style={headerCellStyle}>Person to Meet</th>
-                                                    <th style={headerCellStyle}>Purpose of Visit</th>
-                                                    <th style={headerCellStyle}>Expected Time</th>
-                                                    <th style={headerCellStyle}>Photo</th>
-                                                    <th style={headerCellStyle}>Status</th>
-                                                    <th style={{ ...headerCellStyle, textAlign: "center" }}>Action</th>
+                                                    <th scope="col" style={headerCellStyle}>
+                                                        Sr.No
+                                                    </th>
+                                                    <th scope="col" style={headerCellStyle}>
+                                                        Role Name
+                                                    </th>
+                                                    <th scope="col" style={headerCellStyle}>
+                                                        Description
+                                                    </th>
+                                                    <th scope="col" style={headerCellStyle}>
+                                                        Menu Name
+                                                    </th>
+                                                    <th scope="col" style={headerCellStyle}>
+                                                        Status
+                                                    </th>
+                                                    <th scope="col" style={headerCellStyle}>
+                                                        Action
+                                                    </th>
                                                 </tr>
                                             </thead>
                                             <tbody>
                                                 {currentItems.map((data, index) => (
-                                                    <tr key={data.Id}>
+                                                    <tr key={data.r_id}>
                                                         <td>
                                                             {(currentPage - 1) * itemsPerPage + index + 1}
                                                         </td>
-                                                        <td>{data.EmployeeCode}</td>
-                                                        <td>{data.EmployeeName}</td>
-                                                        <td>{data.Email}</td>
-                                                        <td>{data.MobileNo}</td>
-                                                        <td>{data.DepartmentName}</td>
-                                                        <td>{data.IsActive === true ? "Active" : "Inactive"}</td>
-                                                        <td>
-                                                            <div className="d-flex ">
-                                                                <Edit
-                                                                    className="text-success mr-2"
-                                                                    type="button"
-                                                                    onClick={() => getVisitorData(data.Id)}
-                                                                />
+                                                        <td>{data.r_rolename}</td>
+                                                        <td>{data.r_description}</td>
 
+                                                        <td>{data.m_menuname}</td>
+                                                        <td>{data.r_isactive}</td>
+                                                        <td>
+                                                            <div className="d-flex"><Edit
+                                                                className="text-success mr-2"
+                                                                type="button"
+
+                                                                style={{
+
+                                                                    ...(data.r_isactive === "Inactive" && {
+                                                                        opacity: 0.5,
+                                                                        cursor: "not-allowed",
+                                                                    }),
+                                                                }}
+                                                                onClick={data.r_isactive === "Inactive" ? null : () => GetRoleMaster(data.r_id)}
+                                                            />
                                                                 <Delete
                                                                     className="text-danger"
                                                                     type="button"
-                                                                    onClick={() => DeleteVisitorData(data.Id)}
+
+
+                                                                    style={{
+                                                                        marginLeft: "0.5rem",
+                                                                        ...(data.r_isactive === "Inactive" && {
+                                                                            opacity: 0.5,
+                                                                            cursor: "not-allowed",
+                                                                        }),
+                                                                    }}
+                                                                    onClick={data.r_isactive === "Inactive" ? null : () => DeleteRoleData(data.r_id)}
                                                                 /> </div>
+
                                                         </td>
                                                     </tr>
                                                 ))}
@@ -161,15 +182,15 @@ const Visitor = () => {
                                         <div className="row mt-4 mt-xl-3">
                                             <div className="col-lg-4 col-md-4 col-12">
                                                 <h6 className="text-lg-start text-center"> Showing {indexOfFirstItem + 1} to{" "}
-                                                    {Math.min(indexOfLastItem, allVisitors.length)} of{" "}
-                                                    {allVisitors.length} entries</h6>
+                                                    {Math.min(indexOfLastItem, allRole.length)} of{" "}
+                                                    {allRole.length} entries</h6>
                                             </div>
                                             <div className="col-lg-4 col-md-4 col-12"></div>
                                             <div className="col-lg-4 col-md-4 col-12 mt-3 mt-lg-0 mt-md-0">
                                                 <Pagination
                                                     currentPage={currentPage}
                                                     setCurrentPage={setCurrentPage}
-                                                    allData={allVisitors}
+                                                    allData={allRole}
                                                     itemsPerPage={itemsPerPage}
                                                 />
                                             </div>
@@ -185,4 +206,4 @@ const Visitor = () => {
     );
 };
 
-export default Visitor;
+export default RoleMaster;

@@ -5,6 +5,7 @@ import { useNavigate, useLocation } from "react-router-dom";
 import Select from "react-select";
 import { AddUserApi, getUserApi } from "../../../Api/UserMasterApi";
 import { getAllEmployeeApi } from "../../../Api/EmployeeMasterApi";
+import { getAllRoleApi } from "../../../Api/RoleMasterApi";
 
 const AddUserMaster = () => {
     const navigate = useNavigate();
@@ -16,6 +17,7 @@ const AddUserMaster = () => {
     const [employeeName, setEmployeeName] = useState("")
     const [allEmployee, setAllEmployee] = useState([])
     const [role, setRole] = useState("")
+    const [allRole, setAllRole] = useState([])
 
     useEffect(() => {
         if (uId != null) { // covers both null and undefined
@@ -27,9 +29,26 @@ const AddUserMaster = () => {
         const fetchData = async () => {
 
             await getAllEmployee();
+            await getAllRole();
         };
         fetchData();
     }, []);
+
+    const getAllRole = async () => {
+        const data = await getAllRoleApi(navigate);
+        console.log(data)
+        const options = data.map((data) => ({
+            value: data.r_id,
+            label: `${data.r_rolename}`,
+        }));
+        setAllRole(options);
+    }
+
+    const handleRole = (selected) => {
+        const selectedValue = selected;
+        setRole(selectedValue);
+        console.log(selectedValue, "selected value");
+    }
 
     const getAllEmployee = async () => {
         const data = await getAllEmployeeApi(navigate);
@@ -135,8 +154,8 @@ const AddUserMaster = () => {
                                                     <Select
                                                         className="mt-3"
                                                         value={role}
-                                                        // onChange={handleDutyName}
-                                                        // options={allDutyName}
+                                                        onChange={handleRole}
+                                                        options={allRole}
                                                         placeholder="Select Role"
 
                                                     />

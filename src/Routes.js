@@ -3,7 +3,6 @@
 
 import { lazy } from 'react';
 
-
 const Registration = lazy(() => import('./Components/Pages/Login/Registration'));
 const VisitorType = lazy(() => import('./Components/Pages/Masters/VisitorTypeMaster/VisitorType'));
 const AddVisitorType = lazy(() => import('./Components/Pages/Masters/VisitorTypeMaster/AddVisitorType'));
@@ -14,6 +13,10 @@ const AddEmployeeMaster = lazy(() => import('./Components/Pages/Masters/Employee
 const Dashboard = lazy(() => import('./Components/Dashboard/Dashboard'));
 const UserMaster = lazy(() => import('./Components/Pages/Masters/UserMaster/UserMaster'));
 const AddUserMaster = lazy(() => import('./Components/Pages/Masters/UserMaster/AddUserMaster'));
+const RoleMaster = lazy(() => import('./Components/Pages/Masters/RoleMaster/RoleMaster'));
+const AddRoleMaster = lazy(() => import('./Components/Pages/Masters/RoleMaster/AddRoleMaster'));
+const Visitor = lazy(() => import('./Components/Pages/Visitor/Visitor'));
+const VisitorForm = lazy(() => import('./Components/Pages/Visitor/VisitorForm'));
 
 const routes = [
   // { path: '/', exact: true, name: 'Login', element: Login },
@@ -29,6 +32,10 @@ const routes = [
   { path: '/addEmployeeMaster', exact: true, name: 'AddEmployeeMaster', element: AddEmployeeMaster },
   { path: '/userMaster', exact: true, name: 'UserMaster', element: UserMaster },
   { path: '/addUserMaster', exact: true, name: 'AddUserMaster', element: AddUserMaster },
+  { path: '/roleMaster', exact: true, name: 'RoleMaster', element: RoleMaster },
+  { path: '/addRoleMaster', exact: true, name: 'AddRoleMaster', element: AddRoleMaster },
+  { path: '/visitor', exact: true, name: 'Visitor', element: Visitor },
+  { path: '/visitorForm', exact: true, name: 'VisitorForm', element: VisitorForm },
 
 ]
 export default routes

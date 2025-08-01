@@ -1,11 +1,12 @@
 import React, { useState, useEffect } from "react";
-import { Table, Modal, Button, Form, Row, Col } from "react-bootstrap";
+import { Table } from "react-bootstrap";
 import { Pagination } from "../../../Utils/Pagination";
 import "bootstrap/dist/css/bootstrap.min.css"; // Make sure this is loaded once globally
 import 'bootstrap/dist/js/bootstrap.bundle.min.js';
 import { useNavigate } from "react-router-dom";
 import { deleteUserApi, getAllUserApi } from "../../../Api/UserMasterApi";
 import { Delete, Edit } from "@material-ui/icons";
+import * as XLSX from "xlsx";
 
 const UserMaster = () => {
     const headerCellStyle = {
@@ -38,6 +39,27 @@ const UserMaster = () => {
         getAllUsers()
     }
 
+    const exportData = (data, filename = "User List.xlsx") => {
+        if (!data || data.length === 0) {
+            alert("No data available to export.");
+            return;
+        }
+
+        // Format data for Excel
+        const formattedData = data.map((item, index) => ({
+            "Sr. No": index + 1, // Generate Sr. No based on index
+            "Username": item.um_user_name,
+            "Employee Name": item.EmployeeName,
+            "Password": `${item.Password}`,
+            // "Chest No.": `${item.chestno}`
+        }));
+
+        const worksheet = XLSX.utils.json_to_sheet(formattedData);
+        const workbook = XLSX.utils.book_new();
+        XLSX.utils.book_append_sheet(workbook, worksheet, "UserList");
+        XLSX.writeFile(workbook, filename);
+    };
+
     const handleSearch = (e) => {
         const searchDataValue = e.target.value.toLowerCase();
         setSearchData(searchDataValue);
@@ -45,13 +67,12 @@ const UserMaster = () => {
         if (searchDataValue.trim() === "") {
             getAllUsers();
         } else {
-            // const filteredData = allUsers.filter(
-            //     (user) =>
-            //         user.userCode.toLowerCase().includes(searchDataValue) ||
-            //         user.EmployeeName.toLowerCase().includes(searchDataValue)
-
-            // );
-            // setAllUsers(filteredData);
+            const filteredData = allUsers.filter((user) => {
+                const userName = user.um_user_name ? user.um_user_name.toLowerCase() : '';
+                const employeeName = user.EmployeeName ? user.EmployeeName.toLowerCase() : '';
+                return userName.includes(searchDataValue) || employeeName.includes(searchDataValue);
+            });
+            setAllUsers(filteredData);
             setCurrentPage(1);
         }
     };
@@ -76,6 +97,15 @@ const UserMaster = () => {
                                                 {/* <Button onClick={handleNavigate}  style={headerCellStyle}>
                                                     Add
                                                 </Button> */}
+                                                <button
+                                                    className="btn btn-md text-light mx-2"
+                                                    type="button"
+                                                    style={{ backgroundColor: "#8b5c7e" }}
+                                                    onClick={() => exportData(allUsers, "User List.xlsx")}
+                                                >
+                                                    Export
+                                                </button>
+
                                                 <button
                                                     className="btn btn-md text-light"
                                                     type="button"

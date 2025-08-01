@@ -2483,13 +2483,10 @@ input.ggg{
     -moz-transition: 0.5s all;
     -ms-transition: 0.5s all;
 }
-.w3layouts-main input[type="submit"]:hover {
+
+.w3layouts-main btn:hover {
 	background:#8b5c7e;
 	transition:0.5s all;
-	-webkit-transition:0.5s all;
-	-o-transition:0.5s all;
-	-moz-transition:0.5s all;
-	-ms-transition:0.5s all;
 }
 .w3layouts-main p a {
     color: #f0bcb4;

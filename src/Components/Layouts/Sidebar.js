@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import { NavLink } from 'react-router-dom'
 import TheContent from './Content.js'
 // import 'bootstrap/dist/css/bootstrap.min.css';
@@ -40,10 +40,22 @@ import "../../assets/js/jquery.nicescroll.js"
 import "../../assets/js/jquery.scrollTo.js"
 import "../../assets/js/scripts.js"
 import { Nav } from 'react-bootstrap'
+import { getAllWebMenuApi } from '../Api/SidebarApi.js'
 
 const Sidebar = () => {
     const [isOpen, setIsOpen] = useState(false);
     const [isVisitor, setIsVisitor] = useState(false);
+    const [sidebarData, setSidebarData] = useState([]);
+    const [openDropdown, setOpenDropdown] = useState(null);
+    const [openSubDropdown, setOpenSubDropdown] = useState(null);
+    const [openDropdowns, setOpenDropdowns] = useState({});
+
+    const toggleDropdown = (id) => {
+        setOpenDropdowns((prev) => ({
+            ...prev,
+            [id]: !prev[id],
+        }));
+    };
 
     const toggleSubmenu = () => {
         setIsOpen(!isOpen);
@@ -51,6 +63,17 @@ const Sidebar = () => {
     const toggleVisitor = () => {
         setIsVisitor(!isVisitor);
     };
+
+    useEffect(() => {
+        getAllWebMenu();
+    }, [])
+
+    const getAllWebMenu = async () => {
+        const data = await getAllWebMenuApi();
+        console.log(data)
+        setSidebarData(data)
+    }
+
 
     return (
         <>
@@ -307,11 +330,12 @@ const Sidebar = () => {
 
                                     {isVisitor && (
                                         <ul className="sub">
-                                            <li><NavLink to="/VisitorType">Visitor Form</NavLink></li>
+                                            <li><NavLink to="/visitor">Visitor Form</NavLink></li>
 
                                         </ul>
                                     )}
                                 </li>
+                               
                                 {/* <li className="sub-menu">
                                     <a href="javascript:;">
                                         <i className="fa fa-th"></i>
