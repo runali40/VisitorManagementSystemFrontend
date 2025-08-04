@@ -335,7 +335,7 @@ const Sidebar = () => {
                                         </ul>
                                     )}
                                 </li>
-                               
+
                                 {/* <li className="sub-menu">
                                     <a href="javascript:;">
                                         <i className="fa fa-th"></i>

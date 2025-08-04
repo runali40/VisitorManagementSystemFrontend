@@ -119,6 +119,7 @@ const Visitor = () => {
                                                     <th style={headerCellStyle}>Email</th>
                                                     <th style={headerCellStyle}>Mobile No</th>
                                                     <th style={headerCellStyle}>Gov Id</th>
+                                                    <th style={headerCellStyle}>Visitor Category</th>
                                                     <th style={headerCellStyle}>Person to Meet</th>
                                                     <th style={headerCellStyle}>Purpose of Visit</th>
                                                     <th style={headerCellStyle}>Expected Time</th>
@@ -133,11 +134,16 @@ const Visitor = () => {
                                                         <td>
                                                             {(currentPage - 1) * itemsPerPage + index + 1}
                                                         </td>
-                                                        <td>{data.EmployeeCode}</td>
-                                                        <td>{data.EmployeeName}</td>
+                                                        <td>{data.FullName}</td>
+                                                        <td>{data.CompanyName}</td>
                                                         <td>{data.Email}</td>
-                                                        <td>{data.MobileNo}</td>
-                                                        <td>{data.DepartmentName}</td>
+                                                        <td>{data.MobileNumber}</td>
+                                                        <td>{data.GovermentId}</td>
+                                                        <td>{data.CategoryName}</td>
+                                                        <td>{data.PersonToMeet}</td>
+                                                        <td>{data.PurposeName}</td>
+                                                        <td>{(data.VisitTime) ? data.VisitTime.split("T")[0] : null}</td>
+                                                        <td>{data.PhotoPath}</td>
                                                         <td>{data.IsActive === true ? "Active" : "Inactive"}</td>
                                                         <td>
                                                             <div className="d-flex ">

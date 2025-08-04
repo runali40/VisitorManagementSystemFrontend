@@ -63,25 +63,33 @@ const VisitorForm = () => {
 
         const data = await getVisitorApi(vId, navigate);
         console.log(data)
-        // setEmployeeCode(data.EmployeeCode)
-        // setEmployeeName(data.EmployeeName)
-        // setEmail(data.Email)
-        // setMobileNo(data.MobileNo)
-        // setDepartment({
-        //     value: data.DepartmentId,
-        //     label: `${data.DepartmentName}`,
-        // })
+        setFullName(data.FullName)
+        setCompanyName(data.CompanyName)
+        setEmail(data.Email)
+        setMobileNo(data.MobileNumber)
+        setGovId(data.GovermentId)
+        setPersonToMeet(data.PersonToMeet)
+        setExpectedTime(data.VisitTime.split("T")[0])
+        setPhoto(data.PhotoPath)
+        setPurposeOfVisit({
+            value: data.PurposeId,
+            label: `${data.PurposeName}`,
+        })
+        setVisitorCategory({
+            value: data.CategoryId,
+            label: `${data.CategoryName}`,
+        })
     }
 
 
     const getAllPurpose = async () => {
         const data = await getAllPurposeApi(navigate);
         console.log(data)
-        // const options = data.map((data) => ({
-        //     value: data.Id,
-        //     label: `${data.VisitorTypeName}`,
-        // }));
-        // setAllPurpose(options);
+        const options = data.map((data) => ({
+            value: data.Id,
+            label: `${data.PurposeName}`,
+        }));
+        setAllPurpose(options);
     }
 
     const handlePurpose = (selected) => {
