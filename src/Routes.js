@@ -24,7 +24,7 @@ const routes = [
   { path: '/registration', exact: true, name: 'Dashboard', element: Registration },
   // { path: '/sidebar', exact: true, name: 'sidebar', element: Sidebar },
   { path: '/dashboard', exact: true, name: 'Dashboard', element: Dashboard },
-  { path: '/visitorType', exact: true, name: 'VisitorType', element: VisitorType },
+  { path: '/VisitorTypeMaster', exact: true, name: 'VisitorType', element: VisitorType },
   { path: '/addVisitorType', exact: true, name: 'AddVisitorType', element: AddVisitorType },
   { path: '/departmentMaster', exact: true, name: 'DepartmentMaster', element: DepartmentMaster },
   { path: '/addDepartmentMaster', exact: true, name: 'AddVisitorType', element: AddDepartmentMaster },
@@ -34,7 +34,7 @@ const routes = [
   { path: '/addUserMaster', exact: true, name: 'AddUserMaster', element: AddUserMaster },
   { path: '/roleMaster', exact: true, name: 'RoleMaster', element: RoleMaster },
   { path: '/addRoleMaster', exact: true, name: 'AddRoleMaster', element: AddRoleMaster },
-  { path: '/visitor', exact: true, name: 'Visitor', element: Visitor },
+  { path: '/VisiotrsInfo', exact: true, name: 'Visitor', element: Visitor },
   { path: '/visitorForm', exact: true, name: 'VisitorForm', element: VisitorForm },
 
 ]

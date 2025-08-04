@@ -19,7 +19,7 @@ const AddVisitorType = () => {
     const AddVisitorType = async () => {
         const data = await AddVisitorTypeApi(visitorTypeCode, visitorTypeName, visitorId, navigate);
         console.log(data)
-        navigate("/visitorType")
+        navigate("/VisitorTypeMaster")
     }
 
     const getVisitorsTypeData = async () => {
@@ -51,7 +51,7 @@ const AddVisitorType = () => {
                                                     className="btn btn-md text-light"
                                                     type="button"
                                                     style={{ backgroundColor: "#8b5c7e" }}
-                                                    onClick={() => navigate("/visitorType")}
+                                                    onClick={() => navigate("/VisitorTypeMaster")}
                                                 >
                                                     Back
                                                 </button>

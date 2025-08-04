@@ -1,7 +1,8 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useCallback, useRef } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
 import Select from "react-select";
-import { AddEmployeeApi, getEmployeeApi } from "../../Api/EmployeeMasterApi";
+import Webcam from "react-webcam";
+import CryptoJS from "crypto-js";
 import { getAllVisitorTypeApi } from "../../Api/VisitorTypeMasterApi";
 import { AddVisitorFormApi, getAllPurposeApi, getVisitorApi } from "../../Api/VisitorFormApi";
 
@@ -21,9 +22,24 @@ const VisitorForm = () => {
     const [purposeOfVisit, setPurposeOfVisit] = useState("")
     const [allPurpose, setAllPurpose] = useState([])
     const [expectedTime, setExpectedTime] = useState("")
-    const [photo, setPhoto] = useState("")
+    const [photo, setPhoto] = useState(null)
+    const webcamRef = useRef(null);
+    const [deviceId, setDeviceId] = useState("");
+    const [facingMode, setFacingMode] = useState("environment");
+    const [secretKey, setSecretKey] = useState("");
+    const [biometricIv, setBiometricIV] = useState("")
 
-
+    useEffect(() => {
+        const generateSecretKey = () => {
+            const key = CryptoJS.lib.WordArray.random(32); // 32 bytes = 256 bits
+            return key.toString(CryptoJS.enc.Hex);
+        };
+        const key = generateSecretKey();
+        // const key ="eb7b5de469bed866f1a5360ef7ec87d85d4786a0ea40692a3b7b54e103fc6dd7"
+        setSecretKey(key);
+        // localStorage.setItem("biometricKey", key)
+        console.log(key, "secret key");
+    }, []);
 
     useEffect(() => {
         getAllVisitorCategory();
@@ -56,11 +72,10 @@ const VisitorForm = () => {
     const AddVisitor = async () => {
         const data = await AddVisitorFormApi(fullName, companyName, email, mobileNo, govId, visitorCategory, personToMeet, purposeOfVisit, expectedTime, photo, vId, navigate);
         console.log(data)
-        // navigate("/visitor")
+        navigate("/VisiotrsInfo")
     }
 
     const getVisitorData = async () => {
-
         const data = await getVisitorApi(vId, navigate);
         console.log(data)
         setFullName(data.FullName)
@@ -81,7 +96,6 @@ const VisitorForm = () => {
         })
     }
 
-
     const getAllPurpose = async () => {
         const data = await getAllPurposeApi(navigate);
         console.log(data)
@@ -99,6 +113,66 @@ const VisitorForm = () => {
         console.log(purposeOfVisit)
     }
 
+    const videoConstraints = {
+        width: 540,
+        facingMode: facingMode,
+        deviceId: deviceId || undefined,
+    };
+
+    const capturePhoto = useCallback(() => {
+        if (webcamRef.current) {
+            const imageSrc = webcamRef.current.getScreenshot();
+            try {
+                const key = CryptoJS.enc.Hex.parse(secretKey);
+                const iv = CryptoJS.lib.WordArray.random(16); // Generate a 16-byte IV
+                setBiometricIV(iv.toString(CryptoJS.enc.Hex));
+                console.log(typeof biometricIv)
+                // Extract the base64 part of the image
+                const base64Image = imageSrc.split(",")[1];
+                const wordArrayImage = CryptoJS.enc.Base64.parse(base64Image);
+
+                // Encrypt the image
+                const encryptedImage = CryptoJS.AES.encrypt(wordArrayImage, key, { iv });
+
+                // Combine IV and encrypted data for storage
+                const encryptedImageSrc = `${iv.toString(CryptoJS.enc.Hex)}:${encryptedImage.ciphertext.toString(CryptoJS.enc.Hex)}`;
+
+                // localStorage.setItem("encryptedImage", encryptedImageSrc);
+                setPhoto(encryptedImageSrc); // Store URL if needed
+                // toast.success("Photo Capture Successfully!")
+            } catch (error) {
+                console.error("Error during encryption:", error);
+            }
+        } else {
+            console.error("Webcam ref not found");
+        }
+    }, [webcamRef, secretKey]);
+
+    // Decrypt the Encrypted Image (Biometric)
+    const decryptImage = useCallback((encryptedImage) => {
+
+        try {
+            const [ivHex, encryptedHex] = encryptedImage.split(":"); // Split IV and ciphertext
+            const key = CryptoJS.enc.Hex.parse(secretKey); // Parse secret key
+            const iv = CryptoJS.enc.Hex.parse(ivHex); // Parse IV
+            // Decrypt the image
+            const decryptedBytes = CryptoJS.AES.decrypt(
+                { ciphertext: CryptoJS.enc.Hex.parse(encryptedHex) },
+                key,
+                { iv, padding: CryptoJS.pad.Pkcs7 } // Use Pkcs7 padding
+            );
+            // Convert decrypted WordArray back to Base64 string
+            const decryptedBase64 = CryptoJS.enc.Base64.stringify(decryptedBytes);
+            return `data:image/png;base64,${decryptedBase64}`; // Return image in Base64 format
+        } catch (error) {
+            console.error("Error during decryption:", error);
+            return ""; // Return empty string if error occurs
+        }
+    }, [secretKey]);
+
+
+    // Use the decrypted image
+    const decryptedImageUrl = photo ? decryptImage(photo) : null;
     return (
         <>
             <section id="main-content">
@@ -118,7 +192,7 @@ const VisitorForm = () => {
                                                     className="btn btn-md text-light"
                                                     type="button"
                                                     style={{ backgroundColor: "#8b5c7e" }}
-                                                    onClick={() => navigate("/visitor")}
+                                                    onClick={() => navigate("/VisiotrsInfo")}
                                                 >
                                                     Back
                                                 </button>
@@ -278,14 +352,41 @@ const VisitorForm = () => {
                                                     <label className="control-label fw-bold">
                                                         Photo:
                                                     </label>{" "}
-                                                    <input
+                                                    {/* <input
                                                         type="text"
                                                         id="expectedTime"
                                                         className="form-control mt-3"
                                                         placeholder="Enter Photo"
                                                         value={photo}
                                                         onChange={(e) => setPhoto(e.target.value)}
+                                                    /> */}
+                                                    <br />
+                                                    <button
+                                                        className="btn btn-md text-light mt-3"
+                                                        type="button"
+                                                        style={{ backgroundColor: "#8b5c7e" }}
+                                                        onClick={
+                                                            capturePhoto
+                                                        }
+                                                    >
+                                                        Capture Photo
+                                                    </button>
+
+                                                    <Webcam
+                                                        className="my-3"
+                                                        id="clickPhoto"
+                                                        style={{ height: "110%", width: "60%" }}
+                                                        ref={webcamRef}
+                                                        audio={false}
+                                                        screenshotFormat="image/png"
+                                                        videoConstraints={videoConstraints}
+                                                        onUserMediaError={(err) => console.error("onUserMediaError: ", err)}
                                                     />
+                                                    {photo && (
+                                                        <div className="my-3">
+                                                            <img src={decryptedImageUrl} alt="screenshot" />
+                                                        </div>
+                                                    )}
                                                 </div>
                                             </div>
                                         </div>

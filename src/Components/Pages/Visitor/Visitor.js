@@ -46,12 +46,11 @@ const Visitor = () => {
         if (searchDataValue.trim() === "") {
             getAllVisitor();
         } else {
-            const filteredData = allVisitors.filter(
-                (employee) =>
-                    employee.EmployeeCode.toLowerCase().includes(searchDataValue) ||
-                    employee.EmployeeName.toLowerCase().includes(searchDataValue)
-
-            );
+            const filteredData = allVisitors.filter((visitor) => {
+                const fullName = visitor.FullName ? visitor.FullName.toLowerCase() : '';
+                const mobileNumber = visitor.MobileNumber ? visitor.MobileNumber.toLowerCase() : '';
+                return fullName.includes(searchDataValue) || mobileNumber.includes(searchDataValue);
+            });
             setAllVisitors(filteredData);
             setCurrentPage(1);
         }
