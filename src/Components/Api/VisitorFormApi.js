@@ -6,7 +6,7 @@ import 'react-toastify/dist/ReactToastify.css';
 import ErrorHandler from "../ErrorHandler/ErrorHandler";
 
 
-export const AddVisitorFormApi = (fullName, companyName, email, mobileNo, govId, visitorCategory, personToMeet, purposeOfVisit, expectedTime, photo, vId, navigate) => {
+export const AddVisitorFormApi = (fullName, companyName, email, mobileNo, govId, visitorCategory, personToMeet, purposeOfVisit, expectedTime, photo, secretKey, vId, photopathIv, navigate) => {
     const userId = localStorage.getItem('userId');
     const data = {
         userId: userId,
@@ -20,6 +20,8 @@ export const AddVisitorFormApi = (fullName, companyName, email, mobileNo, govId,
         personToMeet: personToMeet,
         purposeId: purposeOfVisit.value,
         visitTime: expectedTime,
+        secretKey : secretKey,
+        photopathIV: photopathIv
         // visitTime: "2025-08-01"
     };
     if (vId !== null && vId !== "") {

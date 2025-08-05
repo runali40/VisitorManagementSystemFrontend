@@ -1,6 +1,7 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useCallback } from "react";
 import { Table, Modal, Button, Form, Row, Col } from "react-bootstrap";
 import { Pagination } from "../../Utils/Pagination";
+import CryptoJS from "crypto-js";
 import "bootstrap/dist/css/bootstrap.min.css"; // Make sure this is loaded once globally
 import 'bootstrap/dist/js/bootstrap.bundle.min.js';
 import { useNavigate } from "react-router-dom";
@@ -18,10 +19,31 @@ const Visitor = () => {
     const [itemsPerPage] = useState(10);
     const [allVisitors, setAllVisitors] = useState([]); // Dummy empty state
     const [searchData, setSearchData] = useState("")
+    const [secretKey, setSecretKey] = useState("");
+    const [photopathIV, setPhotopathIv] = useState("")
+    const [rowId, setRowId] = useState("")
 
     useEffect(() => {
-        getAllVisitor();
+
+
+        const fetchData = async () => {
+
+            await getAllVisitor();
+            // await getSecretKey();
+        };
+        fetchData();
     }, [currentPage, itemsPerPage]);
+
+    // useEffect(() => {
+    //     const allSecretKeys = allVisitors.map((data) => data.secretKey);
+    //     console.log(allSecretKeys); // Or set to state
+    // }, [allVisitors]);
+
+    const getSecretKey = (Id, secretKey, photopathIV) => {
+        setSecretKey(secretKey);
+        setPhotopathIv(photopathIV)
+        setRowId(Id)
+    };
 
     const getAllVisitor = async () => {
         const data = await getAllVisitorApi(navigate);
@@ -55,6 +77,32 @@ const Visitor = () => {
             setCurrentPage(1);
         }
     };
+
+    // const iv = CryptoJS.lib.WordArray.random(16);
+    // const encrypted = CryptoJS.AES.encrypt(wordArrayImage, key, { iv });
+    // const result = `${iv.toString(CryptoJS.enc.Hex)}:${encrypted.ciphertext.toString(CryptoJS.enc.Hex)}`;
+    const decryptImage = useCallback((encryptedImage) => {
+
+        try {
+            const [ivHex, encryptedHex] = encryptedImage.split(":"); // Split IV and ciphertext
+            console.log(ivHex, "ivHex")
+            const key = CryptoJS.enc.Hex.parse(secretKey); // Parse secret key
+            const iv = CryptoJS.enc.Hex.parse(ivHex); // Parse IV
+            // Decrypt the image
+            const decryptedBytes = CryptoJS.AES.decrypt(
+                { ciphertext: CryptoJS.enc.Hex.parse(encryptedHex) },
+                key,
+                { iv, padding: CryptoJS.pad.Pkcs7 } // Use Pkcs7 padding
+            );
+            // Convert decrypted WordArray back to Base64 string
+            const decryptedBase64 = CryptoJS.enc.Base64.stringify(decryptedBytes);
+            console.log(`data:image/png;base64,${decryptedBase64}`)
+            return `data:image/png;base64,${decryptedBase64}`; // Return image in Base64 format
+        } catch (error) {
+            console.error("Error during decryption:", error);
+            return ""; // Return empty string if error occurs
+        }
+    }, [secretKey]);
 
     const indexOfLastItem = currentPage * itemsPerPage;
     const indexOfFirstItem = indexOfLastItem - itemsPerPage;
@@ -127,7 +175,7 @@ const Visitor = () => {
                                                     <th style={{ ...headerCellStyle, textAlign: "center" }}>Action</th>
                                                 </tr>
                                             </thead>
-                                            <tbody>
+                                            {/* <tbody>
                                                 {currentItems.map((data, index) => (
                                                     <tr key={data.Id}>
                                                         <td>
@@ -142,7 +190,20 @@ const Visitor = () => {
                                                         <td>{data.PersonToMeet}</td>
                                                         <td>{data.PurposeName}</td>
                                                         <td>{(data.VisitTime) ? data.VisitTime.split("T")[0] : null}</td>
-                                                        <td>{data.PhotoPath}</td>
+                                                        <td>
+                                                            {data.PhotoPath && data.secretKey ? (() => {
+                                                                const decryptedImage = decryptImage(data.PhotoPath, data.secretKey);
+                                                                return (
+                                                                    <img
+                                                                        src={decryptedImage}
+                                                                        alt="Decrypted"
+                                                                        style={{ width: '100px', height: 'auto' }}
+                                                                    />
+                                                                );
+                                                            })() : (
+                                                                <span>No Image</span>
+                                                            )}
+                                                        </td>
                                                         <td>{data.IsActive === true ? "Active" : "Inactive"}</td>
                                                         <td>
                                                             <div className="d-flex ">
@@ -160,7 +221,59 @@ const Visitor = () => {
                                                         </td>
                                                     </tr>
                                                 ))}
+                                            </tbody> */}
+                                            <tbody>
+                                                {currentItems.map((data, index) => {
+                                                    const decryptedImage = data.PhotoPath && data.secretKey
+                                                        ? decryptImage(data.PhotoPath)
+                                                        : "";
+
+                                                    return (
+                                                        <tr key={data.Id}>
+                                                            <td>{(currentPage - 1) * itemsPerPage + index + 1}</td>
+                                                            <td>{data.FullName}</td>
+                                                            <td>{data.CompanyName}</td>
+                                                            <td>{data.Email}</td>
+                                                            <td>{data.MobileNumber}</td>
+                                                            <td>{data.GovermentId}</td>
+                                                            <td>{data.CategoryName}</td>
+                                                            <td>{data.PersonToMeet}</td>
+                                                            <td>{data.PurposeName}</td>
+                                                            <td>{data.VisitTime ? data.VisitTime.split("T")[0] : null}</td>
+                                                            {/* <td></td> */}
+                                                            <td>
+                                                                {rowId === data.Id ? (
+                                                                    <img
+                                                                        src={decryptedImage}
+                                                                        alt="Decrypted"
+                                                                        style={{ width: "100px", height: "auto" }}
+                                                                    />
+                                                                ) : (
+                                                                    <button
+                                                                        className="btn"
+                                                                        style={headerCellStyle}
+                                                                        onClick={() => {
+
+                                                                            getSecretKey(data.Id, data.secretKey, data.PhotopathIV);
+                                                                        }}
+                                                                    >
+                                                                        View
+                                                                    </button>
+                                                                )}
+                                                            </td>
+
+                                                            <td>{data.IsActive ? "Active" : "Inactive"}</td>
+                                                            <td>
+                                                                <div className="d-flex">
+                                                                    <Edit className="text-success mr-2" onClick={() => getVisitorData(data.Id)} />
+                                                                    <Delete className="text-danger" onClick={() => DeleteVisitorData(data.Id)} />
+                                                                </div>
+                                                            </td>
+                                                        </tr>
+                                                    );
+                                                })}
                                             </tbody>
+
                                         </Table>
 
                                         <div className="row mt-4 mt-xl-3">

@@ -27,7 +27,7 @@ const VisitorForm = () => {
     const [deviceId, setDeviceId] = useState("");
     const [facingMode, setFacingMode] = useState("environment");
     const [secretKey, setSecretKey] = useState("");
-    const [biometricIv, setBiometricIV] = useState("")
+    const [photopathIv, setPhotopathIv] = useState("")
 
     useEffect(() => {
         const generateSecretKey = () => {
@@ -70,7 +70,7 @@ const VisitorForm = () => {
     }, [vId]);
 
     const AddVisitor = async () => {
-        const data = await AddVisitorFormApi(fullName, companyName, email, mobileNo, govId, visitorCategory, personToMeet, purposeOfVisit, expectedTime, photo, vId, navigate);
+        const data = await AddVisitorFormApi(fullName, companyName, email, mobileNo, govId, visitorCategory, personToMeet, purposeOfVisit, expectedTime, photo, secretKey, vId, photopathIv, navigate);
         console.log(data)
         navigate("/VisiotrsInfo")
     }
@@ -125,8 +125,9 @@ const VisitorForm = () => {
             try {
                 const key = CryptoJS.enc.Hex.parse(secretKey);
                 const iv = CryptoJS.lib.WordArray.random(16); // Generate a 16-byte IV
-                setBiometricIV(iv.toString(CryptoJS.enc.Hex));
-                console.log(typeof biometricIv)
+                setPhotopathIv(iv.toString(CryptoJS.enc.Hex));
+                console.log(iv.toString(CryptoJS.enc.Hex), "photopathIv")
+                console.log(typeof photopathIv)
                 // Extract the base64 part of the image
                 const base64Image = imageSrc.split(",")[1];
                 const wordArrayImage = CryptoJS.enc.Base64.parse(base64Image);
@@ -138,6 +139,7 @@ const VisitorForm = () => {
                 const encryptedImageSrc = `${iv.toString(CryptoJS.enc.Hex)}:${encryptedImage.ciphertext.toString(CryptoJS.enc.Hex)}`;
 
                 // localStorage.setItem("encryptedImage", encryptedImageSrc);
+                console.log(encryptedImageSrc, "encryptedImageSrc")
                 setPhoto(encryptedImageSrc); // Store URL if needed
                 // toast.success("Photo Capture Successfully!")
             } catch (error) {
@@ -163,6 +165,7 @@ const VisitorForm = () => {
             );
             // Convert decrypted WordArray back to Base64 string
             const decryptedBase64 = CryptoJS.enc.Base64.stringify(decryptedBytes);
+            console.log(`data:image/png;base64,${decryptedBase64}`)
             return `data:image/png;base64,${decryptedBase64}`; // Return image in Base64 format
         } catch (error) {
             console.error("Error during decryption:", error);
@@ -173,6 +176,7 @@ const VisitorForm = () => {
 
     // Use the decrypted image
     const decryptedImageUrl = photo ? decryptImage(photo) : null;
+
     return (
         <>
             <section id="main-content">
@@ -365,14 +369,15 @@ const VisitorForm = () => {
                                                         className="btn btn-md text-light mt-3"
                                                         type="button"
                                                         style={{ backgroundColor: "#8b5c7e" }}
-                                                        onClick={
-                                                            capturePhoto
-                                                        }
+                                                        data-toggle="modal" data-target="#exampleModal"
+                                                    // onClick={
+                                                    //     capturePhoto
+                                                    // }
                                                     >
                                                         Capture Photo
                                                     </button>
 
-                                                    <Webcam
+                                                    {/* <Webcam
                                                         className="my-3"
                                                         id="clickPhoto"
                                                         style={{ height: "110%", width: "60%" }}
@@ -386,7 +391,7 @@ const VisitorForm = () => {
                                                         <div className="my-3">
                                                             <img src={decryptedImageUrl} alt="screenshot" />
                                                         </div>
-                                                    )}
+                                                    )} */}
                                                 </div>
                                             </div>
                                         </div>
@@ -407,6 +412,60 @@ const VisitorForm = () => {
                                             </div>
                                         </div>
                                     </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div className="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                        <div className="modal-dialog" role="document">
+                            <div className="modal-content">
+                                <div className="modal-header">
+                                    <h5 className="modal-title" id="exampleModalLabel">Modal title</h5>
+                                    <button type="button" className="close" data-dismiss="modal" aria-label="Close">
+                                        <span aria-hidden="true">&times;</span>
+                                    </button>
+                                </div>
+                                <div className="modal-body">
+                                    <div className="row">
+                                        <div className="col-lg-12">
+                                            {photo ? (
+                                                <div className="my-3">
+                                                    <img src={decryptedImageUrl} alt="screenshot" />
+                                                </div>
+                                            ) :
+                                                <Webcam
+                                                    className="my-3"
+                                                    id="clickPhoto"
+                                                    style={{ height: "110%", width: "60%" }}
+                                                    ref={webcamRef}
+                                                    audio={false}
+                                                    screenshotFormat="image/png"
+                                                    videoConstraints={videoConstraints}
+                                                    onUserMediaError={(err) => console.error("onUserMediaError: ", err)}
+                                                />
+                                            }
+                                        </div>
+                                        <div className="col-lg-12">
+
+                                            <button
+                                                className="btn btn-md text-light mt-3"
+                                                type="button"
+                                                style={{ backgroundColor: "#8b5c7e" }}
+                                                // data-toggle="modal" data-target="#exampleModal"
+                                                onClick={
+                                                    capturePhoto
+                                                }
+                                            >
+                                                Capture Photo
+                                            </button>
+                                        </div>
+                                    </div>
+
+
+                                </div>
+                                <div className="modal-footer">
+                                    <button type="button" className="btn btn-secondary" data-dismiss="modal">Close</button>
+                                    <button type="button" className="btn btn-primary">Save changes</button>
                                 </div>
                             </div>
                         </div>
