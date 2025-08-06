@@ -356,42 +356,15 @@ const VisitorForm = () => {
                                                     <label className="control-label fw-bold">
                                                         Photo:
                                                     </label>{" "}
-                                                    {/* <input
-                                                        type="text"
-                                                        id="expectedTime"
-                                                        className="form-control mt-3"
-                                                        placeholder="Enter Photo"
-                                                        value={photo}
-                                                        onChange={(e) => setPhoto(e.target.value)}
-                                                    /> */}
                                                     <br />
                                                     <button
                                                         className="btn btn-md text-light mt-3"
                                                         type="button"
                                                         style={{ backgroundColor: "#8b5c7e" }}
                                                         data-toggle="modal" data-target="#exampleModal"
-                                                    // onClick={
-                                                    //     capturePhoto
-                                                    // }
                                                     >
                                                         Capture Photo
                                                     </button>
-
-                                                    {/* <Webcam
-                                                        className="my-3"
-                                                        id="clickPhoto"
-                                                        style={{ height: "110%", width: "60%" }}
-                                                        ref={webcamRef}
-                                                        audio={false}
-                                                        screenshotFormat="image/png"
-                                                        videoConstraints={videoConstraints}
-                                                        onUserMediaError={(err) => console.error("onUserMediaError: ", err)}
-                                                    />
-                                                    {photo && (
-                                                        <div className="my-3">
-                                                            <img src={decryptedImageUrl} alt="screenshot" />
-                                                        </div>
-                                                    )} */}
                                                 </div>
                                             </div>
                                         </div>

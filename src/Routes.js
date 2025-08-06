@@ -2,6 +2,7 @@
 // import Registration from "./Components/Pages/Registration";
 
 import { lazy } from 'react';
+import Reports from './Components/Pages/Reports/Reports';
 
 const Registration = lazy(() => import('./Components/Pages/Login/Registration'));
 const VisitorType = lazy(() => import('./Components/Pages/Masters/VisitorTypeMaster/VisitorType'));
@@ -36,6 +37,7 @@ const routes = [
   { path: '/addRoleMaster', exact: true, name: 'AddRoleMaster', element: AddRoleMaster },
   { path: '/VisiotrsInfo', exact: true, name: 'Visitor', element: Visitor },
   { path: '/visitorForm', exact: true, name: 'VisitorForm', element: VisitorForm },
+  { path: '/reports', exact: true, name: 'Reports', element: Reports },
 
 ]
 export default routes

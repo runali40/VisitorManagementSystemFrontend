@@ -27,7 +27,7 @@ export const AddVisitorFormApi = (fullName, companyName, email, mobileNo, govId,
     if (vId !== null && vId !== "") {
         data.id = vId;
     }
-    const url = 'VisiotrsInfo/Insert';
+    const url = 'VisitorsInfo/Insert';
     return apiClient({
         method: 'post',
         url: UrlData + url,
@@ -67,7 +67,7 @@ export const getAllVisitorApi = (navigate) => {
     const params = {
         UserId: userId,
     };
-    const url = 'VisiotrsInfo/GetAll';
+    const url = 'VisitorsInfo/GetAll';
     return apiClient({
         method: 'get',
         url: UrlData + url,
@@ -104,7 +104,7 @@ export const getVisitorApi = (vId, navigate) => {
         userId: userId,
         id: vId,
     };
-    const url = 'VisiotrsInfo/Get';
+    const url = 'VisitorsInfo/Get';
     return apiClient({
         method: 'get',
         url: UrlData + url,
@@ -140,7 +140,7 @@ export const deleteVisitorApi = (vId, navigate) => {
         userId: userId,
         id: vId,
     };
-    const url = 'VisiotrsInfo/Delete';
+    const url = 'VisitorsInfo/Delete';
     return apiClient({
         method: 'post',
         url: UrlData + url,
@@ -175,7 +175,7 @@ export const getAllPurposeApi = (navigate) => {
     const params = {
         UserId: userId,
     };
-    const url = 'VisiotrsInfo/GetPurpose';
+    const url = 'VisitorsInfo/GetPurpose';
     return apiClient({
         method: 'get',
         url: UrlData + url,

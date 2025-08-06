@@ -387,6 +387,19 @@ const Sidebar = () => {
 
                                     );
                                 })}
+                                   <li className={`sub-menu ${isVisitor ? 'active' : ''}`}>
+                                    <div onClick={toggleVisitor} style={{ cursor: 'pointer' }}>
+                                        <i className="fa fa-book"></i>
+                                        <span className="ms-2">Reports</span>
+                                    </div>
+
+                                    {isVisitor && (
+                                        <ul className="sub">
+                                            <li><NavLink to="/reports">Reports</NavLink></li>
+
+                                        </ul>
+                                    )}
+                                </li> 
                             </ul>
                             {/* </ul> */}
                         </div>

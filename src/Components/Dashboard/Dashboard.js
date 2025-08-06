@@ -1,6 +1,22 @@
-import React from 'react'
+import React, { useState, useEffect } from 'react'
+import { getDashboardApi } from '../Api/DashboardApi'
 
 const Dashboard = () => {
+
+    const [dailyVisitor, setDailyVisitor] = useState("")
+    const [liveVisitor, setLiveVisitor] = useState("")
+
+    useEffect(() => {
+        getDashboard();
+    }, [])
+
+    const getDashboard = async () => {
+        const data = await getDashboardApi();
+        console.log(data)
+        setDailyVisitor(data.DailyVisitor)
+        setLiveVisitor(data.LiveVisitor)
+    }
+
     return (
         <>
             <section id="main-content">
@@ -25,8 +41,8 @@ const Dashboard = () => {
                                     <i className="fa fa-users" ></i>
                                 </div>
                                 <div className="col-md-8 market-update-left">
-                                    <h4>Users</h4>
-                                    <h3>1,250</h3>
+                                    <h4>Daily Visitors</h4>
+                                    <h3>{dailyVisitor}</h3>
                                     <p>Other hand, we denounce</p>
                                 </div>
                                 <div className="clearfix"> </div>
@@ -38,8 +54,8 @@ const Dashboard = () => {
                                     <i className="fa fa-usd"></i>
                                 </div>
                                 <div className="col-md-8 market-update-left">
-                                    <h4>Sales</h4>
-                                    <h3>1,500</h3>
+                                    <h4>Live Visitors</h4>
+                                    <h3>{liveVisitor}</h3>
                                     <p>Other hand, we denounce</p>
                                 </div>
                                 <div className="clearfix"> </div>
