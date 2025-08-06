@@ -8340,3 +8340,11 @@ button.close {
         display: none !important
     }
 }
+
+.modal-dialog.modal-lg .modal-header .close span {
+    margin-left: 640px;
+}
+
+.modal-dialog.modal-md .modal-header .close span {
+    margin-left: 335px;
+}

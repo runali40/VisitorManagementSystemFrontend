@@ -175,53 +175,6 @@ const Visitor = () => {
                                                     <th style={{ ...headerCellStyle, textAlign: "center" }}>Action</th>
                                                 </tr>
                                             </thead>
-                                            {/* <tbody>
-                                                {currentItems.map((data, index) => (
-                                                    <tr key={data.Id}>
-                                                        <td>
-                                                            {(currentPage - 1) * itemsPerPage + index + 1}
-                                                        </td>
-                                                        <td>{data.FullName}</td>
-                                                        <td>{data.CompanyName}</td>
-                                                        <td>{data.Email}</td>
-                                                        <td>{data.MobileNumber}</td>
-                                                        <td>{data.GovermentId}</td>
-                                                        <td>{data.CategoryName}</td>
-                                                        <td>{data.PersonToMeet}</td>
-                                                        <td>{data.PurposeName}</td>
-                                                        <td>{(data.VisitTime) ? data.VisitTime.split("T")[0] : null}</td>
-                                                        <td>
-                                                            {data.PhotoPath && data.secretKey ? (() => {
-                                                                const decryptedImage = decryptImage(data.PhotoPath, data.secretKey);
-                                                                return (
-                                                                    <img
-                                                                        src={decryptedImage}
-                                                                        alt="Decrypted"
-                                                                        style={{ width: '100px', height: 'auto' }}
-                                                                    />
-                                                                );
-                                                            })() : (
-                                                                <span>No Image</span>
-                                                            )}
-                                                        </td>
-                                                        <td>{data.IsActive === true ? "Active" : "Inactive"}</td>
-                                                        <td>
-                                                            <div className="d-flex ">
-                                                                <Edit
-                                                                    className="text-success mr-2"
-                                                                    type="button"
-                                                                    onClick={() => getVisitorData(data.Id)}
-                                                                />
-
-                                                                <Delete
-                                                                    className="text-danger"
-                                                                    type="button"
-                                                                    onClick={() => DeleteVisitorData(data.Id)}
-                                                                /> </div>
-                                                        </td>
-                                                    </tr>
-                                                ))}
-                                            </tbody> */}
                                             <tbody>
                                                 {currentItems.map((data, index) => {
                                                     const decryptedImage = data.PhotoPath && data.secretKey

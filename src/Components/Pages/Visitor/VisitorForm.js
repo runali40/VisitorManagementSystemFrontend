@@ -25,6 +25,8 @@ const VisitorForm = () => {
     const [photo, setPhoto] = useState(null)
     const webcamRef = useRef(null);
     const [deviceId, setDeviceId] = useState("");
+    const [showWebcam, setShowWebcam] = useState(true);
+    const [webcamKey, setWebcamKey] = useState(0);
     const [facingMode, setFacingMode] = useState("environment");
     const [secretKey, setSecretKey] = useState("");
     const [photopathIv, setPhotopathIv] = useState("")
@@ -40,6 +42,7 @@ const VisitorForm = () => {
         // localStorage.setItem("biometricKey", key)
         console.log(key, "secret key");
     }, []);
+
 
     useEffect(() => {
         getAllVisitorCategory();
@@ -86,6 +89,7 @@ const VisitorForm = () => {
         setPersonToMeet(data.PersonToMeet)
         setExpectedTime(data.VisitTime.split("T")[0])
         setPhoto(data.PhotoPath)
+        console.log(photo, "91")
         setPurposeOfVisit({
             value: data.PurposeId,
             label: `${data.PurposeName}`,
@@ -94,8 +98,12 @@ const VisitorForm = () => {
             value: data.CategoryId,
             label: `${data.CategoryName}`,
         })
-    }
 
+    }
+    useEffect(() => {
+        console.log(photo, "Updated photo");
+        setPhoto(photo)
+    }, [photo]);
     const getAllPurpose = async () => {
         const data = await getAllPurposeApi(navigate);
         console.log(data)
@@ -142,12 +150,14 @@ const VisitorForm = () => {
                 console.log(encryptedImageSrc, "encryptedImageSrc")
                 setPhoto(encryptedImageSrc); // Store URL if needed
                 // toast.success("Photo Capture Successfully!")
+                setShowWebcam(false);
             } catch (error) {
                 console.error("Error during encryption:", error);
             }
         } else {
             console.error("Webcam ref not found");
         }
+
     }, [webcamRef, secretKey]);
 
     // Decrypt the Encrypted Image (Biometric)
@@ -176,6 +186,14 @@ const VisitorForm = () => {
 
     // Use the decrypted image
     const decryptedImageUrl = photo ? decryptImage(photo) : null;
+    const decryptedImageUrl2 = photo ? decryptImage(photo) : null;
+    const handleRefreshWebcam = () => {
+        setPhoto(null);           // clear previous photo
+        setShowWebcam(false);     // force unmount
+        setTimeout(() => {
+            setShowWebcam(true);    // remount webcam
+        }, 100); // short delay to ensure clean remount
+    }
 
     return (
         <>
@@ -362,6 +380,7 @@ const VisitorForm = () => {
                                                         type="button"
                                                         style={{ backgroundColor: "#8b5c7e" }}
                                                         data-toggle="modal" data-target="#exampleModal"
+                                                        onClick={() => console.log(decryptedImageUrl2, "photo")}
                                                     >
                                                         Capture Photo
                                                     </button>
@@ -389,11 +408,11 @@ const VisitorForm = () => {
                             </div>
                         </div>
                     </div>
-                    <div className="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                        <div className="modal-dialog" role="document">
+                    <div className="modal fade bd-example-modal-md" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                        <div className="modal-dialog modal-md" role="document">
                             <div className="modal-content">
                                 <div className="modal-header">
-                                    <h5 className="modal-title" id="exampleModalLabel">Modal title</h5>
+                                    <h4 className="modal-title" id="exampleModalLabel">Capture Photo</h4>
                                     <button type="button" className="close" data-dismiss="modal" aria-label="Close">
                                         <span aria-hidden="true">&times;</span>
                                     </button>
@@ -405,23 +424,25 @@ const VisitorForm = () => {
                                                 <div className="my-3">
                                                     <img src={decryptedImageUrl} alt="screenshot" />
                                                 </div>
-                                            ) :
-                                                <Webcam
-                                                    className="my-3"
-                                                    id="clickPhoto"
-                                                    style={{ height: "110%", width: "60%" }}
-                                                    ref={webcamRef}
-                                                    audio={false}
-                                                    screenshotFormat="image/png"
-                                                    videoConstraints={videoConstraints}
-                                                    onUserMediaError={(err) => console.error("onUserMediaError: ", err)}
-                                                />
-                                            }
+                                            ) : (
+                                                showWebcam && (
+                                                    <Webcam
+                                                        audio={false}
+                                                        ref={webcamRef}
+                                                        screenshotFormat="image/png"
+                                                        videoConstraints={videoConstraints}
+                                                        className="my-3"
+                                                        style={{ height: "110%", width: "60%" }}
+                                                        onUserMediaError={(err) => console.error("Camera error:", err)}
+                                                    />
+                                                )
+                                            )}
+
                                         </div>
                                         <div className="col-lg-12">
 
                                             <button
-                                                className="btn btn-md text-light mt-3"
+                                                className="btn btn-md text-light mt-4"
                                                 type="button"
                                                 style={{ backgroundColor: "#8b5c7e" }}
                                                 // data-toggle="modal" data-target="#exampleModal"
@@ -429,7 +450,16 @@ const VisitorForm = () => {
                                                     capturePhoto
                                                 }
                                             >
-                                                Capture Photo
+                                                Submit
+                                            </button>
+                                            <button
+                                                className="btn btn-md text-light mt-4 mx-2"
+                                                type="button"
+                                                style={{ backgroundColor: "#8b5c7e" }}
+
+                                                onClick={handleRefreshWebcam}
+                                            >
+                                                Refresh
                                             </button>
                                         </div>
                                     </div>
@@ -437,8 +467,8 @@ const VisitorForm = () => {
 
                                 </div>
                                 <div className="modal-footer">
+                                    <button type="button" className="btn btn-primary" data-dismiss="modal">Save</button>
                                     <button type="button" className="btn btn-secondary" data-dismiss="modal">Close</button>
-                                    <button type="button" className="btn btn-primary">Save changes</button>
                                 </div>
                             </div>
                         </div>

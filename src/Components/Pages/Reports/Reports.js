@@ -229,15 +229,12 @@ const Reports = () => {
                                                         <td>{data.DepartmentCode}</td>
                                                         <td>{data.DepartmentName}</td>
                                                         <td> <button
-                                                                        className="btn"
-                                                                        style={headerCellStyle}
-                                                            // onClick={() => {
-
-                                                            //     getSecretKey(data.Id, data.secretKey, data.PhotopathIV);
-                                                            // }}
-                                                                    >
-                                                                        View
-                                                                    </button></td>
+                                                            className="btn"
+                                                            style={headerCellStyle}
+                                                            data-toggle="modal" data-target="#exampleModal"
+                                                        >
+                                                            View
+                                                        </button></td>
                                                     </tr>
                                                 ))}
                                             </tbody>
@@ -260,6 +257,209 @@ const Reports = () => {
                                             </div>
                                         </div>
                                     </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div className="modal fade bd-example-modal-lg" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                        <div className="modal-dialog modal-lg" role="document">
+                            <div className="modal-content">
+                                <div className="modal-header">
+                                    <h4 className="modal-title" id="exampleModalLabel">One Day Pass</h4>
+                                    <button type="button" className="close" data-dismiss="modal" aria-label="Close">
+                                        <span aria-hidden="true">&times;</span>
+                                    </button>
+                                </div>
+                                {/* <div className="modal-body">
+                                    <div className="row">
+                                        <div className="col-lg-3">
+
+                                        </div>
+                                        <div className="col-lg-6">
+                                            <div className="card">
+                                                <div className="card-header py-3" style={{ backgroundColor: "green", color: "white" }}>
+                                                    <h4 className="text-center">One Day Pass</h4>
+                                                </div>
+                                                <div className="card-body mt-2">
+                                                    <div className="row">
+                                                        <div className="col-lg-6">
+                                                            <h5>Visitor Entry Code</h5>
+                                                        </div>
+                                                        <div className="col-lg-6">
+                                                            <h5>LVVfghfh</h5>
+                                                        </div>
+                                                    </div>
+                                                    <div className="row mt-3">
+                                                        <div className="col-lg-6">
+                                                            <h5>Visitor Name</h5>
+                                                        </div>
+                                                        <div className="col-lg-6">
+                                                            <h5>Runali</h5>
+                                                        </div>
+                                                    </div>
+                                                    <div className="row mt-3">
+                                                        <div className="col-lg-6">
+                                                            <h5>Visitor Company</h5>
+                                                        </div>
+                                                        <div className="col-lg-6">
+                                                            <h5>DIISfdg</h5>
+                                                        </div>
+                                                    </div>
+                                                    <div className="row mt-3">
+                                                        <div className="col-lg-6">
+                                                            <h5>Host</h5>
+                                                        </div>
+                                                        <div className="col-lg-6">
+                                                            <h5>Admin</h5>
+                                                        </div>
+                                                    </div>
+                                                    <div className="row mt-3">
+                                                        <div className="col-lg-6">
+                                                            <h5>Purpose</h5>
+                                                        </div>
+                                                        <div className="col-lg-6">
+                                                            <h5>Meeting</h5>
+                                                        </div>
+                                                    </div>
+                                                    <div className="row mt-3">
+                                                        <div className="col-lg-6">
+                                                            <h5>Mobile No</h5>
+                                                        </div>
+                                                        <div className="col-lg-6">
+                                                            <h5>980000000</h5>
+                                                        </div>
+                                                    </div>
+                                                    <div className="row mt-3">
+                                                        <div className="col-lg-6">
+                                                            <h5>Valid From</h5>
+                                                        </div>
+                                                        <div className="col-lg-6">
+                                                            <h5>6/9/2025</h5>
+                                                        </div>
+                                                    </div>
+                                                    <div className="row mt-3">
+                                                        <div className="col-lg-6">
+                                                            <h5>Valid To</h5>
+                                                        </div>
+                                                        <div className="col-lg-6">
+                                                            <h5>30/9/2025</h5>
+                                                        </div>
+                                                    </div>
+                                                    <div className="row mt-3">
+                                                        <div className="col-lg-6">
+                                                            <h5>Area</h5>
+                                                        </div>
+                                                        <div className="col-lg-6">
+                                                            <h5>IT</h5>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div className="card-footer py-3">
+                                                    <div className="row">
+                                                        <div className="col-lg-6">
+                                                            <h4>DIIS</h4>
+                                                        </div>
+                                                        <div className="col-lg-6">
+                                                            <h4>Auth Sign</h4>
+                                                            <h5 className="mt-2">......</h5>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div className="col-lg-3">
+
+                                        </div>
+                                    </div>
+
+
+                                </div> */}
+                                <div className="modal-body">
+                                    <div className="row justify-content-center">
+                                        <div className="col-lg-6">
+                                            <div className="card position-relative">
+                                                {/* Profile Icon (Left side) */}
+                                                <div
+                                                    style={{
+                                                        position: "absolute",
+                                                        top: "23px",
+                                                        left: "35px",
+                                                        zIndex: 10,
+                                                        width: "75px",
+                                                        height: "75px",
+                                                        backgroundColor: "#fff",
+                                                        borderRadius: "50%",
+                                                        display: "flex",
+                                                        alignItems: "center",
+                                                        justifyContent: "center",
+                                                        border: "2px solid #ccc"
+                                                    }}
+                                                >
+                                                    <i className="bi bi-person-circle" style={{ fontSize: "40px", color: "gray" }}></i>
+                                                </div>
+
+                                                {/* Card Header */}
+                                                <div className="card-header py-3" style={{ backgroundColor: "green", color: "white" }}>
+                                                    <h4 className="text-center mb-0">One Day Pass</h4>
+                                                </div>
+
+                                                {/* Card Body */}
+                                                <div className="card-body mt-5">
+                                                    <div className="row">
+                                                        <div className="col-lg-6"><h5>Visitor Entry Code</h5></div>
+                                                        <div className="col-lg-6"><h5>LVVfghfh</h5></div>
+                                                    </div>
+                                                    <div className="row mt-3">
+                                                        <div className="col-lg-6"><h5>Visitor Name</h5></div>
+                                                        <div className="col-lg-6"><h5>Runali</h5></div>
+                                                    </div>
+                                                    <div className="row mt-3">
+                                                        <div className="col-lg-6"><h5>Visitor Company</h5></div>
+                                                        <div className="col-lg-6"><h5>DIISfdg</h5></div>
+                                                    </div>
+                                                    <div className="row mt-3">
+                                                        <div className="col-lg-6"><h5>Host</h5></div>
+                                                        <div className="col-lg-6"><h5>Admin</h5></div>
+                                                    </div>
+                                                    <div className="row mt-3">
+                                                        <div className="col-lg-6"><h5>Purpose</h5></div>
+                                                        <div className="col-lg-6"><h5>Meeting</h5></div>
+                                                    </div>
+                                                    <div className="row mt-3">
+                                                        <div className="col-lg-6"><h5>Mobile No</h5></div>
+                                                        <div className="col-lg-6"><h5>980000000</h5></div>
+                                                    </div>
+                                                    <div className="row mt-3">
+                                                        <div className="col-lg-6"><h5>Valid From</h5></div>
+                                                        <div className="col-lg-6"><h5>6/9/2025</h5></div>
+                                                    </div>
+                                                    <div className="row mt-3">
+                                                        <div className="col-lg-6"><h5>Valid To</h5></div>
+                                                        <div className="col-lg-6"><h5>30/9/2025</h5></div>
+                                                    </div>
+                                                    <div className="row mt-3">
+                                                        <div className="col-lg-6"><h5>Area</h5></div>
+                                                        <div className="col-lg-6"><h5>IT</h5></div>
+                                                    </div>
+                                                </div>
+
+                                                {/* Card Footer */}
+                                                <div className="card-footer py-3">
+                                                    <div className="row">
+                                                        <div className="col-lg-6"><h4>DIIS</h4></div>
+                                                        <div className="col-lg-6">
+                                                            <h4>Auth Sign</h4>
+                                                            <h5 className="mt-2">......</h5>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div className="modal-footer">
+                                    <button type="button" className="btn btn-secondary" data-dismiss="modal">Close</button>
                                 </div>
                             </div>
                         </div>
