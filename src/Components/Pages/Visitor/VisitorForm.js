@@ -5,6 +5,7 @@ import Webcam from "react-webcam";
 import CryptoJS from "crypto-js";
 import { getAllVisitorTypeApi } from "../../Api/VisitorTypeMasterApi";
 import { AddVisitorFormApi, getAllPurposeApi, getVisitorApi } from "../../Api/VisitorFormApi";
+import { flushSync } from 'react-dom';
 
 const VisitorForm = () => {
     const navigate = useNavigate();
@@ -78,32 +79,70 @@ const VisitorForm = () => {
         navigate("/VisiotrsInfo")
     }
 
+    // const getVisitorData = async () => {
+    //     const data = await getVisitorApi(vId, navigate);
+    //     console.log(data)
+    //     setFullName(data.FullName)
+    //     setCompanyName(data.CompanyName)
+    //     setEmail(data.Email)
+    //     setMobileNo(data.MobileNumber)
+    //     setGovId(data.GovermentId)
+    //     setPersonToMeet(data.PersonToMeet)
+    //     setExpectedTime(data.VisitTime.split("T")[0])
+    //     // setPhoto(data.PhotoPath)
+    //     console.log(data.PhotoPath, "92")
+    //     const temp = data.PhotoPath;
+    //     setPhoto(temp)
+
+    //     console.log(temp, "96")
+    //     console.log(photo, "97")
+    //     setPurposeOfVisit({
+    //         value: data.PurposeId,
+    //         label: `${data.PurposeName}`,
+    //     })
+    //     setVisitorCategory({
+    //         value: data.CategoryId,
+    //         label: `${data.CategoryName}`,
+    //     })
+
+    // }
     const getVisitorData = async () => {
         const data = await getVisitorApi(vId, navigate);
-        console.log(data)
-        setFullName(data.FullName)
-        setCompanyName(data.CompanyName)
-        setEmail(data.Email)
-        setMobileNo(data.MobileNumber)
-        setGovId(data.GovermentId)
-        setPersonToMeet(data.PersonToMeet)
-        setExpectedTime(data.VisitTime.split("T")[0])
-        setPhoto(data.PhotoPath)
-        console.log(photo, "91")
-        setPurposeOfVisit({
-            value: data.PurposeId,
-            label: `${data.PurposeName}`,
-        })
-        setVisitorCategory({
-            value: data.CategoryId,
-            label: `${data.CategoryName}`,
-        })
 
+        flushSync(() => {
+            setFullName(data.FullName);
+            setCompanyName(data.CompanyName);
+            setEmail(data.Email);
+            setMobileNo(data.MobileNumber);
+            setGovId(data.GovermentId);
+            setPersonToMeet(data.PersonToMeet);
+            setExpectedTime(data.VisitTime.split("T")[0]);
+            const photoValue = data?.PhotoPath;
+            console.log("Photo value to set:", photoValue);
+
+            setPhoto(photoValue);
+            console.log(photo, "124")
+            // Immediate check with useEffect
+            // useEffect(() => {
+            //     console.log("Updated photo state:", photo);
+            // }, [photo]);
+            setPurposeOfVisit({
+                value: data.PurposeId,
+                label: `${data.PurposeName}`,
+            });
+            setVisitorCategory({
+                value: data.CategoryId,
+                label: `${data.CategoryName}`,
+            });
+        });
+
+        // Ab photo updated hai
+       // This should show updated value
     }
-    useEffect(() => {
-        console.log(photo, "Updated photo");
-        setPhoto(photo)
-    }, [photo]);
+    // useEffect(() => {
+    //     console.log(photo, "Updated photo");
+    //     setPhoto(photo)
+    // }, [photo]);
     const getAllPurpose = async () => {
         const data = await getAllPurposeApi(navigate);
         console.log(data)
@@ -408,7 +447,7 @@ const VisitorForm = () => {
                             </div>
                         </div>
                     </div>
-                    <div className="modal fade bd-example-modal-md" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                    <div className="modal fade bd-example-modal-md" id="exampleModal" tabIndex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
                         <div className="modal-dialog modal-md" role="document">
                             <div className="modal-content">
                                 <div className="modal-header">

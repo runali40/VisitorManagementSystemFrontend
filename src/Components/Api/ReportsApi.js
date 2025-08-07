@@ -10,7 +10,7 @@ export const getReportsApi = (navigate) => {
     const params = {
         UserId: userId,
     };
-    const url = 'DepartmentMaster/GetAll';
+    const url = 'VisitorsReport/GetAll';
     return apiClient({
         method: 'get',
         url: UrlData + url,

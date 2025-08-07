@@ -85,7 +85,7 @@ const Visitor = () => {
 
         try {
             const [ivHex, encryptedHex] = encryptedImage.split(":"); // Split IV and ciphertext
-            console.log(ivHex, "ivHex")
+            // console.log(ivHex, "ivHex")
             const key = CryptoJS.enc.Hex.parse(secretKey); // Parse secret key
             const iv = CryptoJS.enc.Hex.parse(ivHex); // Parse IV
             // Decrypt the image
@@ -96,7 +96,7 @@ const Visitor = () => {
             );
             // Convert decrypted WordArray back to Base64 string
             const decryptedBase64 = CryptoJS.enc.Base64.stringify(decryptedBytes);
-            console.log(`data:image/png;base64,${decryptedBase64}`)
+            // console.log(`data:image/png;base64,${decryptedBase64}`)
             return `data:image/png;base64,${decryptedBase64}`; // Return image in Base64 format
         } catch (error) {
             console.error("Error during decryption:", error);

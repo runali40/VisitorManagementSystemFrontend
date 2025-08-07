@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useCallback } from "react";
 import { Table } from "react-bootstrap";
 import { Pagination } from "../../Utils/Pagination";
 import "bootstrap/dist/css/bootstrap.min.css"; // Make sure this is loaded once globally
@@ -6,6 +6,7 @@ import 'bootstrap/dist/js/bootstrap.bundle.min.js';
 import { useNavigate } from "react-router-dom";
 import { getReportsApi } from "../../Api/ReportsApi";
 import Select from "react-select";
+import CryptoJS from "crypto-js";
 import { getAllEmployeeApi } from "../../Api/EmployeeMasterApi";
 import { getAllDepartmentApi } from "../../Api/DepartmentMasterApi";
 import { getAllVisitorTypeApi } from "../../Api/VisitorTypeMasterApi";
@@ -28,6 +29,9 @@ const Reports = () => {
     const [department, setDepartment] = useState("")
     const [allVisitorsType, setAllVisitorsType] = useState([]);
     const [visitorsType, setVisitorsType] = useState("")
+    const [secretKey, setSecretKey] = useState("");
+    const [photopathIV, setPhotopathIv] = useState("")
+    const [rowId, setRowId] = useState("")
 
     useEffect(() => {
         getAllReports();
@@ -97,12 +101,102 @@ const Reports = () => {
         }
     };
 
+    const getSecretKey = (Id, secretKey, photopathIV) => {
+        setSecretKey(secretKey);
+        setPhotopathIv(photopathIV)
+        setRowId(Id)
+    };
+
+    const decryptImage = useCallback((encryptedImage) => {
+
+        try {
+            const [ivHex, encryptedHex] = encryptedImage.split(":"); // Split IV and ciphertext
+            // console.log(ivHex, "ivHex")
+            const key = CryptoJS.enc.Hex.parse(secretKey); // Parse secret key
+            const iv = CryptoJS.enc.Hex.parse(ivHex); // Parse IV
+            // Decrypt the image
+            const decryptedBytes = CryptoJS.AES.decrypt(
+                { ciphertext: CryptoJS.enc.Hex.parse(encryptedHex) },
+                key,
+                { iv, padding: CryptoJS.pad.Pkcs7 } // Use Pkcs7 padding
+            );
+            // Convert decrypted WordArray back to Base64 string
+            const decryptedBase64 = CryptoJS.enc.Base64.stringify(decryptedBytes);
+            // console.log(`data:image/png;base64,${decryptedBase64}`)
+            return `data:image/png;base64,${decryptedBase64}`; // Return image in Base64 format
+        } catch (error) {
+            console.error("Error during decryption:", error);
+            return ""; // Return empty string if error occurs
+        }
+    }, [secretKey]);
+
     const indexOfLastItem = currentPage * itemsPerPage;
     const indexOfFirstItem = indexOfLastItem - itemsPerPage;
     const currentItems = allReports.slice(indexOfFirstItem, indexOfLastItem);
 
     return (
         <>
+            <style>
+                {
+
+                    `@media print {
+  body * {
+    visibility: hidden;
+  }
+
+  #section-to-print,
+  #section-to-print * {
+    visibility: visible;
+  }
+
+  #section-to-print {
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100% !important;
+    height: auto;
+    background: white;
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
+  }
+
+  .card-header {
+    background-color: green !important;
+    color: white !important;
+  }
+
+  .card {
+    border: 1px solid #ccc !important;
+    padding: 10px;
+  }
+
+  .card-footer {
+    background-color: #f8f9fa !important;
+  }
+
+
+  .card,
+  .modal-body {
+    box-shadow: none !important;
+    border-radius: 0 !important;
+  }
+    .label {
+    font-weight: bold;
+    margin-right: 10px;
+    
+  }
+
+  .value {
+    text-transform: uppercase;
+    font-size: 24px;
+    font-weight: 600;
+    color: #333;
+    margin-left: 20px;
+  }
+}`
+
+                }
+            </style>
             <section id="main-content">
                 <section className="wrapper">
                     <div className="container-fluid">
@@ -153,7 +247,7 @@ const Reports = () => {
 
                                                 />
                                             </div>
-                                            <div className="col-lg-3">
+                                            {/* <div className="col-lg-3">
                                                 <Select
                                                     className="mt-1"
                                                     // value={purposeOfVisit}
@@ -162,7 +256,7 @@ const Reports = () => {
                                                     placeholder="Select Department"
 
                                                 />
-                                            </div>
+                                            </div> */}
                                             <div className="col-lg-3">
                                                 <Select
                                                     className="mt-1"
@@ -214,29 +308,63 @@ const Reports = () => {
                                                     <th style={headerCellStyle}>Host Department</th>
                                                     <th style={headerCellStyle}>Purpose of Visit</th>
                                                     <th style={headerCellStyle}>Visitor ID/Pass No.</th>
-                                                    <th style={headerCellStyle}>Visitor Address</th>
+                                                    {/* <th style={headerCellStyle}>Visitor Address</th> */}
                                                     <th style={headerCellStyle}>Status</th>
                                                     <th style={headerCellStyle}>Photo</th>
                                                     <th style={headerCellStyle}>Pass</th>
                                                 </tr>
                                             </thead>
                                             <tbody>
-                                                {currentItems.map((data, index) => (
-                                                    <tr key={data.Id}>
-                                                        <td>
-                                                            {(currentPage - 1) * itemsPerPage + index + 1}
-                                                        </td>
-                                                        <td>{data.DepartmentCode}</td>
-                                                        <td>{data.DepartmentName}</td>
-                                                        <td> <button
-                                                            className="btn"
-                                                            style={headerCellStyle}
-                                                            data-toggle="modal" data-target="#exampleModal"
-                                                        >
-                                                            View
-                                                        </button></td>
-                                                    </tr>
-                                                ))}
+                                                {currentItems.map((data, index) => {
+                                                    const decryptedImage = data.PhotoPath && data.secretKey
+                                                        ? decryptImage(data.PhotoPath)
+                                                        : "";
+                                                    return (
+                                                        <tr key={data.Id}>
+                                                            <td>
+                                                                {(currentPage - 1) * itemsPerPage + index + 1}
+                                                            </td>
+                                                            <td>{data.FullName}</td>
+                                                            <td>{data.VisitorTypeName}</td>
+                                                            <td>{data.Email}</td>
+                                                            <td>{data.MobileNumber}</td>
+                                                            <td>{data.VisitTime}</td>
+                                                            <td>{data.ExitTime}</td>
+                                                            <td>abc</td>
+                                                            <td>IT</td>
+                                                            <td>{data.PurposeName}</td>
+                                                            <td>dfgd</td>
+                                                            <td>{data.ApprovalStatus}</td>
+                                                            <td>
+                                                                {rowId === data.Id ? (
+                                                                    <img
+                                                                        src={decryptedImage}
+                                                                        alt="Decrypted"
+                                                                        style={{ width: "100px", height: "auto" }}
+                                                                    />
+                                                                ) : (
+                                                                    <button
+                                                                        className="btn"
+                                                                        style={headerCellStyle}
+                                                                        onClick={() => {
+
+                                                                            getSecretKey(data.Id, data.secretKey, data.PhotopathIV);
+                                                                        }}
+                                                                    >
+                                                                        View
+                                                                    </button>
+                                                                )}
+                                                            </td>
+                                                            <td> <button
+                                                                className="btn"
+                                                                style={headerCellStyle}
+                                                                data-toggle="modal" data-target="#exampleModal"
+                                                            >
+                                                                View
+                                                            </button></td>
+                                                        </tr>
+                                                    )
+                                                })}
                                             </tbody>
                                         </Table>
 
@@ -261,11 +389,12 @@ const Reports = () => {
                             </div>
                         </div>
                     </div>
-                    <div className="modal fade bd-example-modal-lg" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                    <div className="modal fade bd-example-modal-lg" id="exampleModal" tabIndex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
                         <div className="modal-dialog modal-lg" role="document">
                             <div className="modal-content">
                                 <div className="modal-header">
                                     <h4 className="modal-title" id="exampleModalLabel">One Day Pass</h4>
+                                    <button className="btn" onClick={() => window.print()}>Print</button>
                                     <button type="button" className="close" data-dismiss="modal" aria-label="Close">
                                         <span aria-hidden="true">&times;</span>
                                     </button>
@@ -374,7 +503,7 @@ const Reports = () => {
 
 
                                 </div> */}
-                                <div className="modal-body">
+                                <div className="modal-body" id="section-to-print">
                                     <div className="row justify-content-center">
                                         <div className="col-lg-6">
                                             <div className="card position-relative">
@@ -406,40 +535,40 @@ const Reports = () => {
                                                 {/* Card Body */}
                                                 <div className="card-body mt-5">
                                                     <div className="row">
-                                                        <div className="col-lg-6"><h5>Visitor Entry Code</h5></div>
-                                                        <div className="col-lg-6"><h5>LVVfghfh</h5></div>
+                                                        <div className="col-lg-6 label text-dark"><h5 className="text-start ps-3">Visitor Entry Code</h5></div>
+                                                        <div className="col-lg-6 value"><h5>LVVfghfh</h5></div>
                                                     </div>
                                                     <div className="row mt-3">
-                                                        <div className="col-lg-6"><h5>Visitor Name</h5></div>
-                                                        <div className="col-lg-6"><h5>Runali</h5></div>
+                                                        <div className="col-lg-6 label text-dark"><h5 className="text-start ps-3">Visitor Name</h5></div>
+                                                        <div className="col-lg-6 value"><h5>Runali</h5></div>
                                                     </div>
                                                     <div className="row mt-3">
-                                                        <div className="col-lg-6"><h5>Visitor Company</h5></div>
-                                                        <div className="col-lg-6"><h5>DIISfdg</h5></div>
+                                                        <div className="col-lg-6 label text-dark"><h5 className="text-start ps-3">Visitor Company</h5></div>
+                                                        <div className="col-lg-6 value"><h5>DIISfdg</h5></div>
                                                     </div>
                                                     <div className="row mt-3">
-                                                        <div className="col-lg-6"><h5>Host</h5></div>
-                                                        <div className="col-lg-6"><h5>Admin</h5></div>
+                                                        <div className="col-lg-6 label text-dark"><h5 className="text-start ps-3">Host</h5></div>
+                                                        <div className="col-lg-6 value"><h5>Admin</h5></div>
                                                     </div>
                                                     <div className="row mt-3">
-                                                        <div className="col-lg-6"><h5>Purpose</h5></div>
-                                                        <div className="col-lg-6"><h5>Meeting</h5></div>
+                                                        <div className="col-lg-6 label text-dark"><h5 className="text-start ps-3">Purpose</h5></div>
+                                                        <div className="col-lg-6 value"><h5>Meeting</h5></div>
                                                     </div>
                                                     <div className="row mt-3">
-                                                        <div className="col-lg-6"><h5>Mobile No</h5></div>
-                                                        <div className="col-lg-6"><h5>980000000</h5></div>
+                                                        <div className="col-lg-6 label text-dark"><h5 className="text-start ps-3">Mobile No</h5></div>
+                                                        <div className="col-lg-6 value"><h5>980000000</h5></div>
                                                     </div>
                                                     <div className="row mt-3">
-                                                        <div className="col-lg-6"><h5>Valid From</h5></div>
-                                                        <div className="col-lg-6"><h5>6/9/2025</h5></div>
+                                                        <div className="col-lg-6 label text-dark"><h5 className="text-start ps-3">Valid From</h5></div>
+                                                        <div className="col-lg-6 value"><h5>6/9/2025</h5></div>
                                                     </div>
                                                     <div className="row mt-3">
-                                                        <div className="col-lg-6"><h5>Valid To</h5></div>
-                                                        <div className="col-lg-6"><h5>30/9/2025</h5></div>
+                                                        <div className="col-lg-6 label text-dark"><h5 className="text-start ps-3">Valid To</h5></div>
+                                                        <div className="col-lg-6 value"><h5>30/9/2025</h5></div>
                                                     </div>
                                                     <div className="row mt-3">
-                                                        <div className="col-lg-6"><h5>Area</h5></div>
-                                                        <div className="col-lg-6"><h5>IT</h5></div>
+                                                        <div className="col-lg-6 label text-dark"><h5 className="text-start ps-3">Area</h5></div>
+                                                        <div className="col-lg-6 value"><h5>IT</h5></div>
                                                     </div>
                                                 </div>
 
