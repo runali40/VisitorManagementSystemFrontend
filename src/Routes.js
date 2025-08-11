@@ -3,6 +3,7 @@
 
 import { lazy } from 'react';
 import Reports from './Components/Pages/Reports/Reports';
+import Approver from './Components/Pages/Approver/Approver';
 
 const Registration = lazy(() => import('./Components/Pages/Login/Registration'));
 const VisitorType = lazy(() => import('./Components/Pages/Masters/VisitorTypeMaster/VisitorType'));
@@ -38,6 +39,7 @@ const routes = [
   { path: '/VisiotrsInfo', exact: true, name: 'Visitor', element: Visitor },
   { path: '/visitorForm', exact: true, name: 'VisitorForm', element: VisitorForm },
   { path: '/reports', exact: true, name: 'Reports', element: Reports },
+  { path: '/approver', exact: true, name: 'Approver', element: Approver },
 
 ]
 export default routes
