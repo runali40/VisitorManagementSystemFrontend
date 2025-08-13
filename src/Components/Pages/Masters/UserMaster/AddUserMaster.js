@@ -82,6 +82,10 @@ const AddUserMaster = () => {
             value: data.EmployeeId,
             label: `${data.EmployeeName}`,
         })
+        setRole({
+            value: data.um_roleid,
+            label: data.r_rolename
+        })
     }
 
     return (

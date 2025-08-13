@@ -4,7 +4,7 @@ import { Pagination } from "../../Utils/Pagination";
 import "bootstrap/dist/css/bootstrap.min.css"; // Make sure this is loaded once globally
 import 'bootstrap/dist/js/bootstrap.bundle.min.js';
 import { useNavigate } from "react-router-dom";
-import { getReportsApi } from "../../Api/ReportsApi";
+import { getPassApi, getReportsApi } from "../../Api/ReportsApi";
 import Select from "react-select";
 import CryptoJS from "crypto-js";
 import { getAllEmployeeApi } from "../../Api/EmployeeMasterApi";
@@ -26,12 +26,19 @@ const Reports = () => {
     const [allEmployee, setAllEmployee] = useState([]);
     const [employee, setEmployee] = useState("")
     const [allDeparment, setAllDepartment] = useState([]);
-    const [department, setDepartment] = useState("")
     const [allVisitorsType, setAllVisitorsType] = useState([]);
     const [visitorsType, setVisitorsType] = useState("")
     const [secretKey, setSecretKey] = useState("");
     const [photopathIV, setPhotopathIv] = useState("")
     const [rowId, setRowId] = useState("")
+    const [visitorName, setVisitorName] = useState("")
+    const [visitorCompany, setVisitorCompany] = useState("")
+    const [purpose, setPurpose] = useState("")
+    const [mobileNo, setMobileNo] = useState("")
+    const [visitTime, setVisitTime] = useState("")
+    const [exitTime, setExitTime] = useState("")
+    const [passNo, setPassNo] = useState("")
+    const [photo, setPhoto] = useState(null)
 
     useEffect(() => {
         getAllReports();
@@ -83,6 +90,20 @@ const Reports = () => {
         setAllVisitorsType(options);
     }
 
+    const getPassData = async (reportId) => {
+        const data = await getPassApi(reportId, navigate)
+        console.log(data);
+        setVisitorName(data.FullName)
+        setVisitorCompany(data.CompanyName)
+        setMobileNo(data.MobileNumber)
+        setPurpose(data.PurposeName)
+        setVisitTime(data.VisitTime)
+        setExitTime(data.ExitTime)
+        setPassNo(data.PassNo)
+        setPhoto(data.PhotoPath)
+        setSecretKey(data.secretKey)
+    }
+
     const handleSearch = (e) => {
         const searchDataValue = e.target.value.toLowerCase();
         setSearchData(searchDataValue);
@@ -90,12 +111,11 @@ const Reports = () => {
         if (searchDataValue.trim() === "") {
             getAllReports();
         } else {
-            const filteredData = allReports.filter(
-                (department) =>
-                    department.DepartmentCode.toLowerCase().includes(searchDataValue) ||
-                    department.DepartmentName.toLowerCase().includes(searchDataValue)
-
-            );
+            const filteredData = allReports.filter((reports) => {
+                const FullName = reports.FullName ? reports.FullName.toLowerCase() : '';
+                const Email = reports.Email ? reports.Email.toLowerCase() : '';
+                return FullName.includes(searchDataValue) || Email.includes(searchDataValue);
+            });
             setAllReports(filteredData);
             setCurrentPage(1);
         }
@@ -130,6 +150,9 @@ const Reports = () => {
         }
     }, [secretKey]);
 
+    const decryptedImage1 = photo && secretKey
+        ? decryptImage(photo)
+        : "";
     const indexOfLastItem = currentPage * itemsPerPage;
     const indexOfFirstItem = indexOfLastItem - itemsPerPage;
     const currentItems = allReports.slice(indexOfFirstItem, indexOfLastItem);
@@ -227,7 +250,7 @@ const Reports = () => {
                                     <div className="card-body mx-3" style={{ backgroundColor: "rgb(240, 188, 180)" }}>
                                         {/* <div className="container-fluid" > */}
                                         <div className="row py-2" /* style={{backgroundColor:"rgb(240, 188, 180)"}} */>
-                                            <div className="col-lg-3">
+                                            <div className="col-lg-4">
                                                 <input
                                                     type="date"
                                                     id="expectedTime"
@@ -237,7 +260,7 @@ const Reports = () => {
                                                     onChange={(e) => setDate(e.target.value)}
                                                 />
                                             </div>
-                                            <div className="col-lg-3">
+                                            <div className="col-lg-4">
                                                 <Select
                                                     className="mt-1"
                                                     value={employee}
@@ -257,7 +280,7 @@ const Reports = () => {
 
                                                 />
                                             </div> */}
-                                            <div className="col-lg-3">
+                                            <div className="col-lg-4">
                                                 <Select
                                                     className="mt-1"
                                                     value={visitorsType}
@@ -359,6 +382,7 @@ const Reports = () => {
                                                                 className="btn"
                                                                 style={headerCellStyle}
                                                                 data-toggle="modal" data-target="#exampleModal"
+                                                                onClick={() => { getPassData(data.Id); getSecretKey(data.Id, data.secretKey, data.PhotopathIV); }}
                                                             >
                                                                 View
                                                             </button></td>
@@ -399,110 +423,7 @@ const Reports = () => {
                                         <span aria-hidden="true">&times;</span>
                                     </button>
                                 </div>
-                                {/* <div className="modal-body">
-                                    <div className="row">
-                                        <div className="col-lg-3">
 
-                                        </div>
-                                        <div className="col-lg-6">
-                                            <div className="card">
-                                                <div className="card-header py-3" style={{ backgroundColor: "green", color: "white" }}>
-                                                    <h4 className="text-center">One Day Pass</h4>
-                                                </div>
-                                                <div className="card-body mt-2">
-                                                    <div className="row">
-                                                        <div className="col-lg-6">
-                                                            <h5>Visitor Entry Code</h5>
-                                                        </div>
-                                                        <div className="col-lg-6">
-                                                            <h5>LVVfghfh</h5>
-                                                        </div>
-                                                    </div>
-                                                    <div className="row mt-3">
-                                                        <div className="col-lg-6">
-                                                            <h5>Visitor Name</h5>
-                                                        </div>
-                                                        <div className="col-lg-6">
-                                                            <h5>Runali</h5>
-                                                        </div>
-                                                    </div>
-                                                    <div className="row mt-3">
-                                                        <div className="col-lg-6">
-                                                            <h5>Visitor Company</h5>
-                                                        </div>
-                                                        <div className="col-lg-6">
-                                                            <h5>DIISfdg</h5>
-                                                        </div>
-                                                    </div>
-                                                    <div className="row mt-3">
-                                                        <div className="col-lg-6">
-                                                            <h5>Host</h5>
-                                                        </div>
-                                                        <div className="col-lg-6">
-                                                            <h5>Admin</h5>
-                                                        </div>
-                                                    </div>
-                                                    <div className="row mt-3">
-                                                        <div className="col-lg-6">
-                                                            <h5>Purpose</h5>
-                                                        </div>
-                                                        <div className="col-lg-6">
-                                                            <h5>Meeting</h5>
-                                                        </div>
-                                                    </div>
-                                                    <div className="row mt-3">
-                                                        <div className="col-lg-6">
-                                                            <h5>Mobile No</h5>
-                                                        </div>
-                                                        <div className="col-lg-6">
-                                                            <h5>980000000</h5>
-                                                        </div>
-                                                    </div>
-                                                    <div className="row mt-3">
-                                                        <div className="col-lg-6">
-                                                            <h5>Valid From</h5>
-                                                        </div>
-                                                        <div className="col-lg-6">
-                                                            <h5>6/9/2025</h5>
-                                                        </div>
-                                                    </div>
-                                                    <div className="row mt-3">
-                                                        <div className="col-lg-6">
-                                                            <h5>Valid To</h5>
-                                                        </div>
-                                                        <div className="col-lg-6">
-                                                            <h5>30/9/2025</h5>
-                                                        </div>
-                                                    </div>
-                                                    <div className="row mt-3">
-                                                        <div className="col-lg-6">
-                                                            <h5>Area</h5>
-                                                        </div>
-                                                        <div className="col-lg-6">
-                                                            <h5>IT</h5>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <div className="card-footer py-3">
-                                                    <div className="row">
-                                                        <div className="col-lg-6">
-                                                            <h4>DIIS</h4>
-                                                        </div>
-                                                        <div className="col-lg-6">
-                                                            <h4>Auth Sign</h4>
-                                                            <h5 className="mt-2">......</h5>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div className="col-lg-3">
-
-                                        </div>
-                                    </div>
-
-
-                                </div> */}
                                 <div className="modal-body" id="section-to-print">
                                     <div className="row justify-content-center">
                                         <div className="col-lg-6">
@@ -524,7 +445,13 @@ const Reports = () => {
                                                         border: "2px solid #ccc"
                                                     }}
                                                 >
-                                                    <i className="bi bi-person-circle" style={{ fontSize: "40px", color: "gray" }}></i>
+                                                    {/* <i className="bi bi-person-circle" style={{ fontSize: "40px", color: "gray" }}> */}
+                                                        <img
+                                                        src={decryptedImage1}
+                                                        alt="Decrypted"
+                                                        style={{ width: '100px', height: '100px', borderRadius: '50%' }}
+                                                    />
+                                                    {/* </i> */}
                                                 </div>
 
                                                 {/* Card Header */}
@@ -536,40 +463,40 @@ const Reports = () => {
                                                 <div className="card-body mt-5">
                                                     <div className="row">
                                                         <div className="col-lg-6 label text-dark"><h5 className="text-start ps-3">Visitor Entry Code</h5></div>
-                                                        <div className="col-lg-6 value"><h5>LVVfghfh</h5></div>
+                                                        <div className="col-lg-6 value"><h5>{passNo}</h5></div>
                                                     </div>
                                                     <div className="row mt-3">
                                                         <div className="col-lg-6 label text-dark"><h5 className="text-start ps-3">Visitor Name</h5></div>
-                                                        <div className="col-lg-6 value"><h5>Runali</h5></div>
+                                                        <div className="col-lg-6 value"><h5>{visitorName}</h5></div>
                                                     </div>
                                                     <div className="row mt-3">
                                                         <div className="col-lg-6 label text-dark"><h5 className="text-start ps-3">Visitor Company</h5></div>
-                                                        <div className="col-lg-6 value"><h5>DIISfdg</h5></div>
+                                                        <div className="col-lg-6 value"><h5>{visitorCompany}</h5></div>
                                                     </div>
-                                                    <div className="row mt-3">
+                                                    {/* <div className="row mt-3">
                                                         <div className="col-lg-6 label text-dark"><h5 className="text-start ps-3">Host</h5></div>
                                                         <div className="col-lg-6 value"><h5>Admin</h5></div>
-                                                    </div>
+                                                    </div> */}
                                                     <div className="row mt-3">
                                                         <div className="col-lg-6 label text-dark"><h5 className="text-start ps-3">Purpose</h5></div>
-                                                        <div className="col-lg-6 value"><h5>Meeting</h5></div>
+                                                        <div className="col-lg-6 value"><h5>{purpose}</h5></div>
                                                     </div>
                                                     <div className="row mt-3">
                                                         <div className="col-lg-6 label text-dark"><h5 className="text-start ps-3">Mobile No</h5></div>
-                                                        <div className="col-lg-6 value"><h5>980000000</h5></div>
+                                                        <div className="col-lg-6 value"><h5>{mobileNo}</h5></div>
                                                     </div>
                                                     <div className="row mt-3">
                                                         <div className="col-lg-6 label text-dark"><h5 className="text-start ps-3">Valid From</h5></div>
-                                                        <div className="col-lg-6 value"><h5>6/9/2025</h5></div>
+                                                        <div className="col-lg-6 value"><h5>{visitTime}</h5></div>
                                                     </div>
                                                     <div className="row mt-3">
                                                         <div className="col-lg-6 label text-dark"><h5 className="text-start ps-3">Valid To</h5></div>
-                                                        <div className="col-lg-6 value"><h5>30/9/2025</h5></div>
+                                                        <div className="col-lg-6 value"><h5>{exitTime}</h5></div>
                                                     </div>
-                                                    <div className="row mt-3">
+                                                    {/* <div className="row mt-3">
                                                         <div className="col-lg-6 label text-dark"><h5 className="text-start ps-3">Area</h5></div>
                                                         <div className="col-lg-6 value"><h5>IT</h5></div>
-                                                    </div>
+                                                    </div> */}
                                                 </div>
 
                                                 {/* Card Footer */}

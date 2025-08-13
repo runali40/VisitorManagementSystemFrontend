@@ -387,7 +387,7 @@ const Sidebar = () => {
 
                                     );
                                 })}
-                                   <li className={`sub-menu ${isVisitor ? 'active' : ''}`}>
+                                   {/* <li className={`sub-menu ${isVisitor ? 'active' : ''}`}>
                                     <div onClick={toggleVisitor} style={{ cursor: 'pointer' }}>
                                         <i className="fa fa-book"></i>
                                         <span className="ms-2">Reports</span>
@@ -399,7 +399,7 @@ const Sidebar = () => {
 
                                         </ul>
                                     )}
-                                </li> 
+                                </li>  */}
                             </ul>
                             {/* </ul> */}
                         </div>

@@ -8,10 +8,11 @@ import ErrorHandler from "../ErrorHandler/ErrorHandler";
 
 export const AddApproverApi = (approval, approvalId, navigate) => {
     const userId = localStorage.getItem('userId');
+    const hostName = localStorage.getItem('username');
     const data = {
         userId: userId,
         id: approvalId,
-        hostName: "Approver",
+        hostName: hostName,
         status: approval.value,
     };
 

@@ -69,6 +69,10 @@ const Approver = () => {
         const data = await getApproverApi(approverId, navigate);
         console.log(data);
         setApprovalId(data.Id)
+        setApproval({
+            value: data.Id,
+            label: data.ApprovalStatus
+        })
     }
 
     const AddApproval = async () => {
@@ -87,6 +91,8 @@ const Approver = () => {
         setApproval(selectedValue)
     }
 
+
+
     const handleSearch = (e) => {
         const searchDataValue = e.target.value.toLowerCase();
         setSearchData(searchDataValue);
@@ -94,16 +100,16 @@ const Approver = () => {
         if (searchDataValue.trim() === "") {
             getallApprover();
         } else {
-            const filteredData = allApprover.filter(
-                (department) =>
-                    department.DepartmentCode.toLowerCase().includes(searchDataValue) ||
-                    department.DepartmentName.toLowerCase().includes(searchDataValue)
-
-            );
+            const filteredData = allApprover.filter((approver) => {
+                const FullName = approver.FullName ? approver.FullName.toLowerCase() : '';
+                const Email = approver.Email ? approver.Email.toLowerCase() : '';
+                return FullName.includes(searchDataValue) || Email.includes(searchDataValue);
+            });
             setAllApprover(filteredData);
             setCurrentPage(1);
         }
     };
+
 
     const getSecretKey = (Id, secretKey, photopathIV) => {
         setSecretKey(secretKey);
