@@ -55,7 +55,7 @@ const Reports = () => {
     }, []);
 
     const getAllReports = async () => {
-        const data = await getReportsApi(navigate);
+        const data = await getReportsApi(visitorsType, date, navigate);
         console.log(data)
         setAllReports(data)
     }
@@ -103,6 +103,23 @@ const Reports = () => {
         setPhoto(data.PhotoPath)
         setSecretKey(data.secretKey)
     }
+
+    const handleVisitorsType = async (selectedValue) => {
+        setVisitorsType(selectedValue)
+        console.log(selectedValue, "visitorsType")
+        const data = await getReportsApi(selectedValue, date, navigate); 
+        setAllReports(data)
+    }
+
+    const handleChangeDate = async (e) => {
+        const newDate = e.target.value;
+        setDate(newDate);
+        console.log(newDate);
+        console.log(date)
+        const data = await getReportsApi(visitorsType, newDate, navigate); 
+        setAllReports(data)
+        // getAllReports();
+    };
 
     const handleSearch = (e) => {
         const searchDataValue = e.target.value.toLowerCase();
@@ -235,14 +252,14 @@ const Reports = () => {
                                                 {/* <Button onClick={handleNavigate}  style={headerCellStyle}>
                                                     Add
                                                 </Button> */}
-                                                <button
+                                                {/* <button
                                                     className="btn btn-md text-light"
                                                     type="button"
                                                     style={{ backgroundColor: "#8b5c7e" }}
-                                                // onClick={() => navigate("/addDepartmentMaster")}
+                                               
                                                 >
                                                     Print
-                                                </button>
+                                                </button> */}
                                             </div>
                                         </div>
                                     </div>
@@ -257,10 +274,10 @@ const Reports = () => {
                                                     className="form-control mt-1"
 
                                                     value={date}
-                                                    onChange={(e) => setDate(e.target.value)}
+                                                    onChange={handleChangeDate}
                                                 />
                                             </div>
-                                            <div className="col-lg-4">
+                                            {/* <div className="col-lg-4">
                                                 <Select
                                                     className="mt-1"
                                                     value={employee}
@@ -269,7 +286,7 @@ const Reports = () => {
                                                     placeholder="Select Host Name"
 
                                                 />
-                                            </div>
+                                            </div> */}
                                             {/* <div className="col-lg-3">
                                                 <Select
                                                     className="mt-1"
@@ -280,11 +297,11 @@ const Reports = () => {
 
                                                 />
                                             </div> */}
-                                            <div className="col-lg-4">
+                                            <div className="col-lg-5">
                                                 <Select
                                                     className="mt-1"
                                                     value={visitorsType}
-                                                    // onChange={handlePurpose}
+                                                    onChange={handleVisitorsType}
                                                     options={allVisitorsType}
                                                     placeholder="Select Visitor Type"
 
@@ -446,7 +463,7 @@ const Reports = () => {
                                                     }}
                                                 >
                                                     {/* <i className="bi bi-person-circle" style={{ fontSize: "40px", color: "gray" }}> */}
-                                                        <img
+                                                    <img
                                                         src={decryptedImage1}
                                                         alt="Decrypted"
                                                         style={{ width: '100px', height: '100px', borderRadius: '50%' }}

@@ -5,10 +5,12 @@ import { toast } from "react-toastify";
 import 'react-toastify/dist/ReactToastify.css';
 import ErrorHandler from "../ErrorHandler/ErrorHandler";
 
-export const getReportsApi = (navigate) => {
+export const getReportsApi = (visitorsType, date, navigate) => {
     const userId = localStorage.getItem('userId');
     const params = {
         UserId: userId,
+        VisitorType: visitorsType.value,
+        Date: date
     };
     const url = 'VisitorsReport/GetAll';
     return apiClient({
