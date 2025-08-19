@@ -104,6 +104,7 @@ const Visitor = () => {
         }
     }, [secretKey]);
 
+
     const indexOfLastItem = currentPage * itemsPerPage;
     const indexOfFirstItem = indexOfLastItem - itemsPerPage;
     const currentItems = allVisitors.slice(indexOfFirstItem, indexOfLastItem);
@@ -218,7 +219,7 @@ const Visitor = () => {
                                                             <td>{data.IsActive ? "Active" : "Inactive"}</td>
                                                             <td>
                                                                 <div className="d-flex">
-                                                                    <Edit className="text-success mr-2" onClick={() => getVisitorData(data.Id)} />
+                                                                    <Edit className="text-success mr-2" onClick={()=>{getVisitorData(data.Id);getSecretKey(data.Id, data.secretKey, data.PhotopathIV) } } />
                                                                     <Delete className="text-danger" onClick={() => DeleteVisitorData(data.Id)} />
                                                                 </div>
                                                             </td>

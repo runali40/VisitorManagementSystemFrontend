@@ -106,6 +106,40 @@ const VisitorForm = () => {
     //     })
 
     // }
+    // const getVisitorData = async () => {
+    //     const data = await getVisitorApi(vId, navigate);
+
+    //     flushSync(() => {
+    //         setFullName(data.FullName);
+    //         setCompanyName(data.CompanyName);
+    //         setEmail(data.Email);
+    //         setMobileNo(data.MobileNumber);
+    //         setGovId(data.GovermentId);
+    //         setPersonToMeet(data.PersonToMeet);
+    //         setExpectedTime(data.VisitTime.split("T")[0]);
+    //         const photoValue = data?.PhotoPath;
+    //         console.log("Photo value to set:", photoValue);
+
+    //         setPhoto(photoValue);
+    //         const decryptedImageUrl = photo ? decryptImage(photoValue) : null;
+    //         console.log(photo, "124")
+    //         // Immediate check with useEffect
+    //         // useEffect(() => {
+    //         //     console.log("Updated photo state:", photo);
+    //         // }, [photo]);
+    //         setPurposeOfVisit({
+    //             value: data.PurposeId,
+    //             label: `${data.PurposeName}`,
+    //         });
+    //         setVisitorCategory({
+    //             value: data.CategoryId,
+    //             label: `${data.CategoryName}`,
+    //         });
+    //     });
+
+    //     // Ab photo updated hai
+    //    // This should show updated value
+    // }
     const getVisitorData = async () => {
         const data = await getVisitorApi(vId, navigate);
 
@@ -117,15 +151,16 @@ const VisitorForm = () => {
             setGovId(data.GovermentId);
             setPersonToMeet(data.PersonToMeet);
             setExpectedTime(data.VisitTime.split("T")[0]);
+
             const photoValue = data?.PhotoPath;
             console.log("Photo value to set:", photoValue);
 
             setPhoto(photoValue);
-            console.log(photo, "124")
-            // Immediate check with useEffect
-            // useEffect(() => {
-            //     console.log("Updated photo state:", photo);
-            // }, [photo]);
+
+            // Use photoValue directly instead of state
+            const decryptedImageUrl = photoValue ? decryptImage(photoValue) : null;
+            console.log("Decrypted Image URL:", decryptedImageUrl);
+
             setPurposeOfVisit({
                 value: data.PurposeId,
                 label: `${data.PurposeName}`,
@@ -135,14 +170,19 @@ const VisitorForm = () => {
                 label: `${data.CategoryName}`,
             });
         });
+    };
+    useEffect(() => {
+        if (photo) {
+            const decryptedImageUrl = decryptImage(photo);
+            console.log("Decrypted Image URL:", decryptedImageUrl);
+        }
+    }, [photo]);
 
-        // Ab photo updated hai
-       // This should show updated value
-    }
     // useEffect(() => {
     //     console.log(photo, "Updated photo");
     //     setPhoto(photo)
     // }, [photo]);
+
     const getAllPurpose = async () => {
         const data = await getAllPurposeApi(navigate);
         console.log(data)
@@ -222,10 +262,14 @@ const VisitorForm = () => {
         }
     }, [secretKey]);
 
-
     // Use the decrypted image
     const decryptedImageUrl = photo ? decryptImage(photo) : null;
     const decryptedImageUrl2 = photo ? decryptImage(photo) : null;
+    
+    const decryptedImage1 = photo && secretKey
+        ? decryptImage(photo)
+        : "";
+
     const handleRefreshWebcam = () => {
         setPhoto(null);           // clear previous photo
         setShowWebcam(false);     // force unmount
