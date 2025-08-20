@@ -8,190 +8,190 @@ import { getAllEmployeeApi } from "../../../Api/EmployeeMasterApi";
 import { getAllRoleApi } from "../../../Api/RoleMasterApi";
 
 const AddUserMaster = () => {
-    const navigate = useNavigate();
-    const location = useLocation();
-    const { uId } = location.state || {};
-    console.log(uId, "uId")
+  const navigate = useNavigate();
+  const location = useLocation();
+  const { uId } = location.state || {};
+  console.log(uId, "uId");
 
-    const [username, setUsername] = useState("")
-    const [employeeName, setEmployeeName] = useState("")
-    const [allEmployee, setAllEmployee] = useState([])
-    const [role, setRole] = useState("")
-    const [allRole, setAllRole] = useState([])
+  const [username, setUsername] = useState("");
+  const [employeeName, setEmployeeName] = useState("");
+  const [allEmployee, setAllEmployee] = useState([]);
+  const [role, setRole] = useState("");
+  const [allRole, setAllRole] = useState([]);
 
-    useEffect(() => {
-        if (uId != null) { // covers both null and undefined
-            getUserData();
-        }
-    }, [uId]);
-
-    useEffect(() => {
-        const fetchData = async () => {
-
-            await getAllEmployee();
-            await getAllRole();
-        };
-        fetchData();
-    }, []);
-
-    const getAllRole = async () => {
-        const data = await getAllRoleApi(navigate);
-        console.log(data)
-        const options = data.map((data) => ({
-            value: data.r_id,
-            label: `${data.r_rolename}`,
-        }));
-        setAllRole(options);
+  useEffect(() => {
+    if (uId != null) {
+      // covers both null and undefined
+      getUserData();
     }
+  }, [uId]);
 
-    const handleRole = (selected) => {
-        const selectedValue = selected;
-        setRole(selectedValue);
-        console.log(selectedValue, "selected value");
+  useEffect(() => {
+    const fetchData = async () => {
+      await getAllEmployee();
+      await getAllRole();
+    };
+    fetchData();
+  }, []);
+
+  const getAllRole = async () => {
+    const data = await getAllRoleApi(navigate);
+    console.log(data);
+    const options = data.map((data) => ({
+      value: data.r_id,
+      label: `${data.r_rolename}`,
+    }));
+    setAllRole(options);
+  };
+
+  const handleRole = (selected) => {
+    const selectedValue = selected;
+    setRole(selectedValue);
+    console.log(selectedValue, "selected value");
+  };
+
+  const getAllEmployee = async () => {
+    const data = await getAllEmployeeApi(navigate);
+    console.log(data);
+    const options = data.map((data) => ({
+      value: data.Id,
+      label: `${data.EmployeeName}`,
+    }));
+    setAllEmployee(options);
+  };
+
+  const handleEmployee = (selected) => {
+    const selectedValue = selected;
+    setEmployeeName(selectedValue);
+    console.log(selectedValue, "selected value");
+  };
+
+  const AddUser = async () => {
+    const data = await AddUserApi(username, employeeName, role, uId, navigate);
+    if (data) {
+      console.log(data);
+      navigate("/userMaster");
     }
+  };
 
-    const getAllEmployee = async () => {
-        const data = await getAllEmployeeApi(navigate);
-        console.log(data)
-        const options = data.map((data) => ({
-            value: data.Id,
-            label: `${data.EmployeeName}`,
-        }));
-        setAllEmployee(options);
-    }
+  const getUserData = async () => {
+    const data = await getUserApi(uId, navigate);
+    console.log(data);
+    setUsername(data.um_user_name);
+    // setEmail(data.Email)
+    // setMobileNo(data.MobileNo)
+    setEmployeeName({
+      value: data.EmployeeId,
+      label: `${data.EmployeeName}`,
+    });
+    setRole({
+      value: data.um_roleid,
+      label: data.r_rolename,
+    });
+  };
 
-    const handleEmployee = (selected) => {
-        const selectedValue = selected;
-        setEmployeeName(selectedValue);
-        console.log(selectedValue, "selected value");
-    }
-
-    const AddUser = async () => {
-        const data = await AddUserApi(username, employeeName, role, uId, navigate);
-        console.log(data)
-        navigate("/userMaster")
-    }
-
-    const getUserData = async () => {
-        const data = await getUserApi(uId, navigate);
-        console.log(data)
-        setUsername(data.um_user_name)
-        // setEmail(data.Email)
-        // setMobileNo(data.MobileNo)
-        setEmployeeName({
-            value: data.EmployeeId,
-            label: `${data.EmployeeName}`,
-        })
-        setRole({
-            value: data.um_roleid,
-            label: data.r_rolename
-        })
-    }
-
-    return (
-        <>
-            <section id="main-content">
-                <section className="wrapper">
-                    <div className="container-fluid">
-                        <div className="card m-3" style={{ boxShadow: "0px 1px 5px rgba(0, 0, 0, 0.1)" }}>
-                            <div className="row">
-                                <div className="col-lg-12">
-                                    <div className="card-header m-3">
-                                        <div className="row">
-                                            <div className="col-lg-10">
-                                                <h3>Add User</h3>
-                                            </div>
-                                            <div className="col-lg-2 d-flex justify-content-end">
-
-                                                <button
-                                                    className="btn btn-md text-light"
-                                                    type="button"
-                                                    style={{ backgroundColor: "#8b5c7e" }}
-                                                    onClick={() => navigate("/userMaster")}
-                                                >
-                                                    Back
-                                                </button>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div className="card-body pt-3">
-                                        <div className="row">
-                                            <div className="col-xs-12 col-sm-12 col-md-6 col-lg-6 mt-2 mt-lg-0">
-                                                <div className="form-group form-group-sm">
-                                                    <label className="control-label fw-bold">
-                                                        Username:
-                                                    </label>{" "}
-                                                    <span className="text-danger fw-bold">*</span>
-                                                    <input
-                                                        type="text"
-                                                        id="dutyName"
-                                                        className="form-control mt-3"
-                                                        placeholder="Enter Username"
-                                                        value={username}
-                                                        onChange={(e) => setUsername(e.target.value)}
-                                                    />
-                                                </div>
-                                            </div>
-                                            <div className="col-xs-12 col-sm-12 col-md-6 col-lg-6 mt-lg-0 mt-md-0 mt-4">
-                                                <div className="form-group form-group-sm">
-                                                    <label className="control-label fw-bold">
-                                                        Employee:
-                                                    </label>{" "}
-                                                    <Select
-                                                        className="mt-3"
-                                                        value={employeeName}
-                                                        onChange={handleEmployee}
-                                                        options={allEmployee}
-                                                        placeholder="Select Employee"
-
-                                                    />
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div className="row mt-lg-1">
-                                            <div className="col-xs-12 col-sm-12 col-md-6 col-lg-6 mt-2 mt-lg-0">
-                                                <div className="form-group form-group-sm">
-                                                    <label className="control-label fw-bold">
-                                                        Role:
-                                                    </label>{" "}
-                                                    <span className="text-danger fw-bold">*</span>
-                                                    <Select
-                                                        className="mt-3"
-                                                        value={role}
-                                                        onChange={handleRole}
-                                                        options={allRole}
-                                                        placeholder="Select Role"
-
-                                                    />
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div className="card-footer">
-                                        <div className="row">
-                                            <div className="col-lg-12 text-end">
-                                                <button
-                                                    className="btn btn-md text-light"
-                                                    type="button"
-                                                    style={{ backgroundColor: "#8b5c7e" }}
-                                                    onClick={() => {
-                                                        AddUser();
-
-                                                    }}
-                                                >
-                                                    Save
-                                                </button>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
+  return (
+    <>
+      <section id="main-content">
+        <section className="wrapper">
+          <div className="container-fluid">
+            <div
+              className="card m-3"
+              style={{ boxShadow: "0px 1px 5px rgba(0, 0, 0, 0.1)" }}
+            >
+              <div className="row">
+                <div className="col-lg-12">
+                  <div className="card-header m-3">
+                    <div className="row">
+                      <div className="col-lg-10">
+                        <h3>Add User</h3>
+                      </div>
+                      <div className="col-lg-2 d-flex justify-content-end">
+                        <button
+                          className="btn btn-md text-light"
+                          type="button"
+                          style={{ backgroundColor: "#8b5c7e" }}
+                          onClick={() => navigate("/userMaster")}
+                        >
+                          Back
+                        </button>
+                      </div>
                     </div>
-                </section>
-            </section>
-        </>
-    );
+                  </div>
+                  <div className="card-body pt-3">
+                    <div className="row">
+                      <div className="col-xs-12 col-sm-12 col-md-6 col-lg-6 mt-2 mt-lg-0">
+                        <div className="form-group form-group-sm">
+                          <label className="control-label fw-bold">
+                            Username:
+                          </label>{" "}
+                          <span className="text-danger fw-bold">*</span>
+                          <input
+                            type="text"
+                            id="dutyName"
+                            className="form-control mt-3"
+                            placeholder="Enter Username"
+                            value={username}
+                            onChange={(e) => setUsername(e.target.value)}
+                          />
+                        </div>
+                      </div>
+                      <div className="col-xs-12 col-sm-12 col-md-6 col-lg-6 mt-lg-0 mt-md-0 mt-4">
+                        <div className="form-group form-group-sm">
+                          <label className="control-label fw-bold">
+                            Employee:
+                          </label>{" "}
+                          <span className="text-danger fw-bold">*</span>
+                          <Select
+                            className="mt-3"
+                            value={employeeName}
+                            onChange={handleEmployee}
+                            options={allEmployee}
+                            placeholder="Select Employee"
+                          />
+                        </div>
+                      </div>
+                    </div>
+                    <div className="row mt-lg-1">
+                      <div className="col-xs-12 col-sm-12 col-md-6 col-lg-6 mt-2 mt-lg-0">
+                        <div className="form-group form-group-sm">
+                          <label className="control-label fw-bold">Role:</label>{" "}
+                          <span className="text-danger fw-bold">*</span>
+                          <Select
+                            className="mt-3"
+                            value={role}
+                            onChange={handleRole}
+                            options={allRole}
+                            placeholder="Select Role"
+                          />
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div className="card-footer">
+                    <div className="row">
+                      <div className="col-lg-12 text-end">
+                        <button
+                          className="btn btn-md text-light"
+                          type="button"
+                          style={{ backgroundColor: "#8b5c7e" }}
+                          onClick={() => {
+                            AddUser();
+                          }}
+                        >
+                          Save
+                        </button>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+      </section>
+    </>
+  );
 };
 
 export default AddUserMaster;

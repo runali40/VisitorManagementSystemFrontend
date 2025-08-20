@@ -7,6 +7,10 @@ import ErrorHandler from "../ErrorHandler/ErrorHandler";
 
 
 export const AddUserApi = (username, employeeName, role, uId, navigate) => {
+       if (!username || !employeeName || !role) {
+            toast.success("Please fill all the details");
+            return null;
+          }
     const userId = localStorage.getItem('userId');
     const data = {
         userId: userId,

@@ -7,6 +7,10 @@ import ErrorHandler from "../ErrorHandler/ErrorHandler";
 
 
 export const AddVisitorTypeApi = (visitorTypeCode, visitorTypeName, visitorId, navigate) => {
+    if (!visitorTypeCode || !visitorTypeName) {
+    toast.success("Please fill all the details");
+    return null;
+  }
     const userId = localStorage.getItem('userId');
     const data = {
         userId: userId,
