@@ -64,9 +64,9 @@ const Sidebar = () => {
     setIsVisitor(!isVisitor);
   };
 
-  // useEffect(() => {
-  //     getAllWebMenu();
-  // }, [])
+  useEffect(() => {
+      getAllWebMenu();
+  }, [])
 
   const getAllWebMenu = async () => {
     const data = await getAllWebMenuApi();
