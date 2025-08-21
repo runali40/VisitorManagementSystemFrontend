@@ -107,7 +107,7 @@ const Reports = () => {
     const handleVisitorsType = async (selectedValue) => {
         setVisitorsType(selectedValue)
         console.log(selectedValue, "visitorsType")
-        const data = await getReportsApi(selectedValue, date, navigate); 
+        const data = await getReportsApi(selectedValue, date, navigate);
         setAllReports(data)
     }
 
@@ -116,7 +116,7 @@ const Reports = () => {
         setDate(newDate);
         console.log(newDate);
         console.log(date)
-        const data = await getReportsApi(visitorsType, newDate, navigate); 
+        const data = await getReportsApi(visitorsType, newDate, navigate);
         setAllReports(data)
         // getAllReports();
     };
@@ -368,7 +368,7 @@ const Reports = () => {
                                                             <td>{data.VisitorTypeName}</td>
                                                             <td>{data.Email}</td>
                                                             <td>{data.MobileNumber}</td>
-                                                            <td>{data.VisitTime}</td>
+                                                            <td>{data.VisitTime ? data.VisitTime.split("T")[0] : null}</td>
                                                             <td>{data.ExitTime}</td>
                                                             <td>abc</td>
                                                             <td>IT</td>
