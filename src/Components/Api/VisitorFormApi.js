@@ -241,7 +241,7 @@ export const SendSmsApi = (
     const userId = localStorage.getItem("userId");
     const data = {
         userId: userId,
-        to: mobileNo,
+        to: "+91" + mobileNo,
         message: "hello"
     };
     const url = "VisitorsInfo/sendSMS";

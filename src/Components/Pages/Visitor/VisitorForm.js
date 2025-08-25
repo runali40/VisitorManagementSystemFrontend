@@ -423,14 +423,14 @@ const VisitorForm = () => {
                                                         className="form-control mt-3"
                                                         placeholder="Enter Mobile No"
                                                         value={mobileNo}
-                                                        // onChange={(e) => setMobileNo(e.target.value)}
-                                                        onChange={(e) => {
-                                                            const value = e.target.value;
-                                                            // Allow only numbers and max 10 digits
-                                                            if (/^[0-9]{0,10}$/.test(value)) {
-                                                                setMobileNo(value);
-                                                            }
-                                                        }}
+                                                        onChange={(e) => setMobileNo(e.target.value)}
+                                                    // onChange={(e) => {
+                                                    //     const value = e.target.value;
+                                                    //     // Allow only numbers and max 10 digits
+                                                    //     if (/^[0-9]{0,10}$/.test(value)) {
+                                                    //         setMobileNo(value);
+                                                    //     }
+                                                    // }}
                                                     />
                                                 </div>
                                             </div>
