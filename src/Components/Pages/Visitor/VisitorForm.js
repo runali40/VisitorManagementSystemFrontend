@@ -99,7 +99,7 @@ const VisitorForm = () => {
         if (data) {   // ✅ only navigate if API returned valid response
             console.log(data);
             SendSms()
-            // navigate("/VisiotrsInfo");
+            navigate("/VisiotrsInfo");
 
         }
     };
