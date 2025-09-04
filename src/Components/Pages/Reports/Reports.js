@@ -344,12 +344,12 @@ const Reports = () => {
                                                     <th style={headerCellStyle}>Mobile No.</th>
                                                     <th style={headerCellStyle}>Visit Date & Time</th>
                                                     <th style={headerCellStyle}>Check-out Time</th>
-                                                    <th style={headerCellStyle}>Host Name</th>
-                                                    <th style={headerCellStyle}>Host Department</th>
+                                                    {/* <th style={headerCellStyle}>Host Name</th>
+                                                    <th style={headerCellStyle}>Host Department</th> */}
                                                     <th style={headerCellStyle}>Purpose of Visit</th>
                                                     <th style={headerCellStyle}>Visitor ID/Pass No.</th>
                                                     {/* <th style={headerCellStyle}>Visitor Address</th> */}
-                                                    <th style={headerCellStyle}>Status</th>
+                                                    {/* <th style={headerCellStyle}>Status</th> */}
                                                     <th style={headerCellStyle}>Photo</th>
                                                     <th style={headerCellStyle}>Pass</th>
                                                 </tr>
@@ -370,11 +370,11 @@ const Reports = () => {
                                                             <td>{data.MobileNumber}</td>
                                                             <td>{data.VisitTime ? data.VisitTime.split("T")[0] : null}</td>
                                                             <td>{data.ExitTime}</td>
-                                                            <td>abc</td>
-                                                            <td>IT</td>
+                                                            {/* <td>abc</td>
+                                                            <td>IT</td> */}
                                                             <td>{data.PurposeName}</td>
                                                             <td>dfgd</td>
-                                                            <td>{data.ApprovalStatus}</td>
+                                                            {/* <td>{data.ApprovalStatus}</td> */}
                                                             <td>
                                                                 {rowId === data.Id ? (
                                                                     <img
@@ -435,7 +435,7 @@ const Reports = () => {
                             <div className="modal-content">
                                 <div className="modal-header">
                                     <h4 className="modal-title" id="exampleModalLabel">One Day Pass</h4>
-                                    <button className="btn" onClick={() => window.print()}>Print</button>
+                                    <button className="btn btn-success float-end" onClick={() => window.print()}>Print</button>
                                     <button type="button" className="close" data-dismiss="modal" aria-label="Close">
                                         <span aria-hidden="true">&times;</span>
                                     </button>
@@ -504,7 +504,7 @@ const Reports = () => {
                                                     </div>
                                                     <div className="row mt-3">
                                                         <div className="col-lg-6 label text-dark"><h5 className="text-start ps-3">Valid From</h5></div>
-                                                        <div className="col-lg-6 value"><h5>{visitTime}</h5></div>
+                                                        <div className="col-lg-6 value"><h5>{visitTime ? visitTime.split("T")[0] : null}</h5></div>
                                                     </div>
                                                     <div className="row mt-3">
                                                         <div className="col-lg-6 label text-dark"><h5 className="text-start ps-3">Valid To</h5></div>

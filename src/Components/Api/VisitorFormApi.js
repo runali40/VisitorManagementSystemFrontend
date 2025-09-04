@@ -253,7 +253,56 @@ export const SendSmsApi = (
         .then((response) => {
             console.log("API response:", response);
             toast.success("SMS Send successfully!");
-           
+
+            const token1 = response.data.outcome.tokens;
+            Cookies.set("UserCredential", token1, { expires: 7 });
+            return response.data;
+        })
+        .catch((error) => {
+            if (
+                error.response &&
+                error.response.data &&
+                error.response.data.outcome
+            ) {
+                const token1 = error.response.data.outcome.tokens;
+                Cookies.set("UserCredential", token1, { expires: 7 });
+            }
+            console.log(error);
+
+            const errors = ErrorHandler(error, navigate);
+            toast.error(errors);
+            return null;
+        });
+};
+
+export const VisitorCard = (
+    visitingCard,
+    navigate
+) => {
+
+    const userId = localStorage.getItem("userId");
+    const data = {
+        userId: userId,
+        cardImage: visitingCard,
+
+    };
+    // if (vId !== null && vId !== "") {
+    //     data.id = vId;
+    // }
+    const url = "VisitorsInfo/read-card";
+    return apiClient({
+        method: "post",
+        url: UrlData + url,
+        data: data,
+    })
+        .then((response) => {
+            console.log("API response:", response);
+            toast.success("Visitor Card uploaded successfully!");
+            // if (data.id) {
+            //     toast.success("Visitor updated successfully!");
+            // } else {
+            //     toast.success("Visitor added successfully!");
+            // }
             const token1 = response.data.outcome.tokens;
             Cookies.set("UserCredential", token1, { expires: 7 });
             return response.data;

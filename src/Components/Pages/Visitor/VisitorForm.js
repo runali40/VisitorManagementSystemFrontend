@@ -9,6 +9,7 @@ import {
     getAllPurposeApi,
     getVisitorApi,
     SendSmsApi,
+    VisitorCard,
 } from "../../Api/VisitorFormApi";
 import { flushSync } from "react-dom";
 
@@ -29,6 +30,7 @@ const VisitorForm = () => {
     const [allPurpose, setAllPurpose] = useState([]);
     const [expectedTime, setExpectedTime] = useState("");
     const [photo, setPhoto] = useState(null);
+    const [photo1, setPhoto1] = useState(null);
     const webcamRef = useRef(null);
     const [deviceId, setDeviceId] = useState("");
     const [showWebcam, setShowWebcam] = useState(true);
@@ -36,6 +38,8 @@ const VisitorForm = () => {
     const [facingMode, setFacingMode] = useState("environment");
     const [secretKey, setSecretKey] = useState("");
     const [photopathIv, setPhotopathIv] = useState("");
+    const [file, setFile] = useState(null)
+    const [base64, setBase64] = useState("");
 
     useEffect(() => {
         const generateSecretKey = () => {
@@ -173,6 +177,9 @@ const VisitorForm = () => {
         const data = await getVisitorApi(vId, navigate);
 
         flushSync(() => {
+            const photoValue = data?.PhotoPath;
+            console.log("Photo value to set:", photoValue);
+            setPhoto1(photoValue)
             setFullName(data.FullName);
             setCompanyName(data.CompanyName);
             setEmail(data.Email);
@@ -180,15 +187,10 @@ const VisitorForm = () => {
             setGovId(data.GovermentId);
             setPersonToMeet(data.PersonToMeet);
             setExpectedTime(data.VisitTime.split("T")[0]);
+            setSecretKey(data.secretKey)
 
-            const photoValue = data?.PhotoPath;
-            console.log("Photo value to set:", photoValue);
 
-            setPhoto(photoValue);
 
-            // Use photoValue directly instead of state
-            const decryptedImageUrl = photoValue ? decryptImage(photoValue) : null;
-            console.log("Decrypted Image URL:", decryptedImageUrl);
 
             setPurposeOfVisit({
                 value: data.PurposeId,
@@ -201,12 +203,16 @@ const VisitorForm = () => {
         });
     };
     useEffect(() => {
-        if (photo) {
-            const decryptedImageUrl = decryptImage(photo);
-            console.log("Decrypted Image URL:", decryptedImageUrl);
-        }
-    }, [photo]);
+        if (photo1) {
+            setPhoto(photo1);
 
+            console.log("208:", photo);
+        }
+    }, [photo1]);
+    // useEffect(() => {
+    //     console.log("Updated photo state:", photo);
+    // }, [photo]);
+    // const decryptedImageUrl = decryptImage(photo);
     // useEffect(() => {
     //     console.log(photo, "Updated photo");
     //     setPhoto(photo)
@@ -286,7 +292,7 @@ const VisitorForm = () => {
                 );
                 // Convert decrypted WordArray back to Base64 string
                 const decryptedBase64 = CryptoJS.enc.Base64.stringify(decryptedBytes);
-                console.log(`data:image/png;base64,${decryptedBase64}`);
+                // console.log(`data:image/png;base64,${decryptedBase64}`);
                 return `data:image/png;base64,${decryptedBase64}`; // Return image in Base64 format
             } catch (error) {
                 console.error("Error during decryption:", error);
@@ -297,7 +303,11 @@ const VisitorForm = () => {
     );
 
     // Use the decrypted image
-    const decryptedImageUrl = photo ? decryptImage(photo) : null;
+    // const decryptedImageUrl = photo ? decryptImage(photo) : null;
+
+    const decryptedImageUrl = photo && secretKey
+        ? decryptImage(photo)
+        : "";
     const decryptedImageUrl2 = photo ? decryptImage(photo) : null;
 
     const decryptedImage1 = photo && secretKey ? decryptImage(photo) : "";
@@ -309,6 +319,36 @@ const VisitorForm = () => {
             setShowWebcam(true); // remount webcam
         }, 100); // short delay to ensure clean remount
     };
+
+    const handleFileChange = (e) => {
+        const selectedFile = e.target.files[0];
+        if (selectedFile) {
+            setFile(selectedFile);
+            console.log("📂 Selected File:", selectedFile);
+
+            // Convert to Base64
+            const reader = new FileReader();
+            reader.onloadend = () => {
+                console.log("🔑 Base64 String:", reader.result); // <-- console log here
+                setBase64(reader.result);
+            };
+            reader.readAsDataURL(selectedFile);
+        }
+    };
+
+    const UploadVisitorCard = async () => {
+        const data = await VisitorCard(
+            base64,
+            navigate
+        );
+
+        if (data) {   // ✅ only navigate if API returned valid response
+            console.log(data);
+            // navigate("/VisiotrsInfo");
+
+        }
+    };
+
 
     return (
         <>
@@ -539,7 +579,7 @@ const VisitorForm = () => {
                                                         data-toggle="modal"
                                                         data-target="#exampleModal"
                                                         onClick={() =>
-                                                            console.log(decryptedImageUrl2, "photo")
+                                                            console.log(decryptedImageUrl, "photo")
                                                         }
                                                     >
                                                         Capture Photo
@@ -594,7 +634,7 @@ const VisitorForm = () => {
                                 <div className="modal-body">
                                     <div className="row">
                                         <div className="col-lg-12">
-                                            {photo ? (
+                                            {photo !== null ? (
                                                 <div className="my-3">
                                                     <img src={decryptedImageUrl} alt="screenshot" />
                                                 </div>
@@ -653,6 +693,10 @@ const VisitorForm = () => {
                                 </div>
                             </div>
                         </div>
+                    </div>
+                    <div className="container-fluid">
+                        <input className="form-control" type="file" onChange={handleFileChange} />
+                        <button className="btn btn-success" onClick={UploadVisitorCard}>Submit</button>
                     </div>
                 </section>
             </section>

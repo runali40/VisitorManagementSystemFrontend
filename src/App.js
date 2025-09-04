@@ -2,7 +2,8 @@
 import "./App.css";
 import React from "react";
 import { Routes, Route, BrowserRouter as Router } from "react-router-dom";
-
+import { ToastContainer } from "react-toastify";
+import 'react-toastify/dist/ReactToastify.css';
 import "../node_modules/bootstrap/dist/css/bootstrap.min.css";
 import "../node_modules/bootstrap/dist/js/bootstrap.min.js";
 
@@ -20,9 +21,10 @@ const App = (props) => {
   return (
     <>
       <Router>
+        <ToastContainer />
         <Routes>
-          <Route path="/" element={<Login/>}/>
-           <Route path="/registration" element={<Registration/>}/>
+          <Route path="/" element={<Login />} />
+          <Route path="/registration" element={<Registration />} />
           <Route exact path="/*" element={<Sidebar />} />
         </Routes>
       </Router>

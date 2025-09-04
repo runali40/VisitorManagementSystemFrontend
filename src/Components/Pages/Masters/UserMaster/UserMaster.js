@@ -175,7 +175,8 @@ const UserMaster = () => {
                                                                     type="button"
                                                                     onClick={() => DeleteUserData(data.um_id)}
 
-                                                                /> </div>
+                                                                />
+                                                            </div>
                                                         </td>
                                                     </tr>
                                                 ))}

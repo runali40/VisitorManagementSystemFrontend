@@ -7930,7 +7930,7 @@ button.close {
     background-color: #000\9;
     background-color: rgba(0, 0, 0, 0);
     border: 1px solid #fff;
-    border-radius: 10px
+    border-radius: 10px;
 }
 
 .carousel-indicators .active {
@@ -8341,9 +8341,9 @@ button.close {
     }
 }
 
-.modal-dialog.modal-lg .modal-header .close span {
+/* .modal-dialog.modal-lg .modal-header .close span {
     margin-left: 640px;
-}
+} */
 
 .modal-dialog.modal-md .modal-header .close span {
     margin-left: 335px;

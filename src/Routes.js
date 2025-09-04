@@ -2,8 +2,6 @@
 // import Registration from "./Components/Pages/Registration";
 
 import { lazy } from 'react';
-import Reports from './Components/Pages/Reports/Reports';
-import Approver from './Components/Pages/Approver/Approver';
 
 const Registration = lazy(() => import('./Components/Pages/Login/Registration'));
 const VisitorType = lazy(() => import('./Components/Pages/Masters/VisitorTypeMaster/VisitorType'));
@@ -19,6 +17,8 @@ const RoleMaster = lazy(() => import('./Components/Pages/Masters/RoleMaster/Role
 const AddRoleMaster = lazy(() => import('./Components/Pages/Masters/RoleMaster/AddRoleMaster'));
 const Visitor = lazy(() => import('./Components/Pages/Visitor/Visitor'));
 const VisitorForm = lazy(() => import('./Components/Pages/Visitor/VisitorForm'));
+const Reports = lazy(() => import('./Components/Pages/Reports/Reports'));
+const Approver = lazy(() => import('./Components/Pages/Approver/Approver'));
 
 const routes = [
   // { path: '/', exact: true, name: 'Login', element: Login },
