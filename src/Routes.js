@@ -23,7 +23,7 @@ const Approver = lazy(() => import('./Components/Pages/Approver/Approver'));
 const routes = [
   // { path: '/', exact: true, name: 'Login', element: Login },
   // { path: '/resgistration', exact: true, name: 'Registration', element: Registration },
-  { path: '/registration', exact: true, name: 'Dashboard', element: Registration },
+  { path: '/registration', exact: true, name: 'Registration', element: Registration },
   // { path: '/sidebar', exact: true, name: 'sidebar', element: Sidebar },
   { path: '/dashboard', exact: true, name: 'Dashboard', element: Dashboard },
   { path: '/VisitorTypeMaster', exact: true, name: 'VisitorType', element: VisitorType },

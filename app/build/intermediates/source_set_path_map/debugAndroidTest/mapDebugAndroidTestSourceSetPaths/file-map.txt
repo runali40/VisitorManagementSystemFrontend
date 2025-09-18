@@ -1,0 +1,4 @@
+com.informaticsetech.visitdesk.twa.test.app-androidTest-0 D:\Runali1\Runali\VMS\vms-frontend\app\build\generated\res\resValues\androidTest\debug
+com.informaticsetech.visitdesk.twa.test.app-mergeDebugAndroidTestResources-1 D:\Runali1\Runali\VMS\vms-frontend\app\build\intermediates\incremental\debugAndroidTest\mergeDebugAndroidTestResources\merged.dir
+com.informaticsetech.visitdesk.twa.test.app-mergeDebugAndroidTestResources-2 D:\Runali1\Runali\VMS\vms-frontend\app\build\intermediates\incremental\debugAndroidTest\mergeDebugAndroidTestResources\stripped.dir
+com.informaticsetech.visitdesk.twa.test.app-debugAndroidTest-3 D:\Runali1\Runali\VMS\vms-frontend\app\build\intermediates\merged_res\debugAndroidTest\mergeDebugAndroidTestResources
