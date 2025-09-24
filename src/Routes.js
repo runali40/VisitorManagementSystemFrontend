@@ -2,6 +2,8 @@
 // import Registration from "./Components/Pages/Registration";
 
 import { lazy } from 'react';
+import WhatsAppSender from './Components/Pages/WhatsappSender';
+import VoiceDialer from './Components/Pages/VoiceCaller';
 
 const Registration = lazy(() => import('./Components/Pages/Login/Registration'));
 const VisitorType = lazy(() => import('./Components/Pages/Masters/VisitorTypeMaster/VisitorType'));
@@ -19,6 +21,8 @@ const Visitor = lazy(() => import('./Components/Pages/Visitor/Visitor'));
 const VisitorForm = lazy(() => import('./Components/Pages/Visitor/VisitorForm'));
 const Reports = lazy(() => import('./Components/Pages/Reports/Reports'));
 const Approver = lazy(() => import('./Components/Pages/Approver/Approver'));
+const HostMaster = lazy(() => import('./Components/Pages/Masters/HostMaster/HostMaster'));
+const AddHostMaster = lazy(() => import('./Components/Pages/Masters/HostMaster/AddHostMaster'));
 
 const routes = [
   // { path: '/', exact: true, name: 'Login', element: Login },
@@ -40,6 +44,9 @@ const routes = [
   { path: '/visitorForm', exact: true, name: 'VisitorForm', element: VisitorForm },
   { path: '/reports', exact: true, name: 'Reports', element: Reports },
   { path: '/approver', exact: true, name: 'Approver', element: Approver },
-
+  { path: '/whatsApp', exact: true, name: 'whatsApp', element: WhatsAppSender },
+  { path: '/voiceDialer', exact: true, name: 'VoiceDialer', element: VoiceDialer },
+  { path: '/hostMaster', exact: true, name: 'HostMaster', element: HostMaster },
+  { path: '/addHostMaster', exact: true, name: 'AddHostMaster', element: AddHostMaster },
 ]
 export default routes

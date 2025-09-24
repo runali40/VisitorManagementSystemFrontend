@@ -81,288 +81,289 @@
 59-->D:\Runali1\Runali\VMS\vms-frontend\app\src\main\AndroidManifest.xml:41:9-105
 60        android:supportsRtl="true"
 60-->D:\Runali1\Runali\VMS\vms-frontend\app\src\main\AndroidManifest.xml:43:9-35
-61        android:theme="@android:style/Theme.Translucent.NoTitleBar" >
-61-->D:\Runali1\Runali\VMS\vms-frontend\app\src\main\AndroidManifest.xml:44:9-68
-62        <meta-data
-62-->D:\Runali1\Runali\VMS\vms-frontend\app\src\main\AndroidManifest.xml:46:9-48:58
-63            android:name="asset_statements"
-63-->D:\Runali1\Runali\VMS\vms-frontend\app\src\main\AndroidManifest.xml:47:13-44
-64            android:resource="@string/assetStatements" />
-64-->D:\Runali1\Runali\VMS\vms-frontend\app\src\main\AndroidManifest.xml:48:13-55
-65        <meta-data
-65-->D:\Runali1\Runali\VMS\vms-frontend\app\src\main\AndroidManifest.xml:51:13-53:58
-66            android:name="web_manifest_url"
-66-->D:\Runali1\Runali\VMS\vms-frontend\app\src\main\AndroidManifest.xml:52:17-48
-67            android:value="@string/webManifestUrl" />
-67-->D:\Runali1\Runali\VMS\vms-frontend\app\src\main\AndroidManifest.xml:53:17-55
-68        <meta-data
-68-->D:\Runali1\Runali\VMS\vms-frontend\app\src\main\AndroidManifest.xml:56:9-58:52
-69            android:name="twa_generator"
-69-->D:\Runali1\Runali\VMS\vms-frontend\app\src\main\AndroidManifest.xml:57:13-41
-70            android:value="@string/generatorApp" />
-70-->D:\Runali1\Runali\VMS\vms-frontend\app\src\main\AndroidManifest.xml:58:13-49
-71
-72        <activity android:name="com.google.androidbrowserhelper.trusted.ManageDataLauncherActivity" >
-72-->D:\Runali1\Runali\VMS\vms-frontend\app\src\main\AndroidManifest.xml:65:13-69:24
-72-->D:\Runali1\Runali\VMS\vms-frontend\app\src\main\AndroidManifest.xml:65:23-104
-73            <meta-data
-73-->D:\Runali1\Runali\VMS\vms-frontend\app\src\main\AndroidManifest.xml:66:13-68:53
-74                android:name="android.support.customtabs.trusted.MANAGE_SPACE_URL"
-74-->D:\Runali1\Runali\VMS\vms-frontend\app\src\main\AndroidManifest.xml:67:17-83
-75                android:value="@string/launchUrl" />
-75-->D:\Runali1\Runali\VMS\vms-frontend\app\src\main\AndroidManifest.xml:68:17-50
-76        </activity>
-77        <activity
-77-->D:\Runali1\Runali\VMS\vms-frontend\app\src\main\AndroidManifest.xml:72:9-151:20
-78            android:name="com.informaticsetech.visitdesk.twa.LauncherActivity"
-78-->D:\Runali1\Runali\VMS\vms-frontend\app\src\main\AndroidManifest.xml:72:19-50
-79            android:alwaysRetainTaskState="true"
-79-->D:\Runali1\Runali\VMS\vms-frontend\app\src\main\AndroidManifest.xml:73:13-49
-80            android:exported="true"
-80-->D:\Runali1\Runali\VMS\vms-frontend\app\src\main\AndroidManifest.xml:75:13-36
-81            android:label="@string/launcherName" >
-81-->D:\Runali1\Runali\VMS\vms-frontend\app\src\main\AndroidManifest.xml:74:13-49
-82            <meta-data
-82-->D:\Runali1\Runali\VMS\vms-frontend\app\src\main\AndroidManifest.xml:76:13-77:53
-83                android:name="android.support.customtabs.trusted.DEFAULT_URL"
-83-->D:\Runali1\Runali\VMS\vms-frontend\app\src\main\AndroidManifest.xml:76:24-85
-84                android:value="@string/launchUrl" />
-84-->D:\Runali1\Runali\VMS\vms-frontend\app\src\main\AndroidManifest.xml:77:17-50
-85            <meta-data
-85-->D:\Runali1\Runali\VMS\vms-frontend\app\src\main\AndroidManifest.xml:79:13-81:58
-86                android:name="android.support.customtabs.trusted.STATUS_BAR_COLOR"
-86-->D:\Runali1\Runali\VMS\vms-frontend\app\src\main\AndroidManifest.xml:80:17-83
-87                android:resource="@color/colorPrimary" />
-87-->D:\Runali1\Runali\VMS\vms-frontend\app\src\main\AndroidManifest.xml:81:17-55
-88            <meta-data
-88-->D:\Runali1\Runali\VMS\vms-frontend\app\src\main\AndroidManifest.xml:85:13-87:62
-89                android:name="android.support.customtabs.trusted.STATUS_BAR_COLOR_DARK"
-89-->D:\Runali1\Runali\VMS\vms-frontend\app\src\main\AndroidManifest.xml:86:17-88
-90                android:resource="@color/colorPrimaryDark" />
-90-->D:\Runali1\Runali\VMS\vms-frontend\app\src\main\AndroidManifest.xml:87:17-59
-91            <meta-data
-91-->D:\Runali1\Runali\VMS\vms-frontend\app\src\main\AndroidManifest.xml:89:13-91:61
-92                android:name="android.support.customtabs.trusted.NAVIGATION_BAR_COLOR"
-92-->D:\Runali1\Runali\VMS\vms-frontend\app\src\main\AndroidManifest.xml:90:17-87
-93                android:resource="@color/navigationColor" />
-93-->D:\Runali1\Runali\VMS\vms-frontend\app\src\main\AndroidManifest.xml:91:17-58
-94            <meta-data
-94-->D:\Runali1\Runali\VMS\vms-frontend\app\src\main\AndroidManifest.xml:93:13-95:65
-95                android:name="android.support.customtabs.trusted.NAVIGATION_BAR_COLOR_DARK"
-95-->D:\Runali1\Runali\VMS\vms-frontend\app\src\main\AndroidManifest.xml:94:17-92
-96                android:resource="@color/navigationColorDark" />
-96-->D:\Runali1\Runali\VMS\vms-frontend\app\src\main\AndroidManifest.xml:95:17-62
-97            <meta-data
-97-->D:\Runali1\Runali\VMS\vms-frontend\app\src\main\AndroidManifest.xml:97:13-99:68
-98                android:name="androix.browser.trusted.NAVIGATION_BAR_DIVIDER_COLOR"
-98-->D:\Runali1\Runali\VMS\vms-frontend\app\src\main\AndroidManifest.xml:98:17-84
-99                android:resource="@color/navigationDividerColor" />
-99-->D:\Runali1\Runali\VMS\vms-frontend\app\src\main\AndroidManifest.xml:99:17-65
-100            <meta-data
-100-->D:\Runali1\Runali\VMS\vms-frontend\app\src\main\AndroidManifest.xml:101:13-103:72
-101                android:name="androix.browser.trusted.NAVIGATION_BAR_DIVIDER_COLOR_DARK"
-101-->D:\Runali1\Runali\VMS\vms-frontend\app\src\main\AndroidManifest.xml:102:17-89
-102                android:resource="@color/navigationDividerColorDark" />
-102-->D:\Runali1\Runali\VMS\vms-frontend\app\src\main\AndroidManifest.xml:103:17-69
-103            <meta-data
-103-->D:\Runali1\Runali\VMS\vms-frontend\app\src\main\AndroidManifest.xml:105:13-106:54
-104                android:name="android.support.customtabs.trusted.SPLASH_IMAGE_DRAWABLE"
-104-->D:\Runali1\Runali\VMS\vms-frontend\app\src\main\AndroidManifest.xml:105:24-95
-105                android:resource="@drawable/splash" />
-105-->D:\Runali1\Runali\VMS\vms-frontend\app\src\main\AndroidManifest.xml:106:17-52
-106            <meta-data
-106-->D:\Runali1\Runali\VMS\vms-frontend\app\src\main\AndroidManifest.xml:108:13-109:60
-107                android:name="android.support.customtabs.trusted.SPLASH_SCREEN_BACKGROUND_COLOR"
-107-->D:\Runali1\Runali\VMS\vms-frontend\app\src\main\AndroidManifest.xml:108:24-104
-108                android:resource="@color/backgroundColor" />
-108-->D:\Runali1\Runali\VMS\vms-frontend\app\src\main\AndroidManifest.xml:109:17-58
-109            <meta-data
-109-->D:\Runali1\Runali\VMS\vms-frontend\app\src\main\AndroidManifest.xml:111:13-112:71
-110                android:name="android.support.customtabs.trusted.SPLASH_SCREEN_FADE_OUT_DURATION"
-110-->D:\Runali1\Runali\VMS\vms-frontend\app\src\main\AndroidManifest.xml:111:24-105
-111                android:value="@integer/splashScreenFadeOutDuration" />
-111-->D:\Runali1\Runali\VMS\vms-frontend\app\src\main\AndroidManifest.xml:112:17-69
-112            <meta-data
-112-->D:\Runali1\Runali\VMS\vms-frontend\app\src\main\AndroidManifest.xml:114:13-115:60
-113                android:name="android.support.customtabs.trusted.FILE_PROVIDER_AUTHORITY"
-113-->D:\Runali1\Runali\VMS\vms-frontend\app\src\main\AndroidManifest.xml:114:24-97
-114                android:value="@string/providerAuthority" />
-114-->D:\Runali1\Runali\VMS\vms-frontend\app\src\main\AndroidManifest.xml:115:17-58
-115            <meta-data
-115-->D:\Runali1\Runali\VMS\vms-frontend\app\src\main\AndroidManifest.xml:117:13-97
-116                android:name="android.app.shortcuts"
-116-->D:\Runali1\Runali\VMS\vms-frontend\app\src\main\AndroidManifest.xml:117:24-60
-117                android:resource="@xml/shortcuts" />
-117-->D:\Runali1\Runali\VMS\vms-frontend\app\src\main\AndroidManifest.xml:117:61-94
-118            <meta-data
-118-->D:\Runali1\Runali\VMS\vms-frontend\app\src\main\AndroidManifest.xml:119:13-120:56
-119                android:name="android.support.customtabs.trusted.FALLBACK_STRATEGY"
-119-->D:\Runali1\Runali\VMS\vms-frontend\app\src\main\AndroidManifest.xml:119:24-91
-120                android:value="@string/fallbackType" />
-120-->D:\Runali1\Runali\VMS\vms-frontend\app\src\main\AndroidManifest.xml:120:17-53
-121            <meta-data
-121-->D:\Runali1\Runali\VMS\vms-frontend\app\src\main\AndroidManifest.xml:126:13-127:54
-122                android:name="android.support.customtabs.trusted.SCREEN_ORIENTATION"
-122-->D:\Runali1\Runali\VMS\vms-frontend\app\src\main\AndroidManifest.xml:126:24-92
-123                android:value="@string/orientation" />
-123-->D:\Runali1\Runali\VMS\vms-frontend\app\src\main\AndroidManifest.xml:127:17-52
-124
-125            <intent-filter>
-125-->D:\Runali1\Runali\VMS\vms-frontend\app\src\main\AndroidManifest.xml:133:13-136:29
-126                <action android:name="android.intent.action.MAIN" />
-126-->D:\Runali1\Runali\VMS\vms-frontend\app\src\main\AndroidManifest.xml:134:17-69
-126-->D:\Runali1\Runali\VMS\vms-frontend\app\src\main\AndroidManifest.xml:134:25-66
-127
-128                <category android:name="android.intent.category.LAUNCHER" />
-128-->D:\Runali1\Runali\VMS\vms-frontend\app\src\main\AndroidManifest.xml:135:17-77
-128-->D:\Runali1\Runali\VMS\vms-frontend\app\src\main\AndroidManifest.xml:135:27-74
-129            </intent-filter>
-130            <intent-filter android:autoVerify="true" >
-130-->D:\Runali1\Runali\VMS\vms-frontend\app\src\main\AndroidManifest.xml:138:13-146:29
-130-->D:\Runali1\Runali\VMS\vms-frontend\app\src\main\AndroidManifest.xml:138:28-53
-131                <action android:name="android.intent.action.VIEW" />
-131-->D:\Runali1\Runali\VMS\vms-frontend\app\src\main\AndroidManifest.xml:139:17-68
-131-->D:\Runali1\Runali\VMS\vms-frontend\app\src\main\AndroidManifest.xml:139:25-66
-132
-133                <category android:name="android.intent.category.DEFAULT" />
-133-->D:\Runali1\Runali\VMS\vms-frontend\app\src\main\AndroidManifest.xml:140:17-76
-133-->D:\Runali1\Runali\VMS\vms-frontend\app\src\main\AndroidManifest.xml:140:27-73
-134                <category android:name="android.intent.category.BROWSABLE" />
-134-->D:\Runali1\Runali\VMS\vms-frontend\app\src\main\AndroidManifest.xml:141:17-77
-134-->D:\Runali1\Runali\VMS\vms-frontend\app\src\main\AndroidManifest.xml:141:27-75
-135
-136                <data
-136-->D:\Runali1\Runali\VMS\vms-frontend\app\src\main\AndroidManifest.xml:142:17-145:19
-137                    android:host="@string/hostName"
-137-->D:\Runali1\Runali\VMS\vms-frontend\app\src\main\AndroidManifest.xml:143:21-52
-138                    android:scheme="https" />
-138-->D:\Runali1\Runali\VMS\vms-frontend\app\src\main\AndroidManifest.xml:142:23-45
-139            </intent-filter>
-140        </activity>
-141        <activity android:name="com.google.androidbrowserhelper.trusted.FocusActivity" />
-141-->D:\Runali1\Runali\VMS\vms-frontend\app\src\main\AndroidManifest.xml:153:9-90
-141-->D:\Runali1\Runali\VMS\vms-frontend\app\src\main\AndroidManifest.xml:153:19-87
-142        <activity
-142-->D:\Runali1\Runali\VMS\vms-frontend\app\src\main\AndroidManifest.xml:155:9-156:62
-143            android:name="com.google.androidbrowserhelper.trusted.WebViewFallbackActivity"
-143-->D:\Runali1\Runali\VMS\vms-frontend\app\src\main\AndroidManifest.xml:155:19-97
-144            android:configChanges="orientation|screenSize" />
-144-->D:\Runali1\Runali\VMS\vms-frontend\app\src\main\AndroidManifest.xml:156:13-59
-145
-146        <provider
-146-->D:\Runali1\Runali\VMS\vms-frontend\app\src\main\AndroidManifest.xml:158:9-166:20
-147            android:name="androidx.core.content.FileProvider"
-147-->D:\Runali1\Runali\VMS\vms-frontend\app\src\main\AndroidManifest.xml:159:13-62
-148            android:authorities="@string/providerAuthority"
-148-->D:\Runali1\Runali\VMS\vms-frontend\app\src\main\AndroidManifest.xml:160:13-60
-149            android:exported="false"
-149-->D:\Runali1\Runali\VMS\vms-frontend\app\src\main\AndroidManifest.xml:162:13-37
-150            android:grantUriPermissions="true" >
-150-->D:\Runali1\Runali\VMS\vms-frontend\app\src\main\AndroidManifest.xml:161:13-47
-151            <meta-data
-151-->D:\Runali1\Runali\VMS\vms-frontend\app\src\main\AndroidManifest.xml:163:13-165:53
-152                android:name="android.support.FILE_PROVIDER_PATHS"
-152-->D:\Runali1\Runali\VMS\vms-frontend\app\src\main\AndroidManifest.xml:164:17-67
-153                android:resource="@xml/filepaths" />
-153-->D:\Runali1\Runali\VMS\vms-frontend\app\src\main\AndroidManifest.xml:165:17-50
-154        </provider>
-155
-156        <service
-156-->D:\Runali1\Runali\VMS\vms-frontend\app\src\main\AndroidManifest.xml:168:9-183:19
-157            android:name="com.informaticsetech.visitdesk.twa.DelegationService"
-157-->D:\Runali1\Runali\VMS\vms-frontend\app\src\main\AndroidManifest.xml:169:13-46
-158            android:enabled="@bool/enableNotification"
-158-->D:\Runali1\Runali\VMS\vms-frontend\app\src\main\AndroidManifest.xml:170:13-55
-159            android:exported="@bool/enableNotification" >
-159-->D:\Runali1\Runali\VMS\vms-frontend\app\src\main\AndroidManifest.xml:171:13-56
-160            <meta-data
-160-->D:\Runali1\Runali\VMS\vms-frontend\app\src\main\AndroidManifest.xml:174:17-176:73
-161                android:name="android.support.customtabs.trusted.SMALL_ICON"
-161-->D:\Runali1\Runali\VMS\vms-frontend\app\src\main\AndroidManifest.xml:175:21-81
-162                android:resource="@drawable/ic_notification_icon" />
-162-->D:\Runali1\Runali\VMS\vms-frontend\app\src\main\AndroidManifest.xml:176:21-70
-163
-164            <intent-filter>
-164-->D:\Runali1\Runali\VMS\vms-frontend\app\src\main\AndroidManifest.xml:179:13-182:29
-165                <action android:name="android.support.customtabs.trusted.TRUSTED_WEB_ACTIVITY_SERVICE" />
-165-->D:\Runali1\Runali\VMS\vms-frontend\app\src\main\AndroidManifest.xml:180:17-105
-165-->D:\Runali1\Runali\VMS\vms-frontend\app\src\main\AndroidManifest.xml:180:25-103
-166
-167                <category android:name="android.intent.category.DEFAULT" />
-167-->D:\Runali1\Runali\VMS\vms-frontend\app\src\main\AndroidManifest.xml:140:17-76
-167-->D:\Runali1\Runali\VMS\vms-frontend\app\src\main\AndroidManifest.xml:140:27-73
-168            </intent-filter>
-169        </service>
-170
-171        <activity android:name="com.google.androidbrowserhelper.trusted.NotificationPermissionRequestActivity" />
-171-->D:\Runali1\Runali\VMS\vms-frontend\app\src\main\AndroidManifest.xml:186:13-118
-171-->D:\Runali1\Runali\VMS\vms-frontend\app\src\main\AndroidManifest.xml:186:23-115
-172
-173        <provider
-173-->[androidx.emoji2:emoji2:1.3.0] C:\Users\Runali\.gradle\caches\8.11.1\transforms\5cb7738f5242d8c4e38c8ffa2b265b31\transformed\emoji2-1.3.0\AndroidManifest.xml:24:9-32:20
-174            android:name="androidx.startup.InitializationProvider"
-174-->[androidx.emoji2:emoji2:1.3.0] C:\Users\Runali\.gradle\caches\8.11.1\transforms\5cb7738f5242d8c4e38c8ffa2b265b31\transformed\emoji2-1.3.0\AndroidManifest.xml:25:13-67
-175            android:authorities="com.informaticsetech.visitdesk.twa.androidx-startup"
-175-->[androidx.emoji2:emoji2:1.3.0] C:\Users\Runali\.gradle\caches\8.11.1\transforms\5cb7738f5242d8c4e38c8ffa2b265b31\transformed\emoji2-1.3.0\AndroidManifest.xml:26:13-68
-176            android:exported="false" >
-176-->[androidx.emoji2:emoji2:1.3.0] C:\Users\Runali\.gradle\caches\8.11.1\transforms\5cb7738f5242d8c4e38c8ffa2b265b31\transformed\emoji2-1.3.0\AndroidManifest.xml:27:13-37
-177            <meta-data
-177-->[androidx.emoji2:emoji2:1.3.0] C:\Users\Runali\.gradle\caches\8.11.1\transforms\5cb7738f5242d8c4e38c8ffa2b265b31\transformed\emoji2-1.3.0\AndroidManifest.xml:29:13-31:52
-178                android:name="androidx.emoji2.text.EmojiCompatInitializer"
-178-->[androidx.emoji2:emoji2:1.3.0] C:\Users\Runali\.gradle\caches\8.11.1\transforms\5cb7738f5242d8c4e38c8ffa2b265b31\transformed\emoji2-1.3.0\AndroidManifest.xml:30:17-75
-179                android:value="androidx.startup" />
-179-->[androidx.emoji2:emoji2:1.3.0] C:\Users\Runali\.gradle\caches\8.11.1\transforms\5cb7738f5242d8c4e38c8ffa2b265b31\transformed\emoji2-1.3.0\AndroidManifest.xml:31:17-49
-180            <meta-data
-180-->[androidx.lifecycle:lifecycle-process:2.6.2] C:\Users\Runali\.gradle\caches\8.11.1\transforms\4bc52031417e9743197e36b704fe409f\transformed\lifecycle-process-2.6.2\AndroidManifest.xml:29:13-31:52
-181                android:name="androidx.lifecycle.ProcessLifecycleInitializer"
-181-->[androidx.lifecycle:lifecycle-process:2.6.2] C:\Users\Runali\.gradle\caches\8.11.1\transforms\4bc52031417e9743197e36b704fe409f\transformed\lifecycle-process-2.6.2\AndroidManifest.xml:30:17-78
-182                android:value="androidx.startup" />
-182-->[androidx.lifecycle:lifecycle-process:2.6.2] C:\Users\Runali\.gradle\caches\8.11.1\transforms\4bc52031417e9743197e36b704fe409f\transformed\lifecycle-process-2.6.2\AndroidManifest.xml:31:17-49
-183            <meta-data
-183-->[androidx.profileinstaller:profileinstaller:1.3.1] C:\Users\Runali\.gradle\caches\8.11.1\transforms\bb4a0d32d1b17a1dcea0cf71d2bde5e0\transformed\profileinstaller-1.3.1\AndroidManifest.xml:29:13-31:52
-184                android:name="androidx.profileinstaller.ProfileInstallerInitializer"
-184-->[androidx.profileinstaller:profileinstaller:1.3.1] C:\Users\Runali\.gradle\caches\8.11.1\transforms\bb4a0d32d1b17a1dcea0cf71d2bde5e0\transformed\profileinstaller-1.3.1\AndroidManifest.xml:30:17-85
-185                android:value="androidx.startup" />
-185-->[androidx.profileinstaller:profileinstaller:1.3.1] C:\Users\Runali\.gradle\caches\8.11.1\transforms\bb4a0d32d1b17a1dcea0cf71d2bde5e0\transformed\profileinstaller-1.3.1\AndroidManifest.xml:31:17-49
-186        </provider>
-187
-188        <receiver
-188-->[androidx.profileinstaller:profileinstaller:1.3.1] C:\Users\Runali\.gradle\caches\8.11.1\transforms\bb4a0d32d1b17a1dcea0cf71d2bde5e0\transformed\profileinstaller-1.3.1\AndroidManifest.xml:34:9-52:20
-189            android:name="androidx.profileinstaller.ProfileInstallReceiver"
-189-->[androidx.profileinstaller:profileinstaller:1.3.1] C:\Users\Runali\.gradle\caches\8.11.1\transforms\bb4a0d32d1b17a1dcea0cf71d2bde5e0\transformed\profileinstaller-1.3.1\AndroidManifest.xml:35:13-76
-190            android:directBootAware="false"
-190-->[androidx.profileinstaller:profileinstaller:1.3.1] C:\Users\Runali\.gradle\caches\8.11.1\transforms\bb4a0d32d1b17a1dcea0cf71d2bde5e0\transformed\profileinstaller-1.3.1\AndroidManifest.xml:36:13-44
-191            android:enabled="true"
-191-->[androidx.profileinstaller:profileinstaller:1.3.1] C:\Users\Runali\.gradle\caches\8.11.1\transforms\bb4a0d32d1b17a1dcea0cf71d2bde5e0\transformed\profileinstaller-1.3.1\AndroidManifest.xml:37:13-35
-192            android:exported="true"
-192-->[androidx.profileinstaller:profileinstaller:1.3.1] C:\Users\Runali\.gradle\caches\8.11.1\transforms\bb4a0d32d1b17a1dcea0cf71d2bde5e0\transformed\profileinstaller-1.3.1\AndroidManifest.xml:38:13-36
-193            android:permission="android.permission.DUMP" >
-193-->[androidx.profileinstaller:profileinstaller:1.3.1] C:\Users\Runali\.gradle\caches\8.11.1\transforms\bb4a0d32d1b17a1dcea0cf71d2bde5e0\transformed\profileinstaller-1.3.1\AndroidManifest.xml:39:13-57
-194            <intent-filter>
-194-->[androidx.profileinstaller:profileinstaller:1.3.1] C:\Users\Runali\.gradle\caches\8.11.1\transforms\bb4a0d32d1b17a1dcea0cf71d2bde5e0\transformed\profileinstaller-1.3.1\AndroidManifest.xml:40:13-42:29
-195                <action android:name="androidx.profileinstaller.action.INSTALL_PROFILE" />
-195-->[androidx.profileinstaller:profileinstaller:1.3.1] C:\Users\Runali\.gradle\caches\8.11.1\transforms\bb4a0d32d1b17a1dcea0cf71d2bde5e0\transformed\profileinstaller-1.3.1\AndroidManifest.xml:41:17-91
-195-->[androidx.profileinstaller:profileinstaller:1.3.1] C:\Users\Runali\.gradle\caches\8.11.1\transforms\bb4a0d32d1b17a1dcea0cf71d2bde5e0\transformed\profileinstaller-1.3.1\AndroidManifest.xml:41:25-88
-196            </intent-filter>
-197            <intent-filter>
-197-->[androidx.profileinstaller:profileinstaller:1.3.1] C:\Users\Runali\.gradle\caches\8.11.1\transforms\bb4a0d32d1b17a1dcea0cf71d2bde5e0\transformed\profileinstaller-1.3.1\AndroidManifest.xml:43:13-45:29
-198                <action android:name="androidx.profileinstaller.action.SKIP_FILE" />
-198-->[androidx.profileinstaller:profileinstaller:1.3.1] C:\Users\Runali\.gradle\caches\8.11.1\transforms\bb4a0d32d1b17a1dcea0cf71d2bde5e0\transformed\profileinstaller-1.3.1\AndroidManifest.xml:44:17-85
-198-->[androidx.profileinstaller:profileinstaller:1.3.1] C:\Users\Runali\.gradle\caches\8.11.1\transforms\bb4a0d32d1b17a1dcea0cf71d2bde5e0\transformed\profileinstaller-1.3.1\AndroidManifest.xml:44:25-82
-199            </intent-filter>
-200            <intent-filter>
-200-->[androidx.profileinstaller:profileinstaller:1.3.1] C:\Users\Runali\.gradle\caches\8.11.1\transforms\bb4a0d32d1b17a1dcea0cf71d2bde5e0\transformed\profileinstaller-1.3.1\AndroidManifest.xml:46:13-48:29
-201                <action android:name="androidx.profileinstaller.action.SAVE_PROFILE" />
-201-->[androidx.profileinstaller:profileinstaller:1.3.1] C:\Users\Runali\.gradle\caches\8.11.1\transforms\bb4a0d32d1b17a1dcea0cf71d2bde5e0\transformed\profileinstaller-1.3.1\AndroidManifest.xml:47:17-88
-201-->[androidx.profileinstaller:profileinstaller:1.3.1] C:\Users\Runali\.gradle\caches\8.11.1\transforms\bb4a0d32d1b17a1dcea0cf71d2bde5e0\transformed\profileinstaller-1.3.1\AndroidManifest.xml:47:25-85
-202            </intent-filter>
-203            <intent-filter>
-203-->[androidx.profileinstaller:profileinstaller:1.3.1] C:\Users\Runali\.gradle\caches\8.11.1\transforms\bb4a0d32d1b17a1dcea0cf71d2bde5e0\transformed\profileinstaller-1.3.1\AndroidManifest.xml:49:13-51:29
-204                <action android:name="androidx.profileinstaller.action.BENCHMARK_OPERATION" />
-204-->[androidx.profileinstaller:profileinstaller:1.3.1] C:\Users\Runali\.gradle\caches\8.11.1\transforms\bb4a0d32d1b17a1dcea0cf71d2bde5e0\transformed\profileinstaller-1.3.1\AndroidManifest.xml:50:17-95
-204-->[androidx.profileinstaller:profileinstaller:1.3.1] C:\Users\Runali\.gradle\caches\8.11.1\transforms\bb4a0d32d1b17a1dcea0cf71d2bde5e0\transformed\profileinstaller-1.3.1\AndroidManifest.xml:50:25-92
-205            </intent-filter>
-206        </receiver>
-207    </application>
-208
-209</manifest>
+61        android:testOnly="true"
+62        android:theme="@android:style/Theme.Translucent.NoTitleBar" >
+62-->D:\Runali1\Runali\VMS\vms-frontend\app\src\main\AndroidManifest.xml:44:9-68
+63        <meta-data
+63-->D:\Runali1\Runali\VMS\vms-frontend\app\src\main\AndroidManifest.xml:46:9-48:58
+64            android:name="asset_statements"
+64-->D:\Runali1\Runali\VMS\vms-frontend\app\src\main\AndroidManifest.xml:47:13-44
+65            android:resource="@string/assetStatements" />
+65-->D:\Runali1\Runali\VMS\vms-frontend\app\src\main\AndroidManifest.xml:48:13-55
+66        <meta-data
+66-->D:\Runali1\Runali\VMS\vms-frontend\app\src\main\AndroidManifest.xml:51:13-53:58
+67            android:name="web_manifest_url"
+67-->D:\Runali1\Runali\VMS\vms-frontend\app\src\main\AndroidManifest.xml:52:17-48
+68            android:value="@string/webManifestUrl" />
+68-->D:\Runali1\Runali\VMS\vms-frontend\app\src\main\AndroidManifest.xml:53:17-55
+69        <meta-data
+69-->D:\Runali1\Runali\VMS\vms-frontend\app\src\main\AndroidManifest.xml:56:9-58:52
+70            android:name="twa_generator"
+70-->D:\Runali1\Runali\VMS\vms-frontend\app\src\main\AndroidManifest.xml:57:13-41
+71            android:value="@string/generatorApp" />
+71-->D:\Runali1\Runali\VMS\vms-frontend\app\src\main\AndroidManifest.xml:58:13-49
+72
+73        <activity android:name="com.google.androidbrowserhelper.trusted.ManageDataLauncherActivity" >
+73-->D:\Runali1\Runali\VMS\vms-frontend\app\src\main\AndroidManifest.xml:65:13-69:24
+73-->D:\Runali1\Runali\VMS\vms-frontend\app\src\main\AndroidManifest.xml:65:23-104
+74            <meta-data
+74-->D:\Runali1\Runali\VMS\vms-frontend\app\src\main\AndroidManifest.xml:66:13-68:53
+75                android:name="android.support.customtabs.trusted.MANAGE_SPACE_URL"
+75-->D:\Runali1\Runali\VMS\vms-frontend\app\src\main\AndroidManifest.xml:67:17-83
+76                android:value="@string/launchUrl" />
+76-->D:\Runali1\Runali\VMS\vms-frontend\app\src\main\AndroidManifest.xml:68:17-50
+77        </activity>
+78        <activity
+78-->D:\Runali1\Runali\VMS\vms-frontend\app\src\main\AndroidManifest.xml:72:9-151:20
+79            android:name="com.informaticsetech.visitdesk.twa.LauncherActivity"
+79-->D:\Runali1\Runali\VMS\vms-frontend\app\src\main\AndroidManifest.xml:72:19-50
+80            android:alwaysRetainTaskState="true"
+80-->D:\Runali1\Runali\VMS\vms-frontend\app\src\main\AndroidManifest.xml:73:13-49
+81            android:exported="true"
+81-->D:\Runali1\Runali\VMS\vms-frontend\app\src\main\AndroidManifest.xml:75:13-36
+82            android:label="@string/launcherName" >
+82-->D:\Runali1\Runali\VMS\vms-frontend\app\src\main\AndroidManifest.xml:74:13-49
+83            <meta-data
+83-->D:\Runali1\Runali\VMS\vms-frontend\app\src\main\AndroidManifest.xml:76:13-77:53
+84                android:name="android.support.customtabs.trusted.DEFAULT_URL"
+84-->D:\Runali1\Runali\VMS\vms-frontend\app\src\main\AndroidManifest.xml:76:24-85
+85                android:value="@string/launchUrl" />
+85-->D:\Runali1\Runali\VMS\vms-frontend\app\src\main\AndroidManifest.xml:77:17-50
+86            <meta-data
+86-->D:\Runali1\Runali\VMS\vms-frontend\app\src\main\AndroidManifest.xml:79:13-81:58
+87                android:name="android.support.customtabs.trusted.STATUS_BAR_COLOR"
+87-->D:\Runali1\Runali\VMS\vms-frontend\app\src\main\AndroidManifest.xml:80:17-83
+88                android:resource="@color/colorPrimary" />
+88-->D:\Runali1\Runali\VMS\vms-frontend\app\src\main\AndroidManifest.xml:81:17-55
+89            <meta-data
+89-->D:\Runali1\Runali\VMS\vms-frontend\app\src\main\AndroidManifest.xml:85:13-87:62
+90                android:name="android.support.customtabs.trusted.STATUS_BAR_COLOR_DARK"
+90-->D:\Runali1\Runali\VMS\vms-frontend\app\src\main\AndroidManifest.xml:86:17-88
+91                android:resource="@color/colorPrimaryDark" />
+91-->D:\Runali1\Runali\VMS\vms-frontend\app\src\main\AndroidManifest.xml:87:17-59
+92            <meta-data
+92-->D:\Runali1\Runali\VMS\vms-frontend\app\src\main\AndroidManifest.xml:89:13-91:61
+93                android:name="android.support.customtabs.trusted.NAVIGATION_BAR_COLOR"
+93-->D:\Runali1\Runali\VMS\vms-frontend\app\src\main\AndroidManifest.xml:90:17-87
+94                android:resource="@color/navigationColor" />
+94-->D:\Runali1\Runali\VMS\vms-frontend\app\src\main\AndroidManifest.xml:91:17-58
+95            <meta-data
+95-->D:\Runali1\Runali\VMS\vms-frontend\app\src\main\AndroidManifest.xml:93:13-95:65
+96                android:name="android.support.customtabs.trusted.NAVIGATION_BAR_COLOR_DARK"
+96-->D:\Runali1\Runali\VMS\vms-frontend\app\src\main\AndroidManifest.xml:94:17-92
+97                android:resource="@color/navigationColorDark" />
+97-->D:\Runali1\Runali\VMS\vms-frontend\app\src\main\AndroidManifest.xml:95:17-62
+98            <meta-data
+98-->D:\Runali1\Runali\VMS\vms-frontend\app\src\main\AndroidManifest.xml:97:13-99:68
+99                android:name="androix.browser.trusted.NAVIGATION_BAR_DIVIDER_COLOR"
+99-->D:\Runali1\Runali\VMS\vms-frontend\app\src\main\AndroidManifest.xml:98:17-84
+100                android:resource="@color/navigationDividerColor" />
+100-->D:\Runali1\Runali\VMS\vms-frontend\app\src\main\AndroidManifest.xml:99:17-65
+101            <meta-data
+101-->D:\Runali1\Runali\VMS\vms-frontend\app\src\main\AndroidManifest.xml:101:13-103:72
+102                android:name="androix.browser.trusted.NAVIGATION_BAR_DIVIDER_COLOR_DARK"
+102-->D:\Runali1\Runali\VMS\vms-frontend\app\src\main\AndroidManifest.xml:102:17-89
+103                android:resource="@color/navigationDividerColorDark" />
+103-->D:\Runali1\Runali\VMS\vms-frontend\app\src\main\AndroidManifest.xml:103:17-69
+104            <meta-data
+104-->D:\Runali1\Runali\VMS\vms-frontend\app\src\main\AndroidManifest.xml:105:13-106:54
+105                android:name="android.support.customtabs.trusted.SPLASH_IMAGE_DRAWABLE"
+105-->D:\Runali1\Runali\VMS\vms-frontend\app\src\main\AndroidManifest.xml:105:24-95
+106                android:resource="@drawable/splash" />
+106-->D:\Runali1\Runali\VMS\vms-frontend\app\src\main\AndroidManifest.xml:106:17-52
+107            <meta-data
+107-->D:\Runali1\Runali\VMS\vms-frontend\app\src\main\AndroidManifest.xml:108:13-109:60
+108                android:name="android.support.customtabs.trusted.SPLASH_SCREEN_BACKGROUND_COLOR"
+108-->D:\Runali1\Runali\VMS\vms-frontend\app\src\main\AndroidManifest.xml:108:24-104
+109                android:resource="@color/backgroundColor" />
+109-->D:\Runali1\Runali\VMS\vms-frontend\app\src\main\AndroidManifest.xml:109:17-58
+110            <meta-data
+110-->D:\Runali1\Runali\VMS\vms-frontend\app\src\main\AndroidManifest.xml:111:13-112:71
+111                android:name="android.support.customtabs.trusted.SPLASH_SCREEN_FADE_OUT_DURATION"
+111-->D:\Runali1\Runali\VMS\vms-frontend\app\src\main\AndroidManifest.xml:111:24-105
+112                android:value="@integer/splashScreenFadeOutDuration" />
+112-->D:\Runali1\Runali\VMS\vms-frontend\app\src\main\AndroidManifest.xml:112:17-69
+113            <meta-data
+113-->D:\Runali1\Runali\VMS\vms-frontend\app\src\main\AndroidManifest.xml:114:13-115:60
+114                android:name="android.support.customtabs.trusted.FILE_PROVIDER_AUTHORITY"
+114-->D:\Runali1\Runali\VMS\vms-frontend\app\src\main\AndroidManifest.xml:114:24-97
+115                android:value="@string/providerAuthority" />
+115-->D:\Runali1\Runali\VMS\vms-frontend\app\src\main\AndroidManifest.xml:115:17-58
+116            <meta-data
+116-->D:\Runali1\Runali\VMS\vms-frontend\app\src\main\AndroidManifest.xml:117:13-97
+117                android:name="android.app.shortcuts"
+117-->D:\Runali1\Runali\VMS\vms-frontend\app\src\main\AndroidManifest.xml:117:24-60
+118                android:resource="@xml/shortcuts" />
+118-->D:\Runali1\Runali\VMS\vms-frontend\app\src\main\AndroidManifest.xml:117:61-94
+119            <meta-data
+119-->D:\Runali1\Runali\VMS\vms-frontend\app\src\main\AndroidManifest.xml:119:13-120:56
+120                android:name="android.support.customtabs.trusted.FALLBACK_STRATEGY"
+120-->D:\Runali1\Runali\VMS\vms-frontend\app\src\main\AndroidManifest.xml:119:24-91
+121                android:value="@string/fallbackType" />
+121-->D:\Runali1\Runali\VMS\vms-frontend\app\src\main\AndroidManifest.xml:120:17-53
+122            <meta-data
+122-->D:\Runali1\Runali\VMS\vms-frontend\app\src\main\AndroidManifest.xml:126:13-127:54
+123                android:name="android.support.customtabs.trusted.SCREEN_ORIENTATION"
+123-->D:\Runali1\Runali\VMS\vms-frontend\app\src\main\AndroidManifest.xml:126:24-92
+124                android:value="@string/orientation" />
+124-->D:\Runali1\Runali\VMS\vms-frontend\app\src\main\AndroidManifest.xml:127:17-52
+125
+126            <intent-filter>
+126-->D:\Runali1\Runali\VMS\vms-frontend\app\src\main\AndroidManifest.xml:133:13-136:29
+127                <action android:name="android.intent.action.MAIN" />
+127-->D:\Runali1\Runali\VMS\vms-frontend\app\src\main\AndroidManifest.xml:134:17-69
+127-->D:\Runali1\Runali\VMS\vms-frontend\app\src\main\AndroidManifest.xml:134:25-66
+128
+129                <category android:name="android.intent.category.LAUNCHER" />
+129-->D:\Runali1\Runali\VMS\vms-frontend\app\src\main\AndroidManifest.xml:135:17-77
+129-->D:\Runali1\Runali\VMS\vms-frontend\app\src\main\AndroidManifest.xml:135:27-74
+130            </intent-filter>
+131            <intent-filter android:autoVerify="true" >
+131-->D:\Runali1\Runali\VMS\vms-frontend\app\src\main\AndroidManifest.xml:138:13-146:29
+131-->D:\Runali1\Runali\VMS\vms-frontend\app\src\main\AndroidManifest.xml:138:28-53
+132                <action android:name="android.intent.action.VIEW" />
+132-->D:\Runali1\Runali\VMS\vms-frontend\app\src\main\AndroidManifest.xml:139:17-68
+132-->D:\Runali1\Runali\VMS\vms-frontend\app\src\main\AndroidManifest.xml:139:25-66
+133
+134                <category android:name="android.intent.category.DEFAULT" />
+134-->D:\Runali1\Runali\VMS\vms-frontend\app\src\main\AndroidManifest.xml:140:17-76
+134-->D:\Runali1\Runali\VMS\vms-frontend\app\src\main\AndroidManifest.xml:140:27-73
+135                <category android:name="android.intent.category.BROWSABLE" />
+135-->D:\Runali1\Runali\VMS\vms-frontend\app\src\main\AndroidManifest.xml:141:17-77
+135-->D:\Runali1\Runali\VMS\vms-frontend\app\src\main\AndroidManifest.xml:141:27-75
+136
+137                <data
+137-->D:\Runali1\Runali\VMS\vms-frontend\app\src\main\AndroidManifest.xml:142:17-145:19
+138                    android:host="@string/hostName"
+138-->D:\Runali1\Runali\VMS\vms-frontend\app\src\main\AndroidManifest.xml:143:21-52
+139                    android:scheme="https" />
+139-->D:\Runali1\Runali\VMS\vms-frontend\app\src\main\AndroidManifest.xml:142:23-45
+140            </intent-filter>
+141        </activity>
+142        <activity android:name="com.google.androidbrowserhelper.trusted.FocusActivity" />
+142-->D:\Runali1\Runali\VMS\vms-frontend\app\src\main\AndroidManifest.xml:153:9-90
+142-->D:\Runali1\Runali\VMS\vms-frontend\app\src\main\AndroidManifest.xml:153:19-87
+143        <activity
+143-->D:\Runali1\Runali\VMS\vms-frontend\app\src\main\AndroidManifest.xml:155:9-156:62
+144            android:name="com.google.androidbrowserhelper.trusted.WebViewFallbackActivity"
+144-->D:\Runali1\Runali\VMS\vms-frontend\app\src\main\AndroidManifest.xml:155:19-97
+145            android:configChanges="orientation|screenSize" />
+145-->D:\Runali1\Runali\VMS\vms-frontend\app\src\main\AndroidManifest.xml:156:13-59
+146
+147        <provider
+147-->D:\Runali1\Runali\VMS\vms-frontend\app\src\main\AndroidManifest.xml:158:9-166:20
+148            android:name="androidx.core.content.FileProvider"
+148-->D:\Runali1\Runali\VMS\vms-frontend\app\src\main\AndroidManifest.xml:159:13-62
+149            android:authorities="@string/providerAuthority"
+149-->D:\Runali1\Runali\VMS\vms-frontend\app\src\main\AndroidManifest.xml:160:13-60
+150            android:exported="false"
+150-->D:\Runali1\Runali\VMS\vms-frontend\app\src\main\AndroidManifest.xml:162:13-37
+151            android:grantUriPermissions="true" >
+151-->D:\Runali1\Runali\VMS\vms-frontend\app\src\main\AndroidManifest.xml:161:13-47
+152            <meta-data
+152-->D:\Runali1\Runali\VMS\vms-frontend\app\src\main\AndroidManifest.xml:163:13-165:53
+153                android:name="android.support.FILE_PROVIDER_PATHS"
+153-->D:\Runali1\Runali\VMS\vms-frontend\app\src\main\AndroidManifest.xml:164:17-67
+154                android:resource="@xml/filepaths" />
+154-->D:\Runali1\Runali\VMS\vms-frontend\app\src\main\AndroidManifest.xml:165:17-50
+155        </provider>
+156
+157        <service
+157-->D:\Runali1\Runali\VMS\vms-frontend\app\src\main\AndroidManifest.xml:168:9-183:19
+158            android:name="com.informaticsetech.visitdesk.twa.DelegationService"
+158-->D:\Runali1\Runali\VMS\vms-frontend\app\src\main\AndroidManifest.xml:169:13-46
+159            android:enabled="@bool/enableNotification"
+159-->D:\Runali1\Runali\VMS\vms-frontend\app\src\main\AndroidManifest.xml:170:13-55
+160            android:exported="@bool/enableNotification" >
+160-->D:\Runali1\Runali\VMS\vms-frontend\app\src\main\AndroidManifest.xml:171:13-56
+161            <meta-data
+161-->D:\Runali1\Runali\VMS\vms-frontend\app\src\main\AndroidManifest.xml:174:17-176:73
+162                android:name="android.support.customtabs.trusted.SMALL_ICON"
+162-->D:\Runali1\Runali\VMS\vms-frontend\app\src\main\AndroidManifest.xml:175:21-81
+163                android:resource="@drawable/ic_notification_icon" />
+163-->D:\Runali1\Runali\VMS\vms-frontend\app\src\main\AndroidManifest.xml:176:21-70
+164
+165            <intent-filter>
+165-->D:\Runali1\Runali\VMS\vms-frontend\app\src\main\AndroidManifest.xml:179:13-182:29
+166                <action android:name="android.support.customtabs.trusted.TRUSTED_WEB_ACTIVITY_SERVICE" />
+166-->D:\Runali1\Runali\VMS\vms-frontend\app\src\main\AndroidManifest.xml:180:17-105
+166-->D:\Runali1\Runali\VMS\vms-frontend\app\src\main\AndroidManifest.xml:180:25-103
+167
+168                <category android:name="android.intent.category.DEFAULT" />
+168-->D:\Runali1\Runali\VMS\vms-frontend\app\src\main\AndroidManifest.xml:140:17-76
+168-->D:\Runali1\Runali\VMS\vms-frontend\app\src\main\AndroidManifest.xml:140:27-73
+169            </intent-filter>
+170        </service>
+171
+172        <activity android:name="com.google.androidbrowserhelper.trusted.NotificationPermissionRequestActivity" />
+172-->D:\Runali1\Runali\VMS\vms-frontend\app\src\main\AndroidManifest.xml:186:13-118
+172-->D:\Runali1\Runali\VMS\vms-frontend\app\src\main\AndroidManifest.xml:186:23-115
+173
+174        <provider
+174-->[androidx.emoji2:emoji2:1.3.0] C:\Users\Runali\.gradle\caches\8.11.1\transforms\5cb7738f5242d8c4e38c8ffa2b265b31\transformed\emoji2-1.3.0\AndroidManifest.xml:24:9-32:20
+175            android:name="androidx.startup.InitializationProvider"
+175-->[androidx.emoji2:emoji2:1.3.0] C:\Users\Runali\.gradle\caches\8.11.1\transforms\5cb7738f5242d8c4e38c8ffa2b265b31\transformed\emoji2-1.3.0\AndroidManifest.xml:25:13-67
+176            android:authorities="com.informaticsetech.visitdesk.twa.androidx-startup"
+176-->[androidx.emoji2:emoji2:1.3.0] C:\Users\Runali\.gradle\caches\8.11.1\transforms\5cb7738f5242d8c4e38c8ffa2b265b31\transformed\emoji2-1.3.0\AndroidManifest.xml:26:13-68
+177            android:exported="false" >
+177-->[androidx.emoji2:emoji2:1.3.0] C:\Users\Runali\.gradle\caches\8.11.1\transforms\5cb7738f5242d8c4e38c8ffa2b265b31\transformed\emoji2-1.3.0\AndroidManifest.xml:27:13-37
+178            <meta-data
+178-->[androidx.emoji2:emoji2:1.3.0] C:\Users\Runali\.gradle\caches\8.11.1\transforms\5cb7738f5242d8c4e38c8ffa2b265b31\transformed\emoji2-1.3.0\AndroidManifest.xml:29:13-31:52
+179                android:name="androidx.emoji2.text.EmojiCompatInitializer"
+179-->[androidx.emoji2:emoji2:1.3.0] C:\Users\Runali\.gradle\caches\8.11.1\transforms\5cb7738f5242d8c4e38c8ffa2b265b31\transformed\emoji2-1.3.0\AndroidManifest.xml:30:17-75
+180                android:value="androidx.startup" />
+180-->[androidx.emoji2:emoji2:1.3.0] C:\Users\Runali\.gradle\caches\8.11.1\transforms\5cb7738f5242d8c4e38c8ffa2b265b31\transformed\emoji2-1.3.0\AndroidManifest.xml:31:17-49
+181            <meta-data
+181-->[androidx.lifecycle:lifecycle-process:2.6.2] C:\Users\Runali\.gradle\caches\8.11.1\transforms\4bc52031417e9743197e36b704fe409f\transformed\lifecycle-process-2.6.2\AndroidManifest.xml:29:13-31:52
+182                android:name="androidx.lifecycle.ProcessLifecycleInitializer"
+182-->[androidx.lifecycle:lifecycle-process:2.6.2] C:\Users\Runali\.gradle\caches\8.11.1\transforms\4bc52031417e9743197e36b704fe409f\transformed\lifecycle-process-2.6.2\AndroidManifest.xml:30:17-78
+183                android:value="androidx.startup" />
+183-->[androidx.lifecycle:lifecycle-process:2.6.2] C:\Users\Runali\.gradle\caches\8.11.1\transforms\4bc52031417e9743197e36b704fe409f\transformed\lifecycle-process-2.6.2\AndroidManifest.xml:31:17-49
+184            <meta-data
+184-->[androidx.profileinstaller:profileinstaller:1.3.1] C:\Users\Runali\.gradle\caches\8.11.1\transforms\bb4a0d32d1b17a1dcea0cf71d2bde5e0\transformed\profileinstaller-1.3.1\AndroidManifest.xml:29:13-31:52
+185                android:name="androidx.profileinstaller.ProfileInstallerInitializer"
+185-->[androidx.profileinstaller:profileinstaller:1.3.1] C:\Users\Runali\.gradle\caches\8.11.1\transforms\bb4a0d32d1b17a1dcea0cf71d2bde5e0\transformed\profileinstaller-1.3.1\AndroidManifest.xml:30:17-85
+186                android:value="androidx.startup" />
+186-->[androidx.profileinstaller:profileinstaller:1.3.1] C:\Users\Runali\.gradle\caches\8.11.1\transforms\bb4a0d32d1b17a1dcea0cf71d2bde5e0\transformed\profileinstaller-1.3.1\AndroidManifest.xml:31:17-49
+187        </provider>
+188
+189        <receiver
+189-->[androidx.profileinstaller:profileinstaller:1.3.1] C:\Users\Runali\.gradle\caches\8.11.1\transforms\bb4a0d32d1b17a1dcea0cf71d2bde5e0\transformed\profileinstaller-1.3.1\AndroidManifest.xml:34:9-52:20
+190            android:name="androidx.profileinstaller.ProfileInstallReceiver"
+190-->[androidx.profileinstaller:profileinstaller:1.3.1] C:\Users\Runali\.gradle\caches\8.11.1\transforms\bb4a0d32d1b17a1dcea0cf71d2bde5e0\transformed\profileinstaller-1.3.1\AndroidManifest.xml:35:13-76
+191            android:directBootAware="false"
+191-->[androidx.profileinstaller:profileinstaller:1.3.1] C:\Users\Runali\.gradle\caches\8.11.1\transforms\bb4a0d32d1b17a1dcea0cf71d2bde5e0\transformed\profileinstaller-1.3.1\AndroidManifest.xml:36:13-44
+192            android:enabled="true"
+192-->[androidx.profileinstaller:profileinstaller:1.3.1] C:\Users\Runali\.gradle\caches\8.11.1\transforms\bb4a0d32d1b17a1dcea0cf71d2bde5e0\transformed\profileinstaller-1.3.1\AndroidManifest.xml:37:13-35
+193            android:exported="true"
+193-->[androidx.profileinstaller:profileinstaller:1.3.1] C:\Users\Runali\.gradle\caches\8.11.1\transforms\bb4a0d32d1b17a1dcea0cf71d2bde5e0\transformed\profileinstaller-1.3.1\AndroidManifest.xml:38:13-36
+194            android:permission="android.permission.DUMP" >
+194-->[androidx.profileinstaller:profileinstaller:1.3.1] C:\Users\Runali\.gradle\caches\8.11.1\transforms\bb4a0d32d1b17a1dcea0cf71d2bde5e0\transformed\profileinstaller-1.3.1\AndroidManifest.xml:39:13-57
+195            <intent-filter>
+195-->[androidx.profileinstaller:profileinstaller:1.3.1] C:\Users\Runali\.gradle\caches\8.11.1\transforms\bb4a0d32d1b17a1dcea0cf71d2bde5e0\transformed\profileinstaller-1.3.1\AndroidManifest.xml:40:13-42:29
+196                <action android:name="androidx.profileinstaller.action.INSTALL_PROFILE" />
+196-->[androidx.profileinstaller:profileinstaller:1.3.1] C:\Users\Runali\.gradle\caches\8.11.1\transforms\bb4a0d32d1b17a1dcea0cf71d2bde5e0\transformed\profileinstaller-1.3.1\AndroidManifest.xml:41:17-91
+196-->[androidx.profileinstaller:profileinstaller:1.3.1] C:\Users\Runali\.gradle\caches\8.11.1\transforms\bb4a0d32d1b17a1dcea0cf71d2bde5e0\transformed\profileinstaller-1.3.1\AndroidManifest.xml:41:25-88
+197            </intent-filter>
+198            <intent-filter>
+198-->[androidx.profileinstaller:profileinstaller:1.3.1] C:\Users\Runali\.gradle\caches\8.11.1\transforms\bb4a0d32d1b17a1dcea0cf71d2bde5e0\transformed\profileinstaller-1.3.1\AndroidManifest.xml:43:13-45:29
+199                <action android:name="androidx.profileinstaller.action.SKIP_FILE" />
+199-->[androidx.profileinstaller:profileinstaller:1.3.1] C:\Users\Runali\.gradle\caches\8.11.1\transforms\bb4a0d32d1b17a1dcea0cf71d2bde5e0\transformed\profileinstaller-1.3.1\AndroidManifest.xml:44:17-85
+199-->[androidx.profileinstaller:profileinstaller:1.3.1] C:\Users\Runali\.gradle\caches\8.11.1\transforms\bb4a0d32d1b17a1dcea0cf71d2bde5e0\transformed\profileinstaller-1.3.1\AndroidManifest.xml:44:25-82
+200            </intent-filter>
+201            <intent-filter>
+201-->[androidx.profileinstaller:profileinstaller:1.3.1] C:\Users\Runali\.gradle\caches\8.11.1\transforms\bb4a0d32d1b17a1dcea0cf71d2bde5e0\transformed\profileinstaller-1.3.1\AndroidManifest.xml:46:13-48:29
+202                <action android:name="androidx.profileinstaller.action.SAVE_PROFILE" />
+202-->[androidx.profileinstaller:profileinstaller:1.3.1] C:\Users\Runali\.gradle\caches\8.11.1\transforms\bb4a0d32d1b17a1dcea0cf71d2bde5e0\transformed\profileinstaller-1.3.1\AndroidManifest.xml:47:17-88
+202-->[androidx.profileinstaller:profileinstaller:1.3.1] C:\Users\Runali\.gradle\caches\8.11.1\transforms\bb4a0d32d1b17a1dcea0cf71d2bde5e0\transformed\profileinstaller-1.3.1\AndroidManifest.xml:47:25-85
+203            </intent-filter>
+204            <intent-filter>
+204-->[androidx.profileinstaller:profileinstaller:1.3.1] C:\Users\Runali\.gradle\caches\8.11.1\transforms\bb4a0d32d1b17a1dcea0cf71d2bde5e0\transformed\profileinstaller-1.3.1\AndroidManifest.xml:49:13-51:29
+205                <action android:name="androidx.profileinstaller.action.BENCHMARK_OPERATION" />
+205-->[androidx.profileinstaller:profileinstaller:1.3.1] C:\Users\Runali\.gradle\caches\8.11.1\transforms\bb4a0d32d1b17a1dcea0cf71d2bde5e0\transformed\profileinstaller-1.3.1\AndroidManifest.xml:50:17-95
+205-->[androidx.profileinstaller:profileinstaller:1.3.1] C:\Users\Runali\.gradle\caches\8.11.1\transforms\bb4a0d32d1b17a1dcea0cf71d2bde5e0\transformed\profileinstaller-1.3.1\AndroidManifest.xml:50:25-92
+206            </intent-filter>
+207        </receiver>
+208    </application>
+209
+210</manifest>

@@ -389,6 +389,12 @@ const Sidebar = () => {
                     <span>Dashboard</span>
                   </NavLink>
                 </li>
+                <li>
+                  <NavLink to="/voiceDialer">
+                    <i className="fa fa-dashboard"></i>
+                    <span>Voice Calling</span>
+                  </NavLink>
+                </li>
                 {parentMenus.map((parent) => {
                   const childMenus = getChildMenus(parent.m_id);
 

@@ -12,6 +12,7 @@ import {
     VisitorCard,
 } from "../../Api/VisitorFormApi";
 import { flushSync } from "react-dom";
+import { getAllHostApi, getHostApi } from "../../Api/HostMasterApi";
 
 const VisitorForm = () => {
     const navigate = useNavigate();
@@ -40,6 +41,9 @@ const VisitorForm = () => {
     const [photopathIv, setPhotopathIv] = useState("");
     const [file, setFile] = useState(null)
     const [base64, setBase64] = useState("");
+    const [allHost, setAllHost] = useState([])
+    const [hostMobileNo, setHostMobileNo] = useState("")
+
 
     useEffect(() => {
         const generateSecretKey = () => {
@@ -82,6 +86,56 @@ const VisitorForm = () => {
         }
     }, [vId]);
 
+    useEffect(() => {
+        const fetchData = async () => {
+            await getAllHost();
+        };
+        fetchData();
+    }, []);
+
+    const getAllHost = async () => {
+        const data = await getAllHostApi(navigate);
+        console.log(data);
+        const options = data.map((data) => ({
+            value: data.Id,
+            label: `${data.HostName}`,
+        }));
+        setAllHost(options);
+    };
+
+    // const handleHost = (selected) => {
+    //     const selectedValue = selected;
+    //     setPersonToMeet(selectedValue);
+    //     console.log(selectedValue, "selected value");
+    //     setHostId(selectedValue.value)
+    //     getHostData()
+    // };
+
+    const handleHost = (selectedOption) => {
+        if (!selectedOption) return; // handle empty case
+
+        setPersonToMeet(selectedOption);           // store full option object
+        console.log(selectedOption, "selected option");
+
+        // setHostId(selectedOption.value);           // correctly get the value
+        getHostData(selectedOption.value);
+    };
+
+    const getHostData = async (hostId) => {
+        const data = await getHostApi(hostId, navigate);
+        console.log(data);
+        // setHostName(data.HostName);
+        // setEmail(data.Email)
+        // setDesignation(data.Designation)
+        setHostMobileNo(data.MobileNumber)
+        // setDepartmentName({
+        //     value: data.DepartmentId,
+        //     label: data.DepartmentName
+        // })
+        // setHId(data.Id);
+    };
+
+
     const AddVisitor = async () => {
         const data = await AddVisitorFormApi(
             fullName,
@@ -112,67 +166,7 @@ const VisitorForm = () => {
         const data = await SendSmsApi(mobileNo, navigate)
         console.log(data, "sms snd")
     }
-    // const getVisitorData = async () => {
-    //     const data = await getVisitorApi(vId, navigate);
-    //     console.log(data)
-    //     setFullName(data.FullName)
-    //     setCompanyName(data.CompanyName)
-    //     setEmail(data.Email)
-    //     setMobileNo(data.MobileNumber)
-    //     setGovId(data.GovermentId)
-    //     setPersonToMeet(data.PersonToMeet)
-    //     setExpectedTime(data.VisitTime.split("T")[0])
-    //     // setPhoto(data.PhotoPath)
-    //     console.log(data.PhotoPath, "92")
-    //     const temp = data.PhotoPath;
-    //     setPhoto(temp)
 
-    //     console.log(temp, "96")
-    //     console.log(photo, "97")
-    //     setPurposeOfVisit({
-    //         value: data.PurposeId,
-    //         label: `${data.PurposeName}`,
-    //     })
-    //     setVisitorCategory({
-    //         value: data.CategoryId,
-    //         label: `${data.CategoryName}`,
-    //     })
-
-    // }
-    // const getVisitorData = async () => {
-    //     const data = await getVisitorApi(vId, navigate);
-
-    //     flushSync(() => {
-    //         setFullName(data.FullName);
-    //         setCompanyName(data.CompanyName);
-    //         setEmail(data.Email);
-    //         setMobileNo(data.MobileNumber);
-    //         setGovId(data.GovermentId);
-    //         setPersonToMeet(data.PersonToMeet);
-    //         setExpectedTime(data.VisitTime.split("T")[0]);
-    //         const photoValue = data?.PhotoPath;
-    //         console.log("Photo value to set:", photoValue);
-
-    //         setPhoto(photoValue);
-    //         const decryptedImageUrl = photo ? decryptImage(photoValue) : null;
-    //         console.log(photo, "124")
-    //         // Immediate check with useEffect
-    //         // useEffect(() => {
-    //         //     console.log("Updated photo state:", photo);
-    //         // }, [photo]);
-    //         setPurposeOfVisit({
-    //             value: data.PurposeId,
-    //             label: `${data.PurposeName}`,
-    //         });
-    //         setVisitorCategory({
-    //             value: data.CategoryId,
-    //             label: `${data.CategoryName}`,
-    //         });
-    //     });
-
-    //     // Ab photo updated hai
-    //    // This should show updated value
-    // }
     const getVisitorData = async () => {
         const data = await getVisitorApi(vId, navigate);
 
@@ -515,23 +509,33 @@ const VisitorForm = () => {
                                                         Person To Meet:
                                                     </label>{" "}
                                                     <span className="text-danger fw-bold">*</span>
-                                                    <input
-                                                        type="text"
-                                                        id="personToMeet"
-                                                        className="form-control mt-3"
-                                                        placeholder="Enter Person to Meet"
+                                                    <Select
+                                                        className="mt-3"
                                                         value={personToMeet}
-                                                        // onChange={(e) => setPersonToMeet(e.target.value)}
-                                                        onChange={(e) => {
-                                                            const value = e.target.value;
-                                                            // Allow only alphabets and spaces
-                                                            if (/^[a-zA-Z\s]*$/.test(value)) {
-                                                                setPersonToMeet(value);
-                                                            }
-                                                        }}
+                                                        onChange={handleHost}
+                                                        options={allHost}
+                                                        placeholder="Select Person To Meet"
                                                     />
                                                 </div>
                                             </div>
+                                            <div className="col-xs-12 col-sm-12 col-md-6 col-lg-6 mt-2 mt-lg-0">
+                                                <div className="form-group form-group-sm">
+                                                    <label className="control-label fw-bold">
+                                                        Host Mobile No:
+                                                    </label>{" "}
+                                                    <span className="text-danger fw-bold">*</span>
+                                                    <input
+                                                        type="text"
+                                                        id="hostMobileNo"
+                                                        className="form-control mt-3"
+                                                        placeholder="Enter Host Mobile No"
+                                                        value={hostMobileNo}
+                                                        onChange={(e) => setHostMobileNo(e.target.value)}
+                                                    />
+                                                </div>
+                                            </div>
+                                        </div>
+                                          <div className="row mt-lg-1">
                                             <div className="col-xs-12 col-sm-12 col-md-6 col-lg-6 mt-lg-0 mt-md-0 mt-4">
                                                 <div className="form-group form-group-sm">
                                                     <label className="control-label fw-bold">
@@ -547,9 +551,7 @@ const VisitorForm = () => {
                                                     />
                                                 </div>
                                             </div>
-                                        </div>
-                                        <div className="row mt-lg-1">
-                                            <div className="col-xs-12 col-sm-12 col-md-6 col-lg-6 mt-2 mt-lg-0">
+                                                <div className="col-xs-12 col-sm-12 col-md-6 col-lg-6 mt-2 mt-lg-0">
                                                 <div className="form-group form-group-sm">
                                                     <label className="control-label fw-bold">
                                                         Expected Time:
@@ -565,6 +567,9 @@ const VisitorForm = () => {
                                                     />
                                                 </div>
                                             </div>
+                                        </div>
+                                        <div className="row mt-lg-1">
+                                        
                                             <div className="col-xs-12 col-sm-12 col-md-6 col-lg-6 mt-lg-0 mt-md-0 mt-4">
                                                 <div className="form-group form-group-sm">
                                                     <label className="control-label fw-bold">
