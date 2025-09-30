@@ -13,6 +13,7 @@ export const AddVisitorFormApi = (
     govId,
     visitorCategory,
     personToMeet,
+    hostMobileNo,
     purposeOfVisit,
     expectedTime,
     photo,
@@ -45,11 +46,12 @@ export const AddVisitorFormApi = (
         categoryId: visitorCategory.value,
         companyName: companyName,
         photoPath: photo,
-        personToMeet: personToMeet,
+        personToMeet: personToMeet.value,
         purposeId: purposeOfVisit.value,
         visitTime: expectedTime,
         secretKey: secretKey,
         photopathIV: photopathIv,
+        hostNo: hostMobileNo
         // visitTime: "2025-08-01"
     };
     if (vId !== null && vId !== "") {

@@ -145,6 +145,7 @@ const VisitorForm = () => {
             govId,
             visitorCategory,
             personToMeet,
+            hostMobileNo,
             purposeOfVisit,
             expectedTime,
             photo,
@@ -535,7 +536,7 @@ const VisitorForm = () => {
                                                 </div>
                                             </div>
                                         </div>
-                                          <div className="row mt-lg-1">
+                                        <div className="row mt-lg-1">
                                             <div className="col-xs-12 col-sm-12 col-md-6 col-lg-6 mt-lg-0 mt-md-0 mt-4">
                                                 <div className="form-group form-group-sm">
                                                     <label className="control-label fw-bold">
@@ -551,7 +552,7 @@ const VisitorForm = () => {
                                                     />
                                                 </div>
                                             </div>
-                                                <div className="col-xs-12 col-sm-12 col-md-6 col-lg-6 mt-2 mt-lg-0">
+                                            <div className="col-xs-12 col-sm-12 col-md-6 col-lg-6 mt-2 mt-lg-0">
                                                 <div className="form-group form-group-sm">
                                                     <label className="control-label fw-bold">
                                                         Expected Time:
@@ -569,7 +570,7 @@ const VisitorForm = () => {
                                             </div>
                                         </div>
                                         <div className="row mt-lg-1">
-                                        
+
                                             <div className="col-xs-12 col-sm-12 col-md-6 col-lg-6 mt-lg-0 mt-md-0 mt-4">
                                                 <div className="form-group form-group-sm">
                                                     <label className="control-label fw-bold">
