@@ -20,6 +20,9 @@ export const AddVisitorFormApi = (
     secretKey,
     vId,
     photopathIv,
+    visitDate,
+    website,
+     address,
     navigate
 ) => {
     if (
@@ -51,7 +54,10 @@ export const AddVisitorFormApi = (
         visitTime: expectedTime,
         secretKey: secretKey,
         photopathIV: photopathIv,
-        hostNo: hostMobileNo
+        hostNo: hostMobileNo,
+        visitDate: visitDate,
+        website: website,
+        address: address
         // visitTime: "2025-08-01"
     };
     if (vId !== null && vId !== "") {

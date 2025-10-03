@@ -13,6 +13,8 @@ import {
 } from "../../Api/VisitorFormApi";
 import { flushSync } from "react-dom";
 import { getAllHostApi, getHostApi } from "../../Api/HostMasterApi";
+import MicIcon from "@material-ui/icons/Mic";
+import MicOffIcon from "@material-ui/icons/MicOff";
 
 const VisitorForm = () => {
     const navigate = useNavigate();
@@ -23,12 +25,17 @@ const VisitorForm = () => {
     const [companyName, setCompanyName] = useState("");
     const [email, setEmail] = useState("");
     const [mobileNo, setMobileNo] = useState("");
+    const [address, setAddress] = useState("")
     const [govId, setGovId] = useState("");
     const [visitorCategory, setVisitorCategory] = useState("");
     const [allVisitorCategory, setAllVisitorCategory] = useState([]);
     const [personToMeet, setPersonToMeet] = useState("");
     const [purposeOfVisit, setPurposeOfVisit] = useState("");
     const [allPurpose, setAllPurpose] = useState([]);
+    const [visitDate, setVisitDate] = useState(() => {
+        const today = new Date();
+        return today.toISOString().split("T")[0]; // format: YYYY-MM-DD
+    });
     const [expectedTime, setExpectedTime] = useState("");
     const [photo, setPhoto] = useState(null);
     const [photo1, setPhoto1] = useState(null);
@@ -43,6 +50,8 @@ const VisitorForm = () => {
     const [base64, setBase64] = useState("");
     const [allHost, setAllHost] = useState([])
     const [hostMobileNo, setHostMobileNo] = useState("")
+    const [listening, setListening] = useState(false);
+    const [website, setWebsite] = useState("")
 
 
     useEffect(() => {
@@ -152,6 +161,9 @@ const VisitorForm = () => {
             secretKey,
             vId,
             photopathIv,
+            visitDate,
+            website,
+            address,
             navigate
         );
 
@@ -344,6 +356,134 @@ const VisitorForm = () => {
         }
     };
 
+    // const startListening = () => {
+    //     const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+    //     if (!SpeechRecognition) {
+    //         alert("Speech Recognition not supported in this browser");
+    //         return;
+    //     }
+
+    //     const recognition = new SpeechRecognition();
+    //     recognition.lang = "en-IN";
+    //     recognition.continuous = false;
+    //     recognition.interimResults = false;
+
+    //     recognition.onstart = () => setListening(true);
+
+    //     recognition.onresult = (event) => {
+    //         const spokenText = event.results[0][0].transcript;
+    //         const detectedNumber = spokenText.replace(/\D/g, "");
+    //         setMobileNo(detectedNumber);
+    //         setListening(false);
+    //     };
+
+    //     recognition.onerror = (event) => {
+    //         console.error("Error:", event.error);
+    //         alert("Speech error: " + event.error);
+    //         setListening(false);
+    //     };
+
+    //     recognition.onend = () => setListening(false);
+
+    //     recognition.start();
+
+    // };
+
+    // const FullNameData = () => {
+    //     const SpeechRecognition =
+    //         window.SpeechRecognition || window.webkitSpeechRecognition;
+
+    //     if (!SpeechRecognition) {
+    //         alert("Speech Recognition not supported in this browser");
+    //         return;
+    //     }
+
+    //     const recognition = new SpeechRecognition();
+    //     recognition.lang = "en-IN";
+    //     recognition.continuous = false;
+    //     recognition.interimResults = false;
+
+    //     recognition.onstart = () => setListening(true);
+
+    //     recognition.onresult = (event) => {
+    //         const spokenText = event.results[0][0].transcript;
+    //         console.log("Spoken:", spokenText);
+
+    //         // ✅ Bind name directly
+    //         setFullName(spokenText.trim()); 
+
+    //         setListening(false);
+    //     };
+
+    //     recognition.onerror = (event) => {
+    //         console.error("Error:", event.error);
+    //         alert("Speech error: " + event.error);
+    //         setListening(false);
+    //     };
+
+    //     recognition.onend = () => setListening(false);
+
+    //     recognition.start();
+    // };
+
+    const startListening = (field) => {
+        const SpeechRecognition =
+            window.SpeechRecognition || window.webkitSpeechRecognition;
+
+        if (!SpeechRecognition) {
+            alert("Speech Recognition not supported in this browser");
+            return;
+        }
+
+        const recognition = new SpeechRecognition();
+        recognition.lang = "en-IN";
+        recognition.continuous = false;
+        recognition.interimResults = false;
+
+        recognition.onstart = () => setListening(true);
+
+        recognition.onresult = (event) => {
+            let spokenText = event.results[0][0].transcript.trim();
+            console.log("Spoken:", spokenText);
+
+            if (field === "mobileNo") {
+                // extract digits only
+                const detectedNumber = spokenText.replace(/\D/g, "");
+                setMobileNo(detectedNumber);
+            } else if (field === "fullName") {
+                setFullName(spokenText);
+            } else if (field === "companyName") {
+                setCompanyName(spokenText);
+            } else if (field === "email") {
+                // ✅ Fix common replacements
+                spokenText = spokenText
+                    .replace(/\bat the rate\b/gi, "@")
+                    .replace(/\bat\b/gi, "@")
+                    .replace(/\bdot\b/gi, ".")
+                    .replace(/\bunderscore\b/gi, "_")
+                    .replace(/\bdash\b/gi, "-");
+
+                // ✅ Remove all spaces
+                spokenText = spokenText.replace(/\s+/g, "");
+
+                // ✅ Lowercase (emails are case-insensitive)
+                setEmail(spokenText.toLowerCase());
+            }
+
+            setListening(false);
+        };
+
+        recognition.onerror = (event) => {
+            console.error("Error:", event.error);
+            alert("Speech error: " + event.error);
+            setListening(false);
+        };
+
+        recognition.onend = () => setListening(false);
+
+        recognition.start();
+    };
+
 
     return (
         <>
@@ -381,21 +521,49 @@ const VisitorForm = () => {
                                                         Full Name:
                                                     </label>{" "}
                                                     <span className="text-danger fw-bold">*</span>
-                                                    <input
+                                                    {/* <input
                                                         type="text"
                                                         id="fullName"
                                                         className="form-control mt-3"
                                                         placeholder="Enter Full Name"
                                                         value={fullName}
-                                                        // onChange={(e) => setFullName(e.target.value)}
+                                                      
                                                         onChange={(e) => {
                                                             const value = e.target.value;
-                                                            // Allow only alphabets and spaces
+                                                           
                                                             if (/^[a-zA-Z\s]*$/.test(value)) {
                                                                 setFullName(value);
                                                             }
                                                         }}
-                                                    />
+                                                    /> */}
+                                                    <div className="input-group">
+                                                        {/* <input type="text" class="form-control" placeholder="Search"/> */}
+                                                        <input
+                                                            type="text"
+                                                            id="fullName"
+                                                            className="form-control mt-3"
+                                                            placeholder="Enter Full Name"
+                                                            value={fullName}
+
+                                                            onChange={(e) => {
+                                                                const value = e.target.value;
+
+                                                                if (/^[a-zA-Z\s]*$/.test(value)) {
+                                                                    setFullName(value);
+                                                                }
+                                                            }}
+                                                        />
+                                                        <div className="input-group-btn">
+                                                            <button className="btn btn-default mt-3" type="submit" onClick={() => startListening("fullName")}>
+                                                                {/* <i class="glyphicon glyphicon-search"></i> */}
+                                                                {listening === "fullName" ? (
+                                                                    <MicOffIcon style={{ color: "red" }} />
+                                                                ) : (
+                                                                    <MicIcon />
+                                                                )}
+                                                            </button>
+                                                        </div>
+                                                    </div>
                                                 </div>
                                             </div>
                                             <div className="col-xs-12 col-sm-12 col-md-6 col-lg-6 mt-lg-0 mt-md-0 mt-4">
@@ -404,21 +572,34 @@ const VisitorForm = () => {
                                                         Company Name:
                                                     </label>{" "}
                                                     <span className="text-danger fw-bold">*</span>
-                                                    <input
-                                                        type="text"
-                                                        id="companyName"
-                                                        className="form-control mt-3"
-                                                        placeholder="Enter Company Name"
-                                                        value={companyName}
-                                                        // onChange={(e) => setCompanyName(e.target.value)}
-                                                        onChange={(e) => {
-                                                            const value = e.target.value;
-                                                            // Allow only alphabets and spaces
-                                                            if (/^[a-zA-Z\s]*$/.test(value)) {
-                                                                setCompanyName(value);
-                                                            }
-                                                        }}
-                                                    />
+                                                    <div className="input-group">
+                                                        <input
+                                                            type="text"
+                                                            id="companyName"
+                                                            className="form-control mt-3"
+                                                            placeholder="Enter Company Name"
+                                                            value={companyName}
+                                                            // onChange={(e) => setCompanyName(e.target.value)}
+                                                            onChange={(e) => {
+                                                                const value = e.target.value;
+                                                                // Allow only alphabets and spaces
+                                                                if (/^[a-zA-Z\s]*$/.test(value)) {
+                                                                    setCompanyName(value);
+                                                                }
+                                                            }}
+                                                        />
+                                                        <div className="input-group-btn">
+                                                            <button className="btn btn-default mt-3" type="submit" onClick={() => startListening("companyName")}>
+                                                                {/* <i class="glyphicon glyphicon-search"></i> */}
+                                                                {listening === "companyName" ? (
+                                                                    <MicOffIcon style={{ color: "red" }} />
+                                                                ) : (
+                                                                    <MicIcon />
+                                                                )}
+                                                            </button>
+                                                        </div>
+                                                    </div>
+
                                                 </div>
                                             </div>
                                         </div>
@@ -429,21 +610,34 @@ const VisitorForm = () => {
                                                         Email:
                                                     </label>{" "}
                                                     <span className="text-danger fw-bold">*</span>
-                                                    <input
-                                                        type="email"
-                                                        id="dutyName"
-                                                        className="form-control mt-3"
-                                                        placeholder="Enter Email"
-                                                        value={email}
-                                                        // onChange={(e) => setEmail(e.target.value)}
-                                                        onChange={(e) => {
-                                                            const value = e.target.value;
-                                                            // Allow only valid email characters while typing
-                                                            if (/^[a-zA-Z0-9@._-]*$/.test(value)) {
-                                                                setEmail(value);
-                                                            }
-                                                        }}
-                                                    />
+                                                    <div className="input-group">
+                                                        <input
+                                                            type="email"
+                                                            id="dutyName"
+                                                            className="form-control mt-3"
+                                                            placeholder="Enter Email"
+                                                            value={email}
+                                                            // onChange={(e) => setEmail(e.target.value)}
+                                                            onChange={(e) => {
+                                                                const value = e.target.value;
+                                                                // Allow only valid email characters while typing
+                                                                if (/^[a-zA-Z0-9@._-]*$/.test(value)) {
+                                                                    setEmail(value);
+                                                                }
+                                                            }}
+                                                        />
+                                                        <div className="input-group-btn">
+                                                            <button className="btn btn-default mt-3" type="submit" onClick={() => startListening("email")}>
+                                                                {/* <i class="glyphicon glyphicon-search"></i> */}
+                                                                {listening === "email" ? (
+                                                                    <MicOffIcon style={{ color: "red" }} />
+                                                                ) : (
+                                                                    <MicIcon />
+                                                                )}
+                                                            </button>
+                                                        </div>
+                                                    </div>
+
                                                 </div>
                                             </div>
                                             <div className="col-xs-12 col-sm-12 col-md-6 col-lg-6 mt-lg-0 mt-md-0 mt-4">
@@ -452,21 +646,34 @@ const VisitorForm = () => {
                                                         Mobile No:
                                                     </label>{" "}
                                                     <span className="text-danger fw-bold">*</span>
-                                                    <input
-                                                        type="text"
-                                                        id="mobileNo"
-                                                        className="form-control mt-3"
-                                                        placeholder="Enter Mobile No"
-                                                        value={mobileNo}
-                                                        onChange={(e) => setMobileNo(e.target.value)}
-                                                    // onChange={(e) => {
-                                                    //     const value = e.target.value;
-                                                    //     // Allow only numbers and max 10 digits
-                                                    //     if (/^[0-9]{0,10}$/.test(value)) {
-                                                    //         setMobileNo(value);
-                                                    //     }
-                                                    // }}
-                                                    />
+                                                    <div className="input-group">
+                                                        <input
+                                                            type="text"
+                                                            id="mobileNo"
+                                                            className="form-control mt-3"
+                                                            placeholder="Enter Mobile No"
+                                                            value={mobileNo}
+                                                            onChange={(e) => setMobileNo(e.target.value)}
+                                                        // onChange={(e) => {
+                                                        //     const value = e.target.value;
+                                                        //     // Allow only numbers and max 10 digits
+                                                        //     if (/^[0-9]{0,10}$/.test(value)) {
+                                                        //         setMobileNo(value);
+                                                        //     }
+                                                        // }}
+                                                        />
+                                                        <div className="input-group-btn">
+                                                            <button className="btn btn-default mt-3" type="submit" onClick={() => startListening("mobileNo")}>
+                                                                {/* <i class="glyphicon glyphicon-search"></i> */}
+                                                                {listening === "mobileNo" ? (
+                                                                    <MicOffIcon style={{ color: "red" }} />
+                                                                ) : (
+                                                                    <MicIcon />
+                                                                )}
+
+                                                            </button>
+                                                        </div>
+                                                    </div>
                                                 </div>
                                             </div>
                                         </div>
@@ -474,17 +681,20 @@ const VisitorForm = () => {
                                             <div className="col-xs-12 col-sm-12 col-md-6 col-lg-6 mt-2 mt-lg-0">
                                                 <div className="form-group form-group-sm">
                                                     <label className="control-label fw-bold">
-                                                        Government Id:
+                                                        Address:
                                                     </label>{" "}
 
-                                                    <input
+                                                    {/* <input
                                                         type="text"
                                                         id="govId"
                                                         className="form-control mt-3"
                                                         placeholder="Enter Government Id"
                                                         value={govId}
                                                         onChange={(e) => setGovId(e.target.value)}
-                                                    />
+                                                    /> */}
+
+                                                    <textarea className="form-control mt-3" rows="3" id="address" placeholder="Enter Address" value={address} onChange={(e) => setAddress(e.target.value)}></textarea>
+
                                                 </div>
                                             </div>
                                             <div className="col-xs-12 col-sm-12 col-md-6 col-lg-6 mt-lg-0 mt-md-0 mt-4">
@@ -540,6 +750,40 @@ const VisitorForm = () => {
                                             <div className="col-xs-12 col-sm-12 col-md-6 col-lg-6 mt-lg-0 mt-md-0 mt-4">
                                                 <div className="form-group form-group-sm">
                                                     <label className="control-label fw-bold">
+                                                        Visit Date:
+                                                    </label>{" "}
+                                                    <span className="text-danger fw-bold">*</span>
+                                                    <input
+                                                        type="date"
+                                                        id="visitDate"
+                                                        className="form-control mt-3"
+                                                        placeholder="Enter Visit Date"
+                                                        value={visitDate}
+                                                        onChange={(e) => setVisitDate(e.target.value)}
+                                                    />
+                                                </div>
+                                            </div>
+                                            <div className="col-xs-12 col-sm-12 col-md-6 col-lg-6 mt-2 mt-lg-0">
+                                                <div className="form-group form-group-sm">
+                                                    <label className="control-label fw-bold">
+                                                        Visit Time:
+                                                    </label>{" "}
+                                                    <span className="text-danger fw-bold">*</span>
+                                                    <input
+                                                        type="time"
+                                                        id="expectedTime"
+                                                        className="form-control mt-3"
+                                                        placeholder="Enter Expected Time"
+                                                        value={expectedTime}
+                                                        onChange={(e) => setExpectedTime(e.target.value)}
+                                                    />
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div className="row mt-lg-1">
+                                            <div className="col-xs-12 col-sm-12 col-md-6 col-lg-6 mt-lg-0 mt-md-0 mt-4">
+                                                <div className="form-group form-group-sm">
+                                                    <label className="control-label fw-bold">
                                                         Purpose of Visit:
                                                     </label>{" "}
                                                     <span className="text-danger fw-bold">*</span>
@@ -555,16 +799,16 @@ const VisitorForm = () => {
                                             <div className="col-xs-12 col-sm-12 col-md-6 col-lg-6 mt-2 mt-lg-0">
                                                 <div className="form-group form-group-sm">
                                                     <label className="control-label fw-bold">
-                                                        Expected Time:
+                                                        Website:
                                                     </label>{" "}
                                                     <span className="text-danger fw-bold">*</span>
                                                     <input
-                                                        type="date"
-                                                        id="expectedTime"
+                                                        type="text"
+                                                        id="website"
                                                         className="form-control mt-3"
-                                                        placeholder="Enter Expected Time"
-                                                        value={expectedTime}
-                                                        onChange={(e) => setExpectedTime(e.target.value)}
+                                                        placeholder="Enter Website"
+                                                        value={website}
+                                                        onChange={(e) => setWebsite(e.target.value)}
                                                     />
                                                 </div>
                                             </div>
@@ -700,10 +944,10 @@ const VisitorForm = () => {
                             </div>
                         </div>
                     </div>
-                    <div className="container-fluid">
+                    {/* <div className="container-fluid">
                         <input className="form-control" type="file" onChange={handleFileChange} />
                         <button className="btn btn-success" onClick={UploadVisitorCard}>Submit</button>
-                    </div>
+                    </div> */}
                 </section>
             </section>
         </>
