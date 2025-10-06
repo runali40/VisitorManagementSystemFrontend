@@ -182,7 +182,6 @@ const VisitorForm = () => {
 
     const getVisitorData = async () => {
         const data = await getVisitorApi(vId, navigate);
-
         flushSync(() => {
             const photoValue = data?.PhotoPath;
             console.log("Photo value to set:", photoValue);
@@ -195,10 +194,10 @@ const VisitorForm = () => {
             setPersonToMeet(data.PersonToMeet);
             setExpectedTime(data.VisitTime.split("T")[0]);
             setSecretKey(data.secretKey)
-
-
-
-
+            setPersonToMeet({
+                value: data.PersonToMeet,
+                label: data.HostName
+            })
             setPurposeOfVisit({
                 value: data.PurposeId,
                 label: `${data.PurposeName}`,
@@ -207,8 +206,13 @@ const VisitorForm = () => {
                 value: data.CategoryId,
                 label: `${data.CategoryName}`,
             });
+            setExpectedTime(data.VisitTime.split("T")[1].slice(0, 5))
+            setWebsite(data.Website)
+            setHostMobileNo(data.HostNo)
+            setAddress(data.Address)
         });
     };
+
     useEffect(() => {
         if (photo1) {
             setPhoto(photo1);

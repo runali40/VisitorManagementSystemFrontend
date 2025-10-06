@@ -166,11 +166,14 @@ const Visitor = () => {
                                                     <th style={headerCellStyle}>Company Name</th>
                                                     <th style={headerCellStyle}>Email</th>
                                                     <th style={headerCellStyle}>Mobile No</th>
-                                                    <th style={headerCellStyle}>Gov Id</th>
+                                                    <th style={headerCellStyle}>Address</th>
                                                     <th style={headerCellStyle}>Visitor Category</th>
                                                     <th style={headerCellStyle}>Person to Meet</th>
+                                                    <th style={headerCellStyle}>Host Mobile No</th>
                                                     <th style={headerCellStyle}>Purpose of Visit</th>
-                                                    <th style={headerCellStyle}>Expected Time</th>
+                                                    <th style={headerCellStyle}>Visit Date</th>
+                                                    <th style={headerCellStyle}>Visit Time</th>
+                                                    <th style={headerCellStyle}>Website</th>
                                                     <th style={headerCellStyle}>Photo</th>
                                                     <th style={headerCellStyle}>Status</th>
                                                     <th style={{ ...headerCellStyle, textAlign: "center" }}>Action</th>
@@ -189,12 +192,18 @@ const Visitor = () => {
                                                             <td>{data.CompanyName}</td>
                                                             <td>{data.Email}</td>
                                                             <td>{data.MobileNumber}</td>
-                                                            <td>{data.GovermentId}</td>
+                                                            <td>{data.Address}</td>
                                                             <td>{data.CategoryName}</td>
-                                                            <td>{data.PersonToMeet}</td>
+                                                            <td>{data.HostName}</td>
+                                                            <td>{data.HostNo}</td>
                                                             <td>{data.PurposeName}</td>
-                                                            <td>{data.VisitTime ? data.VisitTime.split("T")[0] : null}</td>
-                                                            {/* <td></td> */}
+                                                            <td>{data.VisiDate ? data.VisiDate.split("T")[0] : null}</td>
+                                                            <td>
+                                                                {data.VisitTime
+                                                                    ? `${data.VisitTime.split("T")[1].slice(0, 5)}`
+                                                                    : null}
+                                                            </td>
+                                                            <td>{data.Website}</td>
                                                             <td>
                                                                 {rowId === data.Id ? (
                                                                     <img
@@ -219,7 +228,7 @@ const Visitor = () => {
                                                             <td>{data.IsActive ? "Active" : "Inactive"}</td>
                                                             <td>
                                                                 <div className="d-flex">
-                                                                    <Edit className="text-success mr-2" onClick={()=>{getVisitorData(data.Id);getSecretKey(data.Id, data.secretKey, data.PhotopathIV) } } />
+                                                                    <Edit className="text-success mr-2" onClick={() => { getVisitorData(data.Id); getSecretKey(data.Id, data.secretKey, data.PhotopathIV) }} />
                                                                     <Delete className="text-danger" onClick={() => DeleteVisitorData(data.Id)} />
                                                                 </div>
                                                             </td>
