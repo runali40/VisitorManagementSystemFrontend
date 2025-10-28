@@ -47,11 +47,17 @@ const Login = () => {
             localStorage.setItem("sessionid", result.outcome.sessionId);
             localStorage.setItem("username", result.data.um_user_name);
             localStorage.setItem("RoleName", result.data.r_rolename);
-
+            const roleName = localStorage.getItem("RoleName")
             // Set token in cookies
             Cookies.set("UserCredential", result.outcome.tokens, { expires: 7 });
             // Cookies.remove("UserCredential", { path: '/' });
-            navigate("/dashboard", { replace: true });
+            if (roleName === "Receptionlist") {
+                navigate("/VisiotrsInfo", { replace: true });
+            }
+            else {
+                navigate("/dashboard", { replace: true });
+            }
+
         } catch (error) {
             const errorMessage = error.response?.status === 400
                 ? "Username and Password both are Invalid!"

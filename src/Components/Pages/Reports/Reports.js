@@ -174,66 +174,355 @@ const Reports = () => {
     const indexOfFirstItem = indexOfLastItem - itemsPerPage;
     const currentItems = allReports.slice(indexOfFirstItem, indexOfLastItem);
 
+    // Add this print function to your component
+   // Fixed print function - no hanging issue
+const handlePrint = () => {
+    const printContent = document.getElementById('section-to-print');
+    
+    // Create print window content
+    const printWindow = window.open('', '', 'height=800,width=800');
+    
+    printWindow.document.write(`
+        <html>
+        <head>
+            <title>One Day Pass</title>
+            <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+            <style>
+                @media print {
+                    @page {
+                        size: A4;
+                        margin: 15mm;
+                    }
+                    
+                    body {
+                        margin: 0;
+                        padding: 20px;
+                    }
+                    
+                    .card {
+                        border: 2px solid #000 !important;
+                        box-shadow: none !important;
+                        page-break-inside: avoid;
+                        max-width: 600px;
+                        margin: 0 auto;
+                    }
+                    
+                    .card-header {
+                        background-color: green !important;
+                        color: white !important;
+                        -webkit-print-color-adjust: exact;
+                        print-color-adjust: exact;
+                    }
+                    
+                    .profile-icon {
+                        border: 2px solid #000 !important;
+                        -webkit-print-color-adjust: exact;
+                        print-color-adjust: exact;
+                    }
+                    
+                    .profile-icon img {
+                        -webkit-print-color-adjust: exact;
+                        print-color-adjust: exact;
+                    }
+                    
+                    .row {
+                        display: flex;
+                        margin-top: 1rem;
+                    }
+                    
+                    .label {
+                        font-weight: 600;
+                    }
+                    
+                    .value {
+                        text-align: right;
+                    }
+                    
+                    h4, h5 {
+                        margin: 0;
+                    }
+                    
+                    .card-footer {
+                        border-top: 1px solid #000 !important;
+                    }
+                }
+                
+                body {
+                    font-family: Arial, sans-serif;
+                }
+                
+                .card {
+                    border: 2px solid #000;
+                    max-width: 600px;
+                    margin: 0 auto;
+                }
+                
+                .card-header {
+                    background-color: green;
+                    color: white;
+                }
+                
+                .profile-icon {
+                    position: absolute;
+                    top: 23px;
+                    left: 35px;
+                    z-index: 10;
+                    width: 75px;
+                    height: 75px;
+                    background-color: #fff;
+                    border-radius: 50%;
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+                    border: 2px solid #ccc;
+                    overflow: hidden;
+                }
+                
+                .profile-icon img {
+                    width: 100%;
+                    height: 100%;
+                    object-fit: cover;
+                    border-radius: 50%;
+                }
+                
+                .row {
+                    display: flex;
+                    margin-top: 1rem;
+                }
+                
+                .label {
+                    font-weight: 600;
+                }
+                
+                .value {
+                    text-align: right;
+                }
+            </style>
+        </head>
+        <body>
+            ${printContent.innerHTML}
+        </body>
+        </html>
+    `);
+    
+    printWindow.document.close();
+    
+    // Wait for content to load, then print and close immediately
+    setTimeout(() => {
+        printWindow.focus();
+        printWindow.print();
+        
+        // Close window immediately after print dialog appears
+        // This prevents hanging
+        setTimeout(() => {
+            printWindow.close();
+        }, 100);
+    }, 500);
+};
+
+// Alternative method - if above still causes issues, use this:
+// const handlePrintAlternative = () => {
+//     const printContent = document.getElementById('section-to-print');
+//     const printWindow = window.open('', '_blank');
+    
+//     printWindow.document.write(`
+//         <html>
+//         <head>
+//             <title>One Day Pass</title>
+//             <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+//             <style>
+//                 /* Same styles as above */
+//             </style>
+//         </head>
+//         <body onload="window.print(); window.onafterprint = function(){ window.close(); }">
+//             ${printContent.innerHTML}
+//         </body>
+//         </html>
+//     `);
+    
+//     printWindow.document.close();
+// };
+
+// Add print button in your modal
+// <button className="btn btn-primary" onClick={handlePrint}>
+//     <i className="bi bi-printer"></i> Print Pass
+// </button>
+
+    // Add a print button in your modal
+    // <button className="btn btn-primary" onClick={handlePrint}>
+    //     <i className="bi bi-printer"></i> Print Pass
+    // </button>
     return (
         <>
             <style>
                 {
 
-                    `@media print {
-  body * {
-    visibility: hidden;
+                    //                     `
+                    // @media print {
+                    //   @page {
+                    //     size: A4;
+                    //     margin: 10mm;
+                    //   }
+
+                    //   body * {
+                    //     visibility: hidden;
+                    //   }
+
+                    //   #section-to-print,
+                    //   #section-to-print * {
+                    //     visibility: visible;
+                    //   }
+
+                    //   /* ✅ Center the card vertically and horizontally */
+                    //   #section-to-print {
+                    //     position: fixed;
+                    //     top: 90%;
+                    //     left: 50%;
+                    //     transform: translate(-50%, -50%); /* Center both directions */
+                    //     width: 160mm; /* Card width */
+                    //     max-width: calc(100% - 20mm);
+                    //     box-sizing: border-box;
+                    //     background: white;
+                    //     padding: 10mm;
+                    //     border-radius: 10px;
+                    //   }
+
+                    //   .print-card {
+                    //     border: 1px solid #ddd !important;
+                    //     border-radius: 10px !important;
+                    //     box-shadow: none !important;
+                    //     page-break-inside: avoid;
+                    //     overflow: visible !important;
+                    //   }
+
+                    //   #section-to-print .card-header {
+                    //     background-color: #0b7a14 !important;
+                    //     color: #fff !important;
+                    //     text-align: center;
+                    //     padding: 6px !important;
+                    //     -webkit-print-color-adjust: exact;
+                    //     print-color-adjust: exact;
+                    //     margin-top:300px
+                    //   }
+
+                    //   .profile-icon {
+                    //     position: absolute !important;
+                    //     top: 12mm !important;
+                    //     left: 15mm !important;
+                    //     width: 80px !important;
+                    //     height: 80px !important;
+                    //     border-radius: 50% !important;
+                    //     border: 2px solid #ccc !important;
+                    //     overflow: hidden !important;
+                    //     background: #fff !important;
+                    //     display: flex !important;
+                    //     align-items: center !important;
+                    //     justify-content: center !important;
+                    //   }
+
+                    //   .profile-icon img {
+                    //     width: 100% !important;
+                    //     height: 100% !important;
+                    //     object-fit: cover !important;
+                    //   }
+
+                    //   /* ✅ Make fields appear side-by-side */
+                    //   #section-to-print .card-body .row {
+                    //     display: flex !important;
+                    //     flex-wrap: nowrap !important;
+                    //     justify-content: space-between !important;
+                    //     align-items: flex-start !important;
+                    //     gap: 8px;
+                    //     margin-top: 40px;
+                    //   }
+
+                    //   #section-to-print .card-body .col-lg-6 {
+                    //     flex: 1 1 16% !important;
+                    //     min-width: 90px !important;
+                    //     padding-left: 6px !important;
+                    //     padding-right: 6px !important;
+                    //   }
+
+                    //   #section-to-print h5 {
+                    //     margin: 2px 0 !important;
+                    //     font-size: 12px !important;
+                    //     line-height: 1.2 !important;
+                    //   }
+
+                    //   .print-card .card-footer {
+                    //     border-top: 1px solid #e9e9e9 !important;
+                    //     text-align: center;
+                    //     padding-top: 5px !important;
+                    //   }
+
+                    //   html, body {
+                    //     margin: 0;
+                    //     padding: 0;
+                    //     height: 100%;
+                    //     background: #fff;
+                    //   }
+                    // }
+
+
+                    // `
+                    `
+ /* General styling */
+  body {
+    background-color: #f0f0f0; 
+    justify-content: center;
+    align-items: center;
+ 
   }
 
-  #section-to-print,
-  #section-to-print * {
-    visibility: visible;
-  }
-
-  #section-to-print {
-    position: absolute;
-    left: 0;
-    top: 0;
-    width: 100% !important;
-    height: auto;
+  .print-card {
+    width: 350px;
+    padding: 15px;
     background: white;
-    -webkit-print-color-adjust: exact;
-    print-color-adjust: exact;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+    text-align: center;
   }
 
-  .card-header {
-    background-color: green !important;
-    color: white !important;
+  .print-card img {
+    width: 100%;
+    border-radius: 10px;
   }
 
-  .card {
-    border: 1px solid #ccc !important;
-    padding: 10px;
+  .print-btn {
+    margin-top: 20px;
   }
 
-  .card-footer {
-    background-color: #f8f9fa !important;
-  }
+  /* PRINT CSS */
+  @media print {
+    body {
+      background: white !important;
+      -webkit-print-color-adjust: exact;
+      print-color-adjust: exact;
+      margin: 0;
+      padding: 0;
+    }
 
+    @page {
+      size: A4 portrait;
+      margin: 10mm;
+    }
 
-  .card,
-  .modal-body {
-    box-shadow: none !important;
-    border-radius: 0 !important;
-  }
-    .label {
-    font-weight: bold;
-    margin-right: 10px;
-    
-  }
+    .print-card {
+      box-shadow: none;
+      margin: auto;
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      page-break-inside: avoid;
+      break-inside: avoid;
+    }
 
-  .value {
-    text-transform: uppercase;
-    font-size: 24px;
-    font-weight: 600;
-    color: #333;
-    margin-left: 20px;
+    .print-btn {
+      display: none !important; /* Hide print button on paper */
+    }
   }
-}`
+`
 
                 }
             </style>
@@ -435,7 +724,7 @@ const Reports = () => {
                             <div className="modal-content">
                                 <div className="modal-header">
                                     <h4 className="modal-title" id="exampleModalLabel">One Day Pass</h4>
-                                    <button className="btn btn-success float-end" onClick={() => window.print()}>Print</button>
+                                    <button className="btn btn-success float-end" /* onClick={() => window.print()} */ onClick={handlePrint}>Print</button>
                                     <button type="button" className="close" data-dismiss="modal" aria-label="Close">
                                         <span aria-hidden="true">&times;</span>
                                     </button>
@@ -447,6 +736,7 @@ const Reports = () => {
                                             <div className="card position-relative">
                                                 {/* Profile Icon (Left side) */}
                                                 <div
+                                                    className="profile-icon"
                                                     style={{
                                                         position: "absolute",
                                                         top: "23px",
@@ -464,6 +754,7 @@ const Reports = () => {
                                                 >
                                                     {/* <i className="bi bi-person-circle" style={{ fontSize: "40px", color: "gray" }}> */}
                                                     <img
+                                                        className="img"
                                                         src={decryptedImage1}
                                                         alt="Decrypted"
                                                         style={{ width: '100px', height: '100px', borderRadius: '50%' }}

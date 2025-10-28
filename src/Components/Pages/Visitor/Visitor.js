@@ -22,6 +22,7 @@ const Visitor = () => {
     const [secretKey, setSecretKey] = useState("");
     const [photopathIV, setPhotopathIv] = useState("")
     const [rowId, setRowId] = useState("")
+    const roleName = localStorage.getItem("RoleName")
 
     useEffect(() => {
 
@@ -111,7 +112,7 @@ const Visitor = () => {
 
     return (
         <>
-            <section id="main-content">
+            <section id="main-content" className={roleName === "Receptionlist" ? "merge-left" : ""}>
                 <section className="wrapper">
                     <div className="container-fluid">
                         <div className="card m-3" style={{ boxShadow: "0px 1px 5px rgba(0, 0, 0, 0.1)" }}>

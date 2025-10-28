@@ -52,7 +52,8 @@ const VisitorForm = () => {
     const [hostMobileNo, setHostMobileNo] = useState("")
     const [listening, setListening] = useState(false);
     const [website, setWebsite] = useState("")
-
+    const [visitingCard, setVisitingCard] = useState(false)
+  const roleName = localStorage.getItem("RoleName")
 
     useEffect(() => {
         const generateSecretKey = () => {
@@ -488,12 +489,45 @@ const VisitorForm = () => {
         recognition.start();
     };
 
+    const scanCard = () => {
+        setVisitingCard(true)
+    }
 
     return (
         <>
-            <section id="main-content">
+            <section id="main-content"  className={roleName === "Receptionlist" ? "merge-left" : ""}>
                 <section className="wrapper">
                     <div className="container-fluid">
+                        <button
+                            className="btn btn-md text-light m-3"
+                            type="button"
+                            style={{ backgroundColor: "#8b5c7e" }}
+                            onClick={scanCard}
+                        >
+                            Scan Visiting Card
+                        </button>
+                        {
+                            visitingCard === true &&
+                            <div
+                                className="card m-3"
+                                style={{ boxShadow: "0px 1px 5px rgba(0, 0, 0, 0.1)" }}
+                            >
+                                <div className="row">
+                                    <div className="col-lg-12">
+<div className="card-body pt-3 text-center">
+  <img
+    src="https://asset.gecdesigns.com/img/visiting-card-templates/elegant-visiting-card-design-for-creative-professionals-10042403-1712758228308-cover.webp"
+    alt="Visiting card"
+    className="img-fluid rounded shadow"
+  />
+</div>
+
+                                    </div>
+                                </div>
+                            </div>
+
+                        }
+
                         <div
                             className="card m-3"
                             style={{ boxShadow: "0px 1px 5px rgba(0, 0, 0, 0.1)" }}

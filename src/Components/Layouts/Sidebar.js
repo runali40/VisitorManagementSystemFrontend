@@ -49,6 +49,8 @@ const Sidebar = () => {
   const [openDropdown, setOpenDropdown] = useState(null);
   const [openSubDropdown, setOpenSubDropdown] = useState(null);
   const [openDropdowns, setOpenDropdowns] = useState({});
+  const roleName = localStorage.getItem("RoleName")
+  const userName = localStorage.getItem("username")
 
   const toggleDropdown = (id) => {
     setOpenDropdowns((prev) => ({
@@ -65,7 +67,7 @@ const Sidebar = () => {
   };
 
   useEffect(() => {
-      getAllWebMenu();
+    getAllWebMenu();
   }, [])
 
   const getAllWebMenu = async () => {
@@ -313,7 +315,7 @@ const Sidebar = () => {
               <li className="dropdown">
                 <a data-toggle="dropdown" className="dropdown-toggle" href="#">
                   <img alt="" src="images/2.png" />
-                  <span className="username">John Doe</span>
+                  <span className="username">{userName}</span>
                   <b className="caret"></b>
                 </a>
                 <ul className="dropdown-menu extended logout">
@@ -341,18 +343,21 @@ const Sidebar = () => {
         </header>
         {/* <!--header end--> */}
         {/* <!--sidebar start--> */}
-        <aside>
-          <div id="sidebar" className="nav-collapse">
-            {/* <!-- sidebar menu start--> */}
-            <div className="leftside-navigation">
-              {/* <ul className="sidebar-menu" id="nav-accordion"> */}
-              {/* <li><NavLink to="/dashboard">
+        {
+          roleName !== "Receptionlist"
+          &&
+          <aside>
+            <div id="sidebar" className="nav-collapse">
+              {/* <!-- sidebar menu start--> */}
+              <div className="leftside-navigation">
+                {/* <ul className="sidebar-menu" id="nav-accordion"> */}
+                {/* <li><NavLink to="/dashboard">
                                    <i className="fa fa-dashboard"></i>
                                     <span>Dashboard</span>
 
                               
                                 </NavLink></li> */}
-              {/* <li className={`sub-menu ${isOpen ? 'active' : ''}`}>
+                {/* <li className={`sub-menu ${isOpen ? 'active' : ''}`}>
                                     <div onClick={toggleSubmenu} style={{ cursor: 'pointer' }}>
                                         <i className="fa fa-book"></i>
                                         <span className="ms-2">Masters</span>
@@ -382,54 +387,53 @@ const Sidebar = () => {
                                     )}
                                 </li> */}
 
-              <ul className="sidebar-menu" id="nav-accordion">
-                <li>
-                  <NavLink to="/dashboard">
-                    <i className="fa fa-dashboard"></i>
-                    <span>Dashboard</span>
-                  </NavLink>
-                </li>
-                <li>
+                <ul className="sidebar-menu" id="nav-accordion">
+                  <li>
+                    <NavLink to="/dashboard">
+                      <i className="fa fa-dashboard"></i>
+                      <span>Dashboard</span>
+                    </NavLink>
+                  </li>
+                  {/* <li>
                   <NavLink to="/voiceDialer">
                     <i className="fa fa-dashboard"></i>
                     <span>Voice Calling</span>
                   </NavLink>
-                </li>
-                {parentMenus.map((parent) => {
-                  const childMenus = getChildMenus(parent.m_id);
+                </li> */}
+                  {parentMenus.map((parent) => {
+                    const childMenus = getChildMenus(parent.m_id);
 
-                  return (
-                    <>
-                      <li
-                        key={parent.m_id}
-                        className={`sub-menu ${
-                          openMenu === parent.m_id ? "active" : ""
-                        }`}
-                      >
-                        <div
-                          onClick={() => toggleMenu(parent.m_id)}
-                          style={{ cursor: "pointer" }}
+                    return (
+                      <>
+                        <li
+                          key={parent.m_id}
+                          className={`sub-menu ${openMenu === parent.m_id ? "active" : ""
+                            }`}
                         >
-                          <i className="fa fa-book"></i>
-                          <span className="ms-2">{parent.m_menuname}</span>
-                        </div>
+                          <div
+                            onClick={() => toggleMenu(parent.m_id)}
+                            style={{ cursor: "pointer" }}
+                          >
+                            <i className="fa fa-book"></i>
+                            <span className="ms-2">{parent.m_menuname}</span>
+                          </div>
 
-                        {openMenu === parent.m_id && (
-                          <ul className="sub">
-                            {childMenus.map((child) => (
-                              <li key={child.m_id}>
-                                <NavLink to={`/${child.m_action}`}>
-                                  {child.m_menuname}
-                                </NavLink>
-                              </li>
-                            ))}
-                          </ul>
-                        )}
-                      </li>
-                    </>
-                  );
-                })}
-                {/* <li className={`sub-menu ${isVisitor ? 'active' : ''}`}>
+                          {openMenu === parent.m_id && (
+                            <ul className="sub">
+                              {childMenus.map((child) => (
+                                <li key={child.m_id}>
+                                  <NavLink to={`/${child.m_action}`}>
+                                    {child.m_menuname}
+                                  </NavLink>
+                                </li>
+                              ))}
+                            </ul>
+                          )}
+                        </li>
+                      </>
+                    );
+                  })}
+                  {/* <li className={`sub-menu ${isVisitor ? 'active' : ''}`}>
                                     <div onClick={toggleVisitor} style={{ cursor: 'pointer' }}>
                                         <i className="fa fa-book"></i>
                                         <span className="ms-2">Reports</span>
@@ -442,12 +446,14 @@ const Sidebar = () => {
                                         </ul>
                                     )}
                                 </li>  */}
-              </ul>
-              {/* </ul> */}
+                </ul>
+                {/* </ul> */}
+              </div>
+              {/* <!-- sidebar menu end--> */}
             </div>
-            {/* <!-- sidebar menu end--> */}
-          </div>
-        </aside>
+          </aside>
+        }
+
         <TheContent />
       </section>
       {/* <!--main content end--> */}
