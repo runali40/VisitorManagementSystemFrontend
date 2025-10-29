@@ -331,3 +331,36 @@ export const VisitorCard = (
             return null;
         });
 };
+
+export const ScanCard = async (navigate) => {
+    const userId = localStorage.getItem("userId");
+
+    const data = { userId: userId };
+    const url = "AutoScan/start-scan";
+
+    try {
+        const response = await apiClient.post(`${UrlData}${url}`, data);
+
+        console.log("API response:", response.data);
+
+        if (response.data?.outcome?.tokens) {
+            const token1 = response.data.outcome.tokens;
+            Cookies.set("UserCredential", token1, { expires: 7 });
+        }
+
+        toast.success("Visitor Card uploaded successfully!");
+        return response.data; // ✅ Return your API data to React
+    } catch (error) {
+        console.error("ScanCard error:", error);
+
+        if (error.response?.data?.outcome?.tokens) {
+            const token1 = error.response.data.outcome.tokens;
+            Cookies.set("UserCredential", token1, { expires: 7 });
+        }
+
+        const errors = ErrorHandler(error, navigate);
+        toast.error(errors);
+        return null;
+    }
+};
+

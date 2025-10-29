@@ -8,6 +8,7 @@ import {
     AddVisitorFormApi,
     getAllPurposeApi,
     getVisitorApi,
+    ScanCard,
     SendSmsApi,
     VisitorCard,
 } from "../../Api/VisitorFormApi";
@@ -53,7 +54,8 @@ const VisitorForm = () => {
     const [listening, setListening] = useState(false);
     const [website, setWebsite] = useState("")
     const [visitingCard, setVisitingCard] = useState(false)
-  const roleName = localStorage.getItem("RoleName")
+    const [visitingCardImg, setVisitingCardImg] = useState();
+    const roleName = localStorage.getItem("RoleName")
 
     useEffect(() => {
         const generateSecretKey = () => {
@@ -489,20 +491,44 @@ const VisitorForm = () => {
         recognition.start();
     };
 
-    const scanCard = () => {
-        setVisitingCard(true)
-    }
+    const scanCardData = async () => {
+        try {
+            setVisitingCard(true);
+
+            // Call your scan API
+            const data = await ScanCard(navigate);
+
+            console.log("496 - API Response Data:", data.base64Image);
+
+            if (data) {
+                // Safely set each field
+                setAddress(data.data.Address || "");
+                setCompanyName(data.data.CompanyName || "");
+                setFullName(data.data.FullName || "");
+                setEmail(data.data.Email || "");
+                setMobileNo(data.data.MobileNumber || "");
+                const base64Image = `data:image/jpeg;base64,${data.base64Image}`;
+                setVisitingCardImg(base64Image);
+
+            } else {
+                console.warn("No data returned from ScanCard API.");
+            }
+        } catch (error) {
+            console.error("Error in scanCardData:", error);
+
+        }
+    };
 
     return (
         <>
-            <section id="main-content"  className={roleName === "Receptionlist" ? "merge-left" : ""}>
+            <section id="main-content" className={roleName === "Receptionlist" ? "merge-left" : ""}>
                 <section className="wrapper">
                     <div className="container-fluid">
                         <button
                             className="btn btn-md text-light m-3"
                             type="button"
                             style={{ backgroundColor: "#8b5c7e" }}
-                            onClick={scanCard}
+                            onClick={scanCardData}
                         >
                             Scan Visiting Card
                         </button>
@@ -514,13 +540,32 @@ const VisitorForm = () => {
                             >
                                 <div className="row">
                                     <div className="col-lg-12">
-<div className="card-body pt-3 text-center">
-  <img
-    src="https://asset.gecdesigns.com/img/visiting-card-templates/elegant-visiting-card-design-for-creative-professionals-10042403-1712758228308-cover.webp"
-    alt="Visiting card"
-    className="img-fluid rounded shadow"
-  />
-</div>
+                                        <div className="text-center">
+                                            {/* {visitingCardImg && (
+                                                <img
+                                                  
+                                                    src={visitingCardImg}
+                                                    alt="Visiting card"
+                                                    className="img-fluid rounded shadow"
+                                                />
+                                            )} */}
+                                            {visitingCardImg && (
+                                                <div /* style={{ marginTop: "20px", textAlign: "center" }} */>
+                                                    <img
+                                                        src={visitingCardImg}
+                                                        alt="Scanned Card"
+                                                        style={{
+                                                            width: "300px",
+                                                            height: "auto",
+                                                            border: "1px solid #ccc",
+                                                            transform: "rotate(90deg)", // 🔄 Rotate 90 degrees
+                                                            borderRadius: "8px",
+                                                            transition: "transform 0.3s ease-in-out"
+                                                        }}
+                                                    />
+                                                </div>
+                                            )}
+                                        </div>
 
                                     </div>
                                 </div>
