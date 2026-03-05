@@ -29,7 +29,7 @@ const Dashboard = () => {
                                 </div>
                                 <div className="col-md-8 market-update-left">
                                     <h4>Visitors</h4>
-                                    <h3>13,500</h3>
+                                    <h3>{liveVisitor}</h3>
                                     <p>Other hand, we denounce</p>
                                 </div>
                                 <div className="clearfix"> </div>
@@ -61,7 +61,7 @@ const Dashboard = () => {
                                 <div className="clearfix"> </div>
                             </div>
                         </div>
-                        <div className="col-md-3 market-update-gd">
+                        {/* <div className="col-md-3 market-update-gd">
                             <div className="market-update-block clr-block-4">
                                 <div className="col-md-4 market-update-right">
                                     <i className="fa fa-shopping-cart" aria-hidden="true"></i>
@@ -73,7 +73,7 @@ const Dashboard = () => {
                                 </div>
                                 <div className="clearfix"> </div>
                             </div>
-                        </div>
+                        </div> */}
                         <div className="clearfix"> </div>
                     </div>
 

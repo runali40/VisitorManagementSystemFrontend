@@ -36,7 +36,7 @@ export const AddVisitorFormApi = (
         !expectedTime ||
         !photo
     ) {
-        toast.success("Please fill all the details");
+        toast.warning("Please fill all the details");
         return null;
     }
     const userId = localStorage.getItem("userId");
