@@ -9,6 +9,8 @@ import { Delete, Edit } from "@material-ui/icons";
 import { deleteEmployeeApi, getAllEmployeeApi } from "../../Api/EmployeeMasterApi";
 import { deleteVisitorApi, getAllVisitorApi } from "../../Api/VisitorFormApi";
 
+
+
 const Visitor = () => {
     const headerCellStyle = {
         backgroundColor: "#8b5c7e",

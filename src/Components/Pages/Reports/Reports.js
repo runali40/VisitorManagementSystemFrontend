@@ -175,14 +175,14 @@ const Reports = () => {
     const currentItems = allReports.slice(indexOfFirstItem, indexOfLastItem);
 
     // Add this print function to your component
-   // Fixed print function - no hanging issue
-const handlePrint = () => {
-    const printContent = document.getElementById('section-to-print');
-    
-    // Create print window content
-    const printWindow = window.open('', '', 'height=800,width=800');
-    
-    printWindow.document.write(`
+    // Fixed print function - no hanging issue
+    const handlePrint = () => {
+        const printContent = document.getElementById('section-to-print');
+
+        // Create print window content
+        const printWindow = window.open('', '', 'height=800,width=800');
+
+        printWindow.document.write(`
         <html>
         <head>
             <title>One Day Pass</title>
@@ -304,49 +304,49 @@ const handlePrint = () => {
         </body>
         </html>
     `);
-    
-    printWindow.document.close();
-    
-    // Wait for content to load, then print and close immediately
-    setTimeout(() => {
-        printWindow.focus();
-        printWindow.print();
-        
-        // Close window immediately after print dialog appears
-        // This prevents hanging
+
+        printWindow.document.close();
+
+        // Wait for content to load, then print and close immediately
         setTimeout(() => {
-            printWindow.close();
-        }, 100);
-    }, 500);
-};
+            printWindow.focus();
+            printWindow.print();
 
-// Alternative method - if above still causes issues, use this:
-// const handlePrintAlternative = () => {
-//     const printContent = document.getElementById('section-to-print');
-//     const printWindow = window.open('', '_blank');
-    
-//     printWindow.document.write(`
-//         <html>
-//         <head>
-//             <title>One Day Pass</title>
-//             <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-//             <style>
-//                 /* Same styles as above */
-//             </style>
-//         </head>
-//         <body onload="window.print(); window.onafterprint = function(){ window.close(); }">
-//             ${printContent.innerHTML}
-//         </body>
-//         </html>
-//     `);
-    
-//     printWindow.document.close();
-// };
+            // Close window immediately after print dialog appears
+            // This prevents hanging
+            setTimeout(() => {
+                printWindow.close();
+            }, 100);
+        }, 500);
+    };
 
-// Add print button in your modal
-// <button className="btn btn-primary" onClick={handlePrint}>
-//     <i className="bi bi-printer"></i> Print Pass
-// </button>
+    // Alternative method - if above still causes issues, use this:
+    // const handlePrintAlternative = () => {
+    //     const printContent = document.getElementById('section-to-print');
+    //     const printWindow = window.open('', '_blank');
+
+    //     printWindow.document.write(`
+    //         <html>
+    //         <head>
+    //             <title>One Day Pass</title>
+    //             <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    //             <style>
+    //                 /* Same styles as above */
+    //             </style>
+    //         </head>
+    //         <body onload="window.print(); window.onafterprint = function(){ window.close(); }">
+    //             ${printContent.innerHTML}
+    //         </body>
+    //         </html>
+    //     `);
+
+    //     printWindow.document.close();
+    // };
+
+    // Add print button in your modal
+    // <button className="btn btn-primary" onClick={handlePrint}>
+    //     <i className="bi bi-printer"></i> Print Pass
+    // </button>
 
     // Add a print button in your modal
     // <button className="btn btn-primary" onClick={handlePrint}>
@@ -631,8 +631,9 @@ const handlePrint = () => {
                                                     <th style={headerCellStyle}>Visitor Type</th>
                                                     <th style={headerCellStyle}>Email ID</th>
                                                     <th style={headerCellStyle}>Mobile No.</th>
-                                                    <th style={headerCellStyle}>Visit Date & Time</th>
-                                                    <th style={headerCellStyle}>Check-out Time</th>
+                                                    <th style={headerCellStyle}>Visit Date</th>
+                                                    <th style={headerCellStyle}>Visit Time</th>
+                                                    <th style={headerCellStyle}>Website</th>
                                                     {/* <th style={headerCellStyle}>Host Name</th>
                                                     <th style={headerCellStyle}>Host Department</th> */}
                                                     <th style={headerCellStyle}>Purpose of Visit</th>
@@ -658,11 +659,17 @@ const handlePrint = () => {
                                                             <td>{data.Email}</td>
                                                             <td>{data.MobileNumber}</td>
                                                             <td>{data.VisitTime ? data.VisitTime.split("T")[0] : null}</td>
-                                                            <td>{data.ExitTime}</td>
+                                                            <td>
+                                                                {data.VisitTime
+                                                                    ? `${data.VisitTime.split("T")[1].slice(0, 5)}`
+                                                                    : null}
+                                                            </td>
+                                                            <td>{data.Website}</td>
                                                             {/* <td>abc</td>
                                                             <td>IT</td> */}
                                                             <td>{data.PurposeName}</td>
-                                                            <td>dfgd</td>
+                                                            <td>{data.PassNo}</td>
+
                                                             {/* <td>{data.ApprovalStatus}</td> */}
                                                             <td>
                                                                 {rowId === data.Id ? (
@@ -724,7 +731,7 @@ const handlePrint = () => {
                             <div className="modal-content">
                                 <div className="modal-header">
                                     <h4 className="modal-title" id="exampleModalLabel">One Day Pass</h4>
-                                    <button className="btn btn-success float-end" /* onClick={() => window.print()} */ onClick={handlePrint}>Print</button>
+                                    <button className="btn btn-success float-end" /* onClick={() => window.print()} */ style={{ marginLeft: "580px" }} onClick={handlePrint}>Print</button>
                                     <button type="button" className="close" data-dismiss="modal" aria-label="Close">
                                         <span aria-hidden="true">&times;</span>
                                     </button>
