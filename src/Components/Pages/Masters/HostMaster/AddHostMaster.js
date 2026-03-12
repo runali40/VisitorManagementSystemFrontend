@@ -1,5 +1,7 @@
 import React, { useState, useEffect } from "react";
 import Select from 'react-select'
+import { toast } from "react-toastify";
+import 'react-toastify/dist/ReactToastify.css';
 import { useNavigate, useLocation } from "react-router-dom";
 import {
     AddDepartmentApi,
@@ -37,22 +39,41 @@ const AddHostMaster = () => {
         fetchData();
     }, []);
 
-    const AddHost = async () => {
-        const data = await AddHostApi(
-            hostName,
-            departmentName,
-            designation,
-            email,
-            mobileNo,
-            hId,
-            navigate
-        );
-        if (data) {
-            console.log(data);
-            navigate("/hostMaster");
-        }
-    };
+const AddHost = async () => {
 
+    const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    const mobilePattern = /^[7-9][0-9]{9}$/;
+
+    if (!hostName || !departmentName || !designation || !email || !mobileNo) {
+        toast.warning("Please fill all the details");
+        return;
+    }
+
+    if (!emailPattern.test(email)) {
+        toast.warning("Please enter valid email address");
+        return;
+    }
+
+    if (!mobilePattern.test(mobileNo)) {
+        toast.warning("Please enter valid 10 digit mobile number");
+        return;
+    }
+
+    const data = await AddHostApi(
+        hostName,
+        departmentName,
+        designation,
+        email,
+        mobileNo,
+        hId,
+        navigate
+    );
+
+    if (data) {
+        console.log(data);
+        navigate("/hostMaster");
+    }
+};
     const getAllDepartment = async () => {
         const data = await getAllDepartmentApi(navigate);
         console.log(data);

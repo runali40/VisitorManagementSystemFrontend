@@ -363,76 +363,6 @@ const VisitorForm = () => {
         }
     };
 
-    // const startListening = () => {
-    //     const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
-    //     if (!SpeechRecognition) {
-    //         alert("Speech Recognition not supported in this browser");
-    //         return;
-    //     }
-
-    //     const recognition = new SpeechRecognition();
-    //     recognition.lang = "en-IN";
-    //     recognition.continuous = false;
-    //     recognition.interimResults = false;
-
-    //     recognition.onstart = () => setListening(true);
-
-    //     recognition.onresult = (event) => {
-    //         const spokenText = event.results[0][0].transcript;
-    //         const detectedNumber = spokenText.replace(/\D/g, "");
-    //         setMobileNo(detectedNumber);
-    //         setListening(false);
-    //     };
-
-    //     recognition.onerror = (event) => {
-    //         console.error("Error:", event.error);
-    //         alert("Speech error: " + event.error);
-    //         setListening(false);
-    //     };
-
-    //     recognition.onend = () => setListening(false);
-
-    //     recognition.start();
-
-    // };
-
-    // const FullNameData = () => {
-    //     const SpeechRecognition =
-    //         window.SpeechRecognition || window.webkitSpeechRecognition;
-
-    //     if (!SpeechRecognition) {
-    //         alert("Speech Recognition not supported in this browser");
-    //         return;
-    //     }
-
-    //     const recognition = new SpeechRecognition();
-    //     recognition.lang = "en-IN";
-    //     recognition.continuous = false;
-    //     recognition.interimResults = false;
-
-    //     recognition.onstart = () => setListening(true);
-
-    //     recognition.onresult = (event) => {
-    //         const spokenText = event.results[0][0].transcript;
-    //         console.log("Spoken:", spokenText);
-
-    //         // ✅ Bind name directly
-    //         setFullName(spokenText.trim()); 
-
-    //         setListening(false);
-    //     };
-
-    //     recognition.onerror = (event) => {
-    //         console.error("Error:", event.error);
-    //         alert("Speech error: " + event.error);
-    //         setListening(false);
-    //     };
-
-    //     recognition.onend = () => setListening(false);
-
-    //     recognition.start();
-    // };
-
     const startListening = (field) => {
         const SpeechRecognition =
             window.SpeechRecognition || window.webkitSpeechRecognition;
@@ -736,14 +666,14 @@ const VisitorForm = () => {
                                                             className="form-control mt-3"
                                                             placeholder="Enter Mobile No"
                                                             value={mobileNo}
-                                                            onChange={(e) => setMobileNo(e.target.value)}
-                                                        // onChange={(e) => {
-                                                        //     const value = e.target.value;
-                                                        //     // Allow only numbers and max 10 digits
-                                                        //     if (/^[0-9]{0,10}$/.test(value)) {
-                                                        //         setMobileNo(value);
-                                                        //     }
-                                                        // }}
+                                                            // onChange={(e) => setMobileNo(e.target.value)}
+                                                            onChange={(e) => {
+                                                                const value = e.target.value;
+                                                                // Allow only numbers and max 10 digits
+                                                                if (/^[0-9]{0,10}$/.test(value)) {
+                                                                    setMobileNo(value);
+                                                                }
+                                                            }}
                                                         />
                                                         <div className="input-group-btn">
                                                             <button className="btn btn-default mt-3" type="submit" onClick={() => startListening("mobileNo")}>
@@ -824,7 +754,14 @@ const VisitorForm = () => {
                                                         className="form-control mt-3"
                                                         placeholder="Enter Host Mobile No"
                                                         value={hostMobileNo}
-                                                        onChange={(e) => setHostMobileNo(e.target.value)}
+                                                        // onChange={(e) => setHostMobileNo(e.target.value)}
+                                                        onChange={(e) => {
+                                                            const value = e.target.value;
+                                                            // Allow only numbers and max 10 digits
+                                                            if (/^[0-9]{0,10}$/.test(value)) {
+                                                                setHostMobileNo(value);
+                                                            }
+                                                        }}
                                                     />
                                                 </div>
                                             </div>
@@ -884,7 +821,7 @@ const VisitorForm = () => {
                                                     <label className="control-label fw-bold">
                                                         Website:
                                                     </label>{" "}
-                                                    <span className="text-danger fw-bold">*</span>
+
                                                     <input
                                                         type="text"
                                                         id="website"

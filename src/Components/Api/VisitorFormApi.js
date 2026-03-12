@@ -22,9 +22,13 @@ export const AddVisitorFormApi = (
     photopathIv,
     visitDate,
     website,
-     address,
+    address,
     navigate
 ) => {
+
+    const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    const mobilePattern = /^[6-9][0-9]{9}$/;
+
     if (
         !fullName ||
         !mobileNo ||
@@ -39,7 +43,24 @@ export const AddVisitorFormApi = (
         toast.warning("Please fill all the details");
         return null;
     }
+
+    if (!emailPattern.test(email)) {
+        toast.warning("Please enter valid email address");
+        return null;
+    }
+
+    if (!mobilePattern.test(mobileNo)) {
+        toast.warning("Please enter valid 10 digit mobile number");
+        return null;
+    }
+
+    if (hostMobileNo && !mobilePattern.test(hostMobileNo)) {
+        toast.warning("Host mobile number must be valid 10 digits");
+        return null;
+    }
+
     const userId = localStorage.getItem("userId");
+
     const data = {
         userId: userId,
         fullName: fullName,
@@ -58,12 +79,14 @@ export const AddVisitorFormApi = (
         visitDate: visitDate,
         website: website,
         address: address
-        // visitTime: "2025-08-01"
     };
+
     if (vId !== null && vId !== "") {
         data.id = vId;
     }
+
     const url = "VisitorsInfo/Insert";
+
     return apiClient({
         method: "post",
         url: UrlData + url,
@@ -71,14 +94,16 @@ export const AddVisitorFormApi = (
     })
         .then((response) => {
             console.log("API response:", response);
-            // toast.success("Visitor Type added successfully!");
+
             if (data.id) {
                 toast.success("Visitor updated successfully!");
             } else {
                 toast.success("Visitor added successfully!");
             }
+
             const token1 = response.data.outcome.tokens;
             Cookies.set("UserCredential", token1, { expires: 7 });
+
             return response.data;
         })
         .catch((error) => {
@@ -90,10 +115,12 @@ export const AddVisitorFormApi = (
                 const token1 = error.response.data.outcome.tokens;
                 Cookies.set("UserCredential", token1, { expires: 7 });
             }
+
             console.log(error);
 
             const errors = ErrorHandler(error, navigate);
             toast.error(errors);
+
             return null;
         });
 };

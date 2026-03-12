@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
 import Select from "react-select";
+import { toast } from "react-toastify";
+import 'react-toastify/dist/ReactToastify.css';
 import { AddEmployeeApi, getEmployeeApi } from "../../../Api/EmployeeMasterApi";
 import { getAllDepartmentApi } from "../../../Api/DepartmentMasterApi";
 
@@ -48,6 +50,24 @@ const AddEmployeeMaster = () => {
   };
 
   const AddEmployee = async () => {
+    const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+   const mobilePattern = /^[7-9][0-9]{9}$/;
+
+    if (!employeeCode || !employeeName || !email || !mobileNo || !department) {
+      toast.warning("Please fill all the details");
+      return;
+    }
+
+    if (!emailPattern.test(email)) {
+      toast.warning("Please enter valid email address");
+      return;
+    }
+
+    if (!mobilePattern.test(mobileNo)) {
+      toast.warning("Please enter valid 10 digit mobile number");
+      return;
+    }
+
     const data = await AddEmployeeApi(
       employeeCode,
       employeeName,
@@ -175,7 +195,7 @@ const AddEmployeeMaster = () => {
                             placeholder="Enter Email"
                             value={email}
                             // onChange={(e) => setEmail(e.target.value)}
-                             onChange={(e) => {
+                            onChange={(e) => {
                               const value = e.target.value;
                               // Allow only valid email characters while typing
                               if (/^[a-zA-Z0-9@._-]*$/.test(value)) {
